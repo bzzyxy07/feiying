@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>财务管理</title>
+	</head>
+
+	<body>
+		<div class="layui-tab layui-tab-card" lay-filter="package-info-card">
+			<ul class="layui-tab-title">
+				<li class="layui-this">网站设置<span class="layui-badge">6</span></li>
+				<li>用户管理</li>
+				<li>权限分配</li>
+				<li>商品管理</li>
+				<li>订单管理</li>
+			</ul>
+			<div class="layui-tab-content white-back">
+				<div class="layui-tab-item layui-show">内容1</div>
+				<div class="layui-tab-item">内容2</div>
+				<div class="layui-tab-item">内容3</div>
+				<div class="layui-tab-item">内容4</div>
+				<div class="layui-tab-item">内容5</div>
+			</div>
+		</div>
+		<form class="layui-form filter-form">
+			<ul>
+				<li>
+					<span>姓名</span>
+					<input class="layui-input form-input" placeholder="请输入姓名" name="">
+				</li>
+				<li>
+					<span>联系电话</span>
+					<input class="layui-input form-input" placeholder="请输入联系电话" name="">
+				</li>
+				<li>
+					<span>地址</span>
+					<input class="layui-input form-input" placeholder="请输入地址" name="">
+				</li>
+				<li><button type="button" class="layui-btn layui-btn-sm layui-btn-normal">查询</button>
+					<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+				</li>
+			</ul>
+		</form>
+		<script>
+			layui.use(['form','element'], function() {
+				
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="js/plugin/layui/css/layui.css" />
+		<link rel="stylesheet/less" href="./css/common1.less" />
+		<link rel="stylesheet" href="js/plugin/font-awesome/css/font-awesome.css" />
+		<title>飞鹰快递</title>
+	</head>
+
+	<body>
+
+		<div class="layui-side">
+			<div class="logo-cont">
+				<img src="img/system-logo.webp" src="飞鹰快递" class="system-logo">
+			</div>
+
+			<ul class="layui-nav layui-nav-tree" id="left_menu">
+				<li class="layui-nav-item layui-this" url="home.html">
+					<i class="fa fa-home"></i>
+					<label>首页</label>
+				</li>
+				<li class="layui-nav-item" url="package-info-manage.html">
+					<i class="fa fa-shopping-bag"></i>
+					<label>包裹</label>
+				</li>
+				<li class="layui-nav-item" url="express-info-manage.html">
+					<i class="fa fa-globe"></i>
+					<label>运单</label>
+				</li>
+				<li class="layui-nav-item" url="pay-info-manage.html">
+					<i class="fa fa-money"></i>
+					<label>财务</label></li>
+				<li class="layui-nav-item" url="financing-info-manage.html">
+					<i class="fa fa-money"></i>
+					<label>支付宝</label></li>
+				<li class="layui-nav-item" url="abnormal-express-manage.html">
+					<i class="fa fa-warning"></i>
+					<label>异常件</label>
+				</li>
+				<li class="layui-nav-item" url="sender-info-manage.html">
+					<i class="fa fa-envelope"></i>
+					<label>发件人</label>
+				</li>
+				<li class="layui-nav-item" url="recipients-info-manage.html">
+					<i class="fa fa-envelope-open"></i>
+					<label>收件人</label>
+				</li>
+				<li class="layui-nav-item" url="user-info-manage.html">
+					<i class="fa fa-user-circle-o"></i>
+					<label>账户</label>
+				</li>
+			</ul>
+		</div>
+
+		<div class="layui-body">
+			<header>
+				<div class="header-info">
+					<span name="user-name">时先生/LSSWG</span>
+					<span name="user-jf">积分：0(个)</span>
+					<span name="user-ye">余额：0.01($)</span>
+					<a id="exit_system_btn"><i class="fa fa-sign-out"></i>退出</a>
+				</div>
+				<div id="page_address"></div>
+			</header>
+
+			<div class="comm-body" id="main_container"></div>
+			<footer>Copyright©2015-2018飞鹰快递版权所有</footer>
+		</div>
+
+	</body>
+	<!--[if lt IE 9]>
+	    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/plugin/layui/layui.js"></script>
+	<script type="text/javascript" src="js/comm.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
+	<script>
+		less = {
+			env: 'development'
+		};
+	</script>
+	<script src="./js/less.min.js"></script>
+	<script>
+		less.watch();
+	</script>
+
+</html>

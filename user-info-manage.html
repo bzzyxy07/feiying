@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>账号管理</title>
+	</head>
+
+	<body>
+		<div class="layui-tab layui-tab-card" style="width: 550px;">
+			<ul class="layui-tab-title">
+				<li class="layui-this">账户信息</li>
+				<li><i class="fa fa-edit"></i>修改密码</li>
+			</ul>
+			<div class="layui-tab-content white-back">
+				<div class="layui-tab-item layui-show" id="user_info_div" fill-url="/api/BasicUser/AllDetails" fill-type="get"  class="fill-container fill-page-container fill-form-container">
+					<ul class="news-list">
+						<li>仓库：<span name="depotname"> 亚特兰大门店</span></li>
+						<li>邮件：<span name="email">qingsongyun@126.com</span></li>
+						<li>编号：<span name="cnum"> LSSWG</span></li>
+					</ul>
+
+					<form class="layui-form" id="user_info_form" submit-url="/api/BasicUser/Put" submit-type="put" succ-msg="修改成功！">
+						<p class="mess-info">备注：姓名、地址、手机，将作为做单默认发件人</p>
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="username" required lay-verify="required" placeholder="请输入您的姓名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">手机</label>
+							<div class="layui-input-inline">
+								<input type="text" name="mobilephone" required lay-verify="required" placeholder="请输入您的手机号码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">QQ</label>
+							<div class="layui-input-inline">
+								<input type="text" name="qq" placeholder="请输入您的QQ号码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">微信</label>
+							<div class="layui-input-inline">
+								<input type="text" name="wechatcode" placeholder="请输入您的微信账号" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">地址</label>
+							<div class="layui-input-block">
+								<input type="text" name="address" required lay-verify="required" placeholder="请输入您的地址" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">保存</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="layui-tab-item">
+					<form class="layui-form" id="cge_pwd_form" submit-url="" submit-type="" succ-cb='comm.systemTimeout("修改成功！", 1)'>
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">原密码</label>
+							<div class="layui-input-inline">
+								<input type="password" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">新密码</label>
+							<div class="layui-input-inline">
+								<input type="password" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required-logo">确认密码</label>
+							<div class="layui-input-inline">
+								<input type="password" name="title" required lay-verify="required" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn layui-btn-normal" lay-submit>保存</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			$("#user_info_div").attr("fill-data", '{"modelId":'+modelId+'}');
+		</script>
+		<script src="./js/comm-inner-page.js"></script>
+		<script>
+			layui.use(['form','element'], function() {
+				
+			});
+			
+		</script>
+	</body>
+
+</html>

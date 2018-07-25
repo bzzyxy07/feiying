@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div class="layui-tab layui-tab-card" lay-filter="package-info-card">
+			<ul class="layui-tab-title">
+				<li>支付宝充值</li>
+				<li>积分明细</li>
+				<li>财务明细</li>
+			</ul>
+			<div class="layui-tab-content white-back">
+				<div class="layui-tab-item layui-show">
+					<div class="layui-form-item">
+						<label class="layui-form-label required-logo">充值方式</label>
+						<div class="layui-input-inline">
+							<img src="img/IconAlipay-logo.webp" />
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label required-logo">当前汇率</label>
+						<div class="layui-input-inline">
+							<span>1$等于6.7000元</span>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">金额</label>
+						<div class="layui-input-inline">
+							<input class="layui-input form-input" placeholder="请输入金额" name="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use(['form', 'element'], function() {
+
+			});
+		</script>
+	</body>
+
+</html>

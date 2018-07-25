@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>包裹管理</title>
+		<style>
+			#detail_body tr:first-child .del-detail-tr {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="layui-tab layui-tab-card" lay-filter="package-info-card">
+			<ul class="layui-tab-title">
+				<li class="layui-this">包裹查询</li>
+				<li>包裹预告</li>
+			</ul>
+			<div class="layui-tab-content white-back">
+				<div class="layui-tab-item layui-show">
+					<form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
+						<ul>
+							<li>
+								<span>送达仓库</span>
+								<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
+							</li>
+							<li>
+								<span>包裹追踪号</span>
+								<input class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
+							</li>
+							<li>
+								<span>运单号</span>
+								<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
+							</li>
+							<li>
+								<span>入库状态</span>
+								<ul class="form-condition" name="isenter">
+									<li class="active" data-value="">全部</li>
+									<li data-value="true">已入库</li>
+									<li data-value="false">未入库</li>
+								</ul>
+							</li>
+							<li>
+								<span>订单提交状态</span>
+								<ul class="form-condition" name="isdeliver">
+									<li class="active" data-value="">全部</li>
+									<li data-value="true">未提交</li>
+									<li data-value="false">已提交</li>
+								</ul>
+							</li>
+							<li>
+								<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+							</li>
+						</ul>
+					</form>
+					<div class="data-table-container">
+						<table id="package_info_table"></table>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<form id="package_preview_form" lay-filter="package-preview-form" class="layui-form ignore-comm-submit">
+						<div class="layui-form-item">
+							<li class="inline-nowrap">
+								<label class="layui-form-label">送达仓库</label>
+								<div class="layui-input-inline">
+									<select name="DepotID" lay-verify="required" initial-name="depotlist"></select>
+								</div>
+							</li>
+							<li class="inline-nowrap">
+								<label class="layui-form-label">送达方式</label>
+								<div class="layui-input-inline">
+									<select name="trackingname" lay-verify="required" initial-name="waylist"></select>
+
+								</div>
+							</li>
+							<li class="inline-nowrap">
+								<label class="layui-form-label">包裹追踪号</label>
+								<div class="layui-input-inline">
+									<input type="text" name="trackingnumber" placeholder="请输入包裹追踪号" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</li>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">物品明细</label>
+							<div class="layui-input-block">
+								<table class="layui-table" lay-size="sm">
+									<thead>
+										<tr>
+											<th>类别</th>
+											<th>物品名称</th>
+											<th>规格</th>
+											<th>品牌</th>
+											<th>数量</th>
+											<th>单价($)</th>
+											<th>单位</th>
+											<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
+										</tr>
+									</thead>
+									<tbody id="detail_body">
+										<tr class="detail-tr">
+											<td class="padd-0">
+												<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
+											</td>
+											<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
+											<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
+											<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
+											<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+											<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+											<td class="padd-0">
+												<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+											</td>
+											<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">备注</label>
+							<div class="layui-input-block">
+								<input type="text" name="remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="js/comm-inner-page.js"></script>
+		<script>
+			layui.use(['form', 'element'], function() {
+				var form = layui.form;
+				comm.bindFilterForm({
+					formId: "package_info_search_form",
+					renderTable: {
+						elem: '#package_info_table',
+						cols: [
+							[{
+								checkbox: true
+							}, {
+								field: 'trackingnumber',
+								title: '包裹追踪号',
+							}, {
+								field: 'depotname',
+								title: '仓库',
+							}, {
+								field: 'enterdate',
+								title: '入库日期',
+								sort: true,
+							}, {
+								field: 'goodsweight',
+								title: '重量(磅)',
+								width: 120,
+							}, {
+								field: 'depotname',
+								title: '物品XXXXX',
+							}, {
+								field: '',
+								title: '操作',
+								toolbar: '#operation'
+							}]
+						]
+					}
+				});
+				//初始化表格选项数据
+				comm.getDataByCondition({
+					ajax: {
+						url: '/api/OrderPackage/PackageViewMy',
+						success: function(data) {
+							for(var key in data) {
+								var sel = '<option value="">请选择</option>',
+									sepData = data[key];
+								sepData.map(function(v) {
+									sel += '<option value="' + v.id + '">' + v.name + '</option>';
+								});
+
+								$('#package_preview_form select[initial-name="' + key + '"]','#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+								
+								form.render('select');
+								//添加行
+								$("#add_detail_tr_btn").unbind("click").on("click", function() {
+									$("#detail_body").append($(".detail-tr").first().clone());
+									$("#detail_body .detail-tr").last().find("select, input").val("");
+									form.render('select');
+								});
+							}
+						}
+					}
+				});
+				//删除行
+				$("#detail_body").on("click", ".del-detail-tr", function() {
+					$(this).parents("tr").remove();
+				});
+                //提交包裹预告
+				form.on('submit(package-preview-form)', function(data) {
+					var packageData = {
+						"DepotID": $('#package_preview_form [name="DepotID"]').val(),
+						"trackingname": $('#package_preview_form [name="trackingname"]').val(),
+						"trackingnumber": $('#package_preview_form [name="trackingnumber"]').val(),
+						"details": []
+					}
+					
+					$(".detail-tr").each(function() {
+						var sepDetail = {}
+						$(this).find('input:not(.layui-unselect), select').each(function() {
+							sepDetail[$(this).attr("name")] = $(this).val();
+						});
+						packageData.details.push(sepDetail);
+					});
+					comm.getDataByCondition({
+						loading: true,
+						ajax: {
+							url: "/api/OrderPackage/PostMy",
+							type: "post",
+							data: packageData,
+							success: function(data) {
+								layer.msg("提交成功，可继续上传包裹预告！");
+								document.getElementById("package_preview_form").reset();
+								form.render('select');
+								$("#detail_body tr:first").siblings("tr").remove();
+							}
+						}
+					});
+					return false;
+				});
+			});
+		</script>
+		<script type="text/html" id="operation">
+			<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
+			<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
+		</script>
+	</body>
+
+</html>

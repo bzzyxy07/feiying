@@ -1,0 +1,106 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .4);
+}
+
+.center-cont {
+    width: 350px;
+    z-index: 1000;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+form {
+    padding: 0 20px 20px 20px;
+}
+
+h1 {
+    font-size: 23px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+body {
+    background: url(../img/login-back.webp);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.layui-btn {
+    background: linear-gradient(to right, #007db5, #00BCD4);
+    letter-spacing: 40px;
+    text-indent: 40px;
+}
+
+.layui-form-item {
+    position: relative;
+}
+
+.layui-form-item i {
+    position: absolute;
+    font-size: 19px !important;
+    left: 5px;
+    bottom: 10px;
+    color: #666;
+}
+
+.layui-input {
+    border-width: 0 0 1px 0;
+    padding-left: 24px;
+}
+
+.text-div {
+    padding-left: 70px;
+    font-size: 22px;
+}
+
+.text-div p {
+    line-height: 38px;
+    font-weight: 300;
+}
+
+.text-div p div {
+    font-size: 30px;
+    display: inline-block;
+}
+
+.em-div * {
+    display: inline-block;
+}
+
+.comm-footer {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+    p {
+        height: 28px;
+        line-height: 28px;
+        font-size: 13px;
+        a,
+        label,
+        span {
+            margin: 0 20px;
+            color: #fff;
+        }
+    }
+}

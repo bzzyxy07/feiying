@@ -1,0 +1,388 @@
+@left-side-width: 100px;
+@main-nav-background-color: #0f8fb9;
+@active-background-color: #025A77;
+@comm-border: 1px solid #ddd;
+@shallow-gray: #f5f5f5;
+@shallow-gray1: #f1f1f1;
+@deep-gray: #ddd;
+@active-blue: #1e9fff;
+a {
+    cursor: pointer;
+}
+
+.comm-border {
+    border: @comm-border;
+}
+
+.gray-border {
+    border: 1px solid #f1f1f1;
+}
+
+.background-red {
+    background: #f68484;
+}
+
+.background-blue {
+    background: #75b9e6;
+}
+
+.background-green {
+    background: #71d398;
+}
+
+.background-teal {
+    background: #73c4b1;
+}
+
+.padd-0 {
+    padding: 0 !important;
+}
+
+.radius-3 {
+    border-radius: 3px;
+}
+
+.padd-all-15 {
+    padding: 15px;
+}
+
+.padd-all-20 {
+    padding: 20px;
+}
+
+.padd-lr-15 {
+    padding: 0 15px;
+}
+
+.white-font {
+    color: #fff;
+}
+
+.float-right {
+    display: block;
+    float: right;
+}
+
+.border-box {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.layui-side {
+    width: @left-side-width;
+    background: @main-nav-background-color;
+    .logo-cont {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .system-logo {
+            max-width: 90%;
+        }
+    }
+    .layui-nav {
+        background: none;
+        width: 100%;
+        .layui-this {
+            background: @active-background-color;
+        }
+        .layui-nav-item {
+            padding: 15px 0;
+            &:hover {
+                background: @active-background-color;
+            }
+            label,
+            .fa {
+                display: block;
+                text-align: center;
+                color: #fff;
+                font-weight: 900;
+            }
+            label {
+                font-size: 14px;
+                line-height: 35px;
+            }
+            .fa {
+                font-size: 16px;
+            }
+        }
+    }
+    .layui-nav-bar {
+        display: none;
+    }
+}
+
+.layui-laypage {
+    .layui-laypage-curr .layui-laypage-em {
+        background: @active-blue;
+    }
+    a:hover {
+        color: @active-blue;
+    }
+}
+
+.layui-body {
+    @header-height: 80px;
+    @footer-height: 30px;
+    left: @left-side-width;
+    header,
+    footer,
+    .comm-body {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    header {
+        top: 0;
+        line-height: @header-height;
+        overflow: hidden;
+        .header-info {
+            .padd-lr-15;
+            line-height: @header-height/2;
+            display: flex;
+            justify-content: flex-end;
+            >* {
+                padding: 0 10px;
+            }
+        }
+        #page_address {
+            .padd-lr-15;
+            line-height: @header-height/2;
+            background: @shallow-gray;
+            i {
+                margin-right: 5px;
+                font-size: 16px;
+            }
+        }
+    }
+    footer {
+        bottom: 0;
+        text-align: center;
+        border-top: @comm-border;
+        line-height: @footer-height;
+    }
+    .comm-body {
+        position: absolute;
+        top: @header-height;
+        bottom: @footer-height;
+        box-shadow: 0 1px 3px 1px rgba(0, 0, 0, .1) inset;
+        background-color: #fafafa;
+        background-image: url("../img/water-mark.webp");
+        .padd-all-15;
+        .border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+.layui-form .required-logo::before {
+    content: "*";
+    color: red;
+    width: 10px;
+}
+
+.layui-card {
+    .gray-border;
+}
+
+.link-text {
+    color: #01AAED;
+}
+
+.news-list {
+    margin-left: 20px;
+    li {
+        list-style-type: disc;
+        line-height: 28px;
+    }
+}
+
+.layui-table .padd-0 .layui-input {
+    border-color: #fff;
+}
+
+.filter-form {
+    padding: 5px 10px;
+    background: @shallow-gray1;
+    .radius-3;
+    >ul>li {
+        white-space: nowrap;
+        margin: 5px 10px 5px 0;
+        display: inline-block;
+        .layui-input {
+            width: 180px;
+            height: 30px;
+            display: inline-block;
+            margin: 0 0 0 3px;
+        }
+        .layui-unselect.layui-form-select {
+            display: inline-block;
+        }
+        .form-condition {
+            display: inline-block;
+            >li {
+                display: inline-block;
+                border: 1px solid #ddd;
+                background: #ddd;
+                padding: 0 8px;
+                line-height: 28px;
+                cursor: pointer;
+                &.active {
+                    background: #fff;
+                }
+            }
+        }
+    }
+}
+
+.layui-tab {
+    margin: 0 0 10px;
+}
+
+.mess-info {
+    background: #e6f1f9;
+    border: 1px dashed #ccc;
+    padding: 0 10px;
+    line-height: 27px;
+    color: #1e9fff;
+    margin: 15px 0;
+    .radius-3;
+}
+
+.white-back {
+    background: #fff;
+}
+
+.inline-nowrap {
+    display: inline-block;
+    white-space: nowrap;
+}
+.layui-tab-item {
+    position: relative;
+}
+.loading-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+//手机端变化
+@media screen and (max-width: 992px) {
+    //  .layui-side {
+    //      width: 100%;
+    //      position: relative;
+    //      .layui-nav-tree {
+    //          display: flex;
+    //      }
+    //      .logo-cont {
+    //          background: #fff;
+    //      }
+    //  }
+    //  .layui-body {
+    //      top: 168px;
+    //      left: 0;
+    //      header {
+    //          position: relative;
+    //      }
+    //  }
+    .layui-side {
+        width: 100%;
+        height: 55px;
+        top: auto;
+        .layui-nav .layui-nav-item {
+            line-height: 55px;
+            padding-top: 10px;
+            .fa {
+                font-size: 14px;
+                margin-bottom: 0;
+            }
+            label {
+                font-weight: 200;
+                font-size: 12px;
+                line-height: 30px;
+            }
+        }
+        .layui-nav-tree {
+            display: flex;
+        }
+        .logo-cont {
+            display: none;
+        }
+    }
+    .layui-body {
+        top: 0;
+        left: 0;
+        header {
+            position: relative;
+            height: 40px;
+        }
+        footer {
+            display: none;
+        }
+        #page_address {
+            display: none;
+        }
+        .comm-body {
+            top: 40px;
+            bottom: 55px;
+        }
+    }
+}
+
+//home页面
+.message-box {
+    padding: 15px 20px;
+    .radius-3;
+    height: 90px;
+    position: relative;
+    color: #fff;
+    box-sizing: border-box;
+    b,
+    label {
+        display: block;
+    }
+    b {
+        font-size: 40px;
+        line-height: 40px;
+        margin-bottom: 3px;
+    }
+    i {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 30px;
+    }
+}
+
+//账号管理
+#user_info_form {
+    margin-top: 15px;
+    border-top: 1px dashed @deep-gray;
+    .layui-form-label {
+        width: 35px;
+    }
+    .layui-input-block {
+        margin-left: 70px;
+    }
+}
+
+#cge_pwd_form {
+    .layui-form-label {
+        width: 80px;
+    }
+}
+
+//管理发件人
+#add_sender_form {
+    width: 550px;
+}
+
+.layui-form-select dl dd.layui-this {
+    background-color: @main-nav-background-color;
+}
