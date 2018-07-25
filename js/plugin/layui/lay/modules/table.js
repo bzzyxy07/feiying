@@ -85,9 +85,9 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 				statusName: "code",
 				statusCode: 0,
 				msgName: "msg",
-				//				dataName: 'Data',
+				dataName: "data",
 				countName: "count"
-			}, a.response), 'Object' == typeof a.page && (a.limit = a.page.limit || a.limit, a.limits = a.page.limits || a.limits, e.page = a.page.curr = a.page.curr || 1, delete a.page.elem), !a.elem[0]) return e;
+			}, a.response), "object" == typeof a.page && (a.limit = a.page.limit || a.limit, a.limits = a.page.limits || a.limits, e.page = a.page.curr = a.page.curr || 1, delete a.page.elem, delete a.page.jump), !a.elem[0]) return e;
 		e.setArea();
 		var l = a.elem,
 			n = l.next("." + y),
@@ -151,7 +151,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 			o = n.request,
 			r = n.response,
 			d = function() {
-				'Object' == typeof n.initSort && a.sort(n.initSort.field, n.initSort.type)
+				"object" == typeof n.initSort && a.sort(n.initSort.field, n.initSort.type)
 			};
 		if(a.startTime = (new Date).getTime(), n.url) {
 			var c = {};
@@ -163,15 +163,12 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 				contentType: n.contentType,
 				data: s,
 				dataType: "json",
-				//				headers: n.headers || {},
 				beforeSend: function(request) {
 					request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
 				},
 				success: function(t) {
-					layer.closeAll("loading");
-					t[r.statusName] != r.statusCode ?
-						(a.renderForm(), a.layMain.html('<div class="' + f + '">' + (t[r.msgName] || "返回的数据状态异常") + "</div>")) :
-						(a.renderData(t, e, t['Object']['Total']), d(), n.time = (new Date).getTime() - a.startTime + " ms"), i && l.close(i), "function" == typeof n.done && n.done(t, e, t['Object']['Total'])
+					var tcopy = t;
+					t[r.statusName] != r.statusCode ? (a.renderForm(), a.layMain.html('<div class="' + f + '">' + (t[r.msgName] || "返回的数据状态异常") + "</div>")) : ((t = t['Object']) && (a.renderData(t, e.Object, t[r.countName]), d(), n.time = (new Date).getTime() - a.startTime + " ms"), i && l.close(i), "function" == typeof n.done && n.done(tcopy, e.Object, t[r.countName]))
 				},
 				error: function(e, t) {
 					a.layMain.html('<div class="' + f + '">数据接口请求异常</div>'), a.renderForm(), i && l.close(i)
@@ -180,7 +177,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 		} else if(n.data && n.data.constructor === Array) {
 			var u = {},
 				h = e * n.limit - n.limit;
-			u[r.dataName] = n.data.concat().splice(h, n.limit), u['Object']['Total'] = n.data.length, a.renderData(u, e, n.data.length), d(), "function" == typeof n.done && n.done(u, e, u['Object']['Total'])
+			u[r.dataName] = n.data.concat().splice(h, n.limit), u[r.countName] = n.data.length, a.renderData(u, e, n.data.length), d(), "function" == typeof n.done && n.done(u, e, u[r.countName])
 		}
 	}, M.prototype.eachCols = function(e) {
 		var i = t.extend(!0, [], this.config.cols),
@@ -206,7 +203,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 	}, M.prototype.renderData = function(e, n, o, r) {
 		var c = this,
 			s = c.config,
-			u = e['Object']['Data'] || [],
+			u = e[s.response.dataName] || [],
 			y = [],
 			p = [],
 			m = [],
@@ -245,7 +242,6 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 					c.scrollPatch()
 				}, 50), c.haveInit = !0, void l.close(c.tipsIndex))
 			};
-			delete s.page.count;
 		return c.key = s.id || s.index, d.cache[c.key] = u, c.layPage[0 === u.length && 1 == n ? "addClass" : "removeClass"](h), r ? v() : 0 === u.length ? (c.renderForm(), c.layFixed.remove(), c.layMain.find("tbody").html(""), c.layMain.find("." + f).remove(), c.layMain.append('<div class="' + f + '">' + s.text.none + "</div>")) : (v(), void(s.page && (s.page = t.extend({
 			elem: "layui-table-page" + s.index,
 			count: o,
@@ -258,7 +254,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 			jump: function(e, t) {
 				t || (c.page = e.curr, s.limit = e.limit, c.pullData(e.curr, c.loading()))
 			}
-		}, s.page), a.render(s.page))))
+		}, s.page), s.page.count = o, a.render(s.page))))
 	}, M.prototype.getColElem = function(e, t) {
 		var i = this,
 			a = i.config;
@@ -287,7 +283,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 		c.sortKey = {
 			field: n,
 			sort: i
-		}, "asc" === i ? r = layui.sort(y, n) : "desc" === i ? r = layui.sort(y, n, !0) : (r = layui.sort(y, d.config.indexName), delete c.sortKey), u[h.response['Object']['Data']] = r, c.renderData(u, c.page, c.count, !0), l && layui.event.call(e, s, "sort(" + f + ")", {
+		}, "asc" === i ? r = layui.sort(y, n) : "desc" === i ? r = layui.sort(y, n, !0) : (r = layui.sort(y, d.config.indexName), delete c.sortKey), u[h.response.dataName] = r, c.renderData(u, c.page, c.count, !0), l && layui.event.call(e, s, "sort(" + f + ")", {
 			field: n,
 			type: i
 		})

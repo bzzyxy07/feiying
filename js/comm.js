@@ -177,7 +177,9 @@ layui.use(['layer', 'form'], function() {
 						response: {
 							statusName: 'Success',
 							statusCode: true,
-							msgName: 'msg'
+							msgName: 'msg',
+							dataName: 'Data',
+							countName: 'Total'
 						},
 						where: comm.getFormData($(filterForm)),
 						done: function(data) {
@@ -190,7 +192,6 @@ layui.use(['layer', 'form'], function() {
 								layer.msg("系统异常：" + data.Errors[0]);
 								return false;
 							}
-							console.info(data)
 							//param.success && param.success(data);
 						}
 

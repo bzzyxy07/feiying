@@ -56,7 +56,7 @@
 						</ul>
 					</form>
 					<div class="data-table-container">
-						<table id="package_info_table"></table>
+						<table id="package_info_table" lay-filter="package-info-table"></table>
 					</div>
 				</div>
 				<div class="layui-tab-item">
@@ -134,8 +134,9 @@
 		</div>
 		<script src="js/comm-inner-page.js"></script>
 		<script>
-			layui.use(['form', 'element'], function() {
+			layui.use(['form', 'element', 'table'], function() {
 				var form = layui.form;
+				var table = layui.table;
 				comm.bindFilterForm({
 					formId: "package_info_search_form",
 					renderTable: {
@@ -146,9 +147,11 @@
 							}, {
 								field: 'trackingnumber',
 								title: '包裹追踪号',
+								sort: true,
 							}, {
 								field: 'depotname',
 								title: '仓库',
+								sort: true,
 							}, {
 								field: 'enterdate',
 								title: '入库日期',
@@ -157,6 +160,7 @@
 								field: 'goodsweight',
 								title: '重量(磅)',
 								width: 120,
+								sort: true,
 							}, {
 								field: 'depotname',
 								title: '物品XXXXX',
@@ -180,8 +184,8 @@
 									sel += '<option value="' + v.id + '">' + v.name + '</option>';
 								});
 
-								$('#package_preview_form select[initial-name="' + key + '"]','#package_info_search_form select[initial-name="' + key + '"]').html(sel);
-								
+								$('#package_preview_form select[initial-name="' + key + '"]', '#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+
 								form.render('select');
 								//添加行
 								$("#add_detail_tr_btn").unbind("click").on("click", function() {
@@ -197,7 +201,7 @@
 				$("#detail_body").on("click", ".del-detail-tr", function() {
 					$(this).parents("tr").remove();
 				});
-                //提交包裹预告
+				//提交包裹预告
 				form.on('submit(package-preview-form)', function(data) {
 					var packageData = {
 						"DepotID": $('#package_preview_form [name="DepotID"]').val(),
@@ -205,7 +209,7 @@
 						"trackingnumber": $('#package_preview_form [name="trackingnumber"]').val(),
 						"details": []
 					}
-					
+
 					$(".detail-tr").each(function() {
 						var sepDetail = {}
 						$(this).find('input:not(.layui-unselect), select').each(function() {
@@ -229,11 +233,35 @@
 					});
 					return false;
 				});
+
+				table.on('tool(package-info-table)', function(obj) {
+					var data = obj.data;
+					var layEvent = obj.event;
+					var tr = obj.tr;
+
+					if(layEvent === 'detail') { //查看详情
+						
+					} else if(layEvent === 'delete') { //删除包裹信息
+						layer.confirm('是否确认删除该包裹信息？', function(index) {
+							obj.del();
+							layer.alert("尚未开发，敬请期待");
+						});
+					} else if(layEvent === 'edit') { //编辑包裹信息
+						
+					} else if(layEvent === 'reject') { //包裹退货
+						layer.alert("尚未开发，敬请期待");
+					}
+				});
 			});
 		</script>
 		<script type="text/html" id="operation">
+			{{# if(d.isenter == true){ }}
 			<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
 			<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
+			{{# } else{ }}
+			<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+			<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>
+			{{# } }}
 		</script>
 	</body>
 
