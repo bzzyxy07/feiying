@@ -134,8 +134,9 @@
 		</div>
 		<script src="js/comm-inner-page.js"></script>
 		<script>
-			layui.use(['form', 'element', 'table'], function() {
+			layui.use(['layer','form', 'element', 'table'], function() {
 				var form = layui.form;
+				var layer = layui.layer;
 				var table = layui.table;
 				comm.bindFilterForm({
 					formId: "package_info_search_form",
@@ -184,7 +185,7 @@
 									sel += '<option value="' + v.id + '">' + v.name + '</option>';
 								});
 
-								$('#package_preview_form select[initial-name="' + key + '"]', '#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+								$('#package_preview_form select[initial-name="' + key + '"], #package_info_search_form select[initial-name="' + key + '"]').html(sel);
 
 								form.render('select');
 								//添加行
@@ -240,14 +241,22 @@
 					var tr = obj.tr;
 
 					if(layEvent === 'detail') { //查看详情
-						
+
 					} else if(layEvent === 'delete') { //删除包裹信息
-						layer.confirm('是否确认删除该包裹信息？', function(index) {
+						layer.confirm('是否确认删除该包裹信息1？', function(index) {
 							obj.del();
 							layer.alert("尚未开发，敬请期待");
 						});
 					} else if(layEvent === 'edit') { //编辑包裹信息
-						
+						layer.open({
+							type: 2,
+							title: '包裹信息编辑',
+							shadeClose: true,
+							maxmin: true,
+							area: ['80%', '600px'],
+							content: './package-info-edit.html'
+						});
+
 					} else if(layEvent === 'reject') { //包裹退货
 						layer.alert("尚未开发，敬请期待");
 					}
