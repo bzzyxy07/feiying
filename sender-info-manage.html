@@ -18,19 +18,19 @@
 						<ul>
 							<li>
 								<span>姓名</span>
-								<input class="layui-input form-input" placeholder="请输入姓名" name="">
+								<input class="layui-input form-input" placeholder="请输入姓名" name="delivername">
 							</li>
 							<li>
 								<span>联系电话</span>
-								<input class="layui-input form-input" placeholder="请输入联系电话" name="">
+								<input class="layui-input form-input" placeholder="请输入联系电话" name="mobilephone">
 							</li>
 							<li>
 								<span>身份证号码</span>
-								<input class="layui-input form-input" placeholder="请输入身份证号码" name="">
+								<input class="layui-input form-input" placeholder="请输入身份证号码" name="idcardnumber">
 							</li>
 							<li>
 								<span>地址</span>
-								<input class="layui-input form-input" placeholder="请输入地址" name="">
+								<input class="layui-input form-input" placeholder="请输入地址" name="deliveraddress">
 							</li>
 							<li>
 								<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
@@ -39,7 +39,7 @@
 						</ul>
 					</form>
 					<div class="data-table-container">
-						<table id="sender_info_table"></table>
+						<table id="sender_info_table" lay-filter="sender_info_table"></table>
 					</div>
 				</div>
 				<div class="layui-tab-item">
@@ -86,7 +86,8 @@
 		</div>
         <script src="js/comm-inner-page.js"></script>
          <script>
-			layui.use(['form', 'element'], function() {
+			layui.use(['form', 'element','table'], function() {
+				var table = layui.table;
 				comm.bindFilterForm({
 					formId: "sender_info_search_form",
 					renderTable: {
@@ -95,16 +96,16 @@
 							[{
 								checkbox: true
 							}, {
-								field: 'trackingnumber',
+								field: 'delivername',
 								title: '姓名',
 							}, {
-								field: 'enterdate',
+								field: 'mobilephone',
 								title: '电话',
 							}, {
-								field: 'goodsweight',
+								field: 'deliveraddress',
 								title: '地址',
 							}, {
-								field: 'depotname',
+								field: 'zipcode',
 								title: '邮编',
 							}, {
 								field: '',
@@ -112,6 +113,33 @@
 								toolbar: '#operation'
 							}]
 						]
+					}
+				});
+				
+				table.on('tool(sender_info_table)', function(obj) {
+					var data = obj.data;
+					var layEvent = obj.event;
+					var tr = obj.tr;
+
+					if(layEvent === 'detail') { //查看详情
+
+					} else if(layEvent === 'delete') { //删除包裹信息
+						layer.confirm('是否确认删除该包裹信息1？', function(index) {
+							obj.del();
+							layer.alert("尚未开发，敬请期待");
+						});
+					} else if(layEvent === 'edit') { //编辑包裹信息
+						layer.open({
+							type: 2,
+							title: '包裹信息编辑',
+							shadeClose: true,
+							maxmin: true,
+							area: ['80%', '600px'],
+						//	content: './package-info-edit.html?id='+data.id
+						});
+
+					} else if(layEvent === 'reject') { //包裹退货
+						layer.alert("尚未开发，敬请期待");
 					}
 				});
 
