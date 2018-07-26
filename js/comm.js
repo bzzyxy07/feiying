@@ -99,6 +99,22 @@ var comm = {
 	initTableByData: function() {
 
 	},
+	fillContainerByUrl: function(param) {
+		var $container = param.cont;
+		comm.getDataByCondition({
+			ajax: {
+				url: $container.attr("fill-url"),
+				type: $container.attr("fill-type") || "get",
+				data: $container.attr("fill-data") || {},
+				success: function(data) {
+					$container.hasClass("fill-page-container") && comm.fillPageByData(data, $container);
+					$container.hasClass("fill-form-container") && comm.fillFormByData(data, $container);
+					param.cb && param.cb(data);
+
+				}
+			}
+		});
+	},
 	/**
 	 * 根据数据填充页面
 	 * @param {Object} data  数据
@@ -241,6 +257,7 @@ var comm = {
 						success: function(data) {
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
 							$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+
 						}
 					}
 				});

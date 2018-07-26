@@ -57,9 +57,15 @@ layui.use('form', function() {
 					success: function(data) {
 						$this.hasClass("fill-page-container") && comm.fillPageByData(data, $this);
 						$this.hasClass("fill-form-container") && comm.fillFormByData(data, $this);
+						$this.attr("fill-cb") && eval($this.attr("fill-cb"));
+//						if (fillCallback) {
+//							fillContainer(data)
+//						}
+//						fillCallback && fillCallback(data);
 					}
 				}
 			});
 		});
 	}
 });
+

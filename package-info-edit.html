@@ -16,7 +16,7 @@
 	<body>
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show">
-				<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-type="get" fill-url="/api/OrderPackage/UnInDetails?modelId=f8e281e1-bd4f-40d6-a0f7-ed67a07f701d">
+				<form class="layui-form ignore-comm-submit fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-type="get">
 					<div class="layui-form-item">
 						<li class="inline-nowrap">
 							<label class="layui-form-label">送达仓库</label>
@@ -99,7 +99,6 @@
 			layui.use(['form', 'element', 'table'], function() {
 				var form = layui.form;
 				var table = layui.table;
-
 				//初始化表格选项数据
 				comm.getDataByCondition({
 					ajax: {
@@ -112,32 +111,39 @@
 									sel += '<option value="' + v.id + '">' + v.name + '</option>';
 								});
 								var $this = $('#package_edit_form select[initial-name="' + key + '"]');
-								$this.html(sel);
-								$this.data("data") && $this.val($this.data("data"));
-
-								form.render('select');
-
-								var cloneLine = $(".detail-tr").first().clone();
-								//添加行
-								$("#add_detail_tr_btn").unbind("click").on("click", function() {
-									$("#detail_body").append(cloneLine);
-									$("#detail_body .detail-tr").last().find("select, input").val("");
-									form.render('select');
-								});
-                                debugger;
-								var detaillist = data.detaillist;
-								detaillist.map(function(v, index, arr) {
-									if(index > 0) {
-										$("#detail_body").append(cloneLine);
-										$("#detail_body .detail-tr").last().find("select, input").val("");
-										for(var key in v) {
-											$("#detail_body .detail-tr").last().find("*[name='" + key + "']").val(v[key]);
-										}
-										form.render('select');
-									}
-								});
+								$this.html(sel).data("data") && $this.val($this.data("data"));
 							}
+							form.render('select');
+							
+							//添加行
+							$("#add_detail_tr_btn").on("click", function() {
+								$("#detail_body").append($(".detail-tr").first().clone());
+								$("#detail_body .detail-tr").last().find("select,input").val("");
+								form.render('select');
+							});
 						}
+					}
+				});
+				$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParam("id"));
+				comm.fillContainerByUrl({
+					cont: $("#package_edit_form"),
+					cb: function(data) {
+						var detaillist = data.detaillist;
+						var len = detaillist.length - $("#detail_body .detail-tr").length;
+						var cloneLine = $(".detail-tr").first().clone();
+						detaillist.map(function(v, index, arr) {
+							for(var i = 0; i < len; i++) {
+								$("#detail_body").append(cloneLine);
+								$("#detail_body .detail-tr:last-child select,input").val("");
+							}
+
+							for(var key in v) {
+								var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+								$cont.val(v[key]).data("data", v[key]);
+							}
+							form.render('select');
+
+						});
 					}
 				});
 
