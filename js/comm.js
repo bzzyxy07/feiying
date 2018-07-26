@@ -70,7 +70,7 @@ layui.use(['layer', 'form'], function() {
 
 			ajaxData.url = path + ajaxData.url;
 			ajaxData.success = function(data) {
-				$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
+				condition.loading && $(condition.loading).parents(".layui-tab-item").children(".loading-container").remove();
 				if(!data.Success) {
 					layer.msg("系统异常：" + data.Errors[0]);
 					return false;
@@ -86,7 +86,7 @@ layui.use(['layer', 'form'], function() {
 				return data.Object;
 			};
 			ajaxData.error = function(data) {
-				$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
+				condition.loading && $(condition.loading).parents(".layui-tab-item").children(".loading-container").remove();
 				if(data.status == 401) {
 					comm.systemTimeout();
 					return false;
