@@ -16,7 +16,7 @@
 	<body>
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show">
-				<form id="package_edit_form" lay-filter="package-edit-form" class="layui-form ignore-comm-submit">
+				<form id="package_edit_form" lay-filter="package-edit-form" class="layui-form ignore-comm-submit fill-container fill-form-container" fill-url="/api/OrderPackage/UnInDetails" fill-type="get" >
 					<div class="layui-form-item">
 						<li class="inline-nowrap">
 							<label class="layui-form-label">送达仓库</label>
@@ -94,8 +94,7 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/plugin/layui/layui.js"></script>
 		<script type="text/javascript" src="js/comm.js"></script>
-		<script src="./js/less.min.js"></script>
-		<script src="js/comm-inner-page.js"></script>
+		<script src="js/less.min.js"></script>
 		<script>
 			layui.use(['form', 'element', 'table'], function() {
 				var form = layui.form;
@@ -113,7 +112,7 @@
 									sel += '<option value="' + v.id + '">' + v.name + '</option>';
 								});
 
-								$('#package_edit_form select[initial-name="' + key + '"]', '#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+								$('#package_edit_form select[initial-name="' + key + '"]').html(sel);
 
 								form.render('select');
 								//添加行
@@ -126,6 +125,8 @@
 						}
 					}
 				});
+				
+				
 				//删除行
 				$("#detail_body").on("click", ".del-detail-tr", function() {
 					$(this).parents("tr").remove();
@@ -153,7 +154,7 @@
 							type: "post",
 							data: packageData,
 							success: function(data) {
-								layer.msg("提交成功，可继续上传包裹预告！");
+								layer.msg("修改成功！");
 								document.getElementById("package_edit_form").reset();
 								form.render('select');
 								$("#detail_body tr:first").siblings("tr").remove();
@@ -164,6 +165,7 @@
 				});
 			});
 		</script>
+		<script src="js/comm-inner-page.js"></script>
 	</body>
 
 </html>

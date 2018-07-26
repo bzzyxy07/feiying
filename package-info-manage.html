@@ -163,8 +163,8 @@
 								width: 120,
 								sort: true,
 							}, {
-								field: 'depotname',
-								title: '物品XXXXX',
+								field: 'packagedetails',
+								title: '物品',
 							}, {
 								field: '',
 								title: '操作',
@@ -239,6 +239,8 @@
 					var data = obj.data;
 					var layEvent = obj.event;
 					var tr = obj.tr;
+					console.info("--------------------");
+					console.info(data);
 
 					if(layEvent === 'detail') { //查看详情
 
@@ -254,7 +256,7 @@
 							shadeClose: true,
 							maxmin: true,
 							area: ['80%', '600px'],
-							content: './package-info-edit.html'
+							content: './package-info-edit.html?id='+data.id
 						});
 
 					} else if(layEvent === 'reject') { //包裹退货
@@ -269,7 +271,8 @@
 			<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
 			{{# } else{ }}
 			<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-			<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>
+			<a class="layui-btn layui-btn-disabled layui-btn-sm">删除</a>
+			<!--<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>-->
 			{{# } }}
 		</script>
 	</body>
