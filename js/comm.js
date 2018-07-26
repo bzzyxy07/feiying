@@ -55,8 +55,7 @@ layui.use(['layer', 'form'], function() {
 		},
 		getDataByCondition: function(condition) {
 			if(condition.loading) {
-				var uuid = comm.uuid();
-				$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container" id="loading_' + uuid + '"><img src="./img/loading.gif" alt="加载中..." width="38.99" height="38.99"></div>');
+				$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 			}
 			var ajaxData = $.extend({
 				url: '',
@@ -71,7 +70,7 @@ layui.use(['layer', 'form'], function() {
 
 			ajaxData.url = path + ajaxData.url;
 			ajaxData.success = function(data) {
-				uuid && $("#loading_" + uuid).remove();
+				$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
 				if(!data.Success) {
 					layer.msg("系统异常：" + data.Errors[0]);
 					return false;
@@ -87,7 +86,7 @@ layui.use(['layer', 'form'], function() {
 				return data.Object;
 			};
 			ajaxData.error = function(data) {
-				uuid && $("#loading_" + uuid).remove();
+				$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
 				if(data.status == 401) {
 					comm.systemTimeout();
 					return false;
@@ -142,7 +141,7 @@ layui.use(['layer', 'form'], function() {
 		 */
 		bindFilterForm: function(param) {
 			var filterForm = document.getElementById(param.formId);
-
+			$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 			$("#" + param.formId + " .form-condition").each(function() {
 				$(filterForm).append('<input type="hidden" name="' + $(this).attr("name") + '">');
 			});
@@ -159,8 +158,7 @@ layui.use(['layer', 'form'], function() {
 				var $this = $(this);
 
 				if(param.renderTable) {
-					var uuid = comm.uuid();
-					$(filterForm).parents(".layui-tab-item").append('<div class="loading-container" id="loading_' + uuid + '"><img src="./img/loading.gif" alt="加载中..." width="38.99" height="38.99"></div>');
+
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
 						method: filterForm.getAttribute("my-type") || "get",
@@ -183,7 +181,7 @@ layui.use(['layer', 'form'], function() {
 						},
 						where: comm.getFormData($(filterForm)),
 						done: function(data) {
-							$("#loading_" + uuid).remove();
+							$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
 							if(data.status == 401) {
 								comm.systemTimeout();
 								return false;
@@ -192,7 +190,6 @@ layui.use(['layer', 'form'], function() {
 								layer.msg("系统异常：" + data.Errors[0]);
 								return false;
 							}
-							//param.success && param.success(data);
 						}
 
 					}, param.renderTable)
@@ -245,6 +242,16 @@ layui.use(['layer', 'form'], function() {
 				return(((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 			}
 			return(S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-		}
+		},
+		/**
+		 * 获取路径中的参数
+		 * @param {Object} 获取参数的名称
+		 */
+		getUrlParam: function(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return unescape(r[2]);
+			return null;
+		},
 	}
 });

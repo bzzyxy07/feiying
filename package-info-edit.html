@@ -16,7 +16,7 @@
 	<body>
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show">
-				<form id="package_edit_form" lay-filter="package-edit-form" class="layui-form ignore-comm-submit fill-container fill-form-container" fill-url="/api/OrderPackage/UnInDetails" fill-type="get" >
+				<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-url="/api/OrderPackage/UnInDetails?modelId=3A4E6959-42F3-4A4D-BF0C-4312A2E944B2" fill-type="get">
 					<div class="layui-form-item">
 						<li class="inline-nowrap">
 							<label class="layui-form-label">送达仓库</label>
@@ -125,13 +125,12 @@
 						}
 					}
 				});
-				
-				
+
 				//删除行
 				$("#detail_body").on("click", ".del-detail-tr", function() {
 					$(this).parents("tr").remove();
 				});
-				//提交包裹预告
+				//提交编辑的包裹信息
 				form.on('submit(package-edit-form)', function(data) {
 					var packageData = {
 						"DepotID": $('#package_edit_form [name="DepotID"]').val(),
@@ -150,14 +149,16 @@
 					comm.getDataByCondition({
 						loading: true,
 						ajax: {
-							url: "/api/OrderPackage/PostMy",
-							type: "post",
+							url: "/api/OrderPackage/Put",
+							type: "put",
 							data: packageData,
 							success: function(data) {
 								layer.msg("修改成功！");
-								document.getElementById("package_edit_form").reset();
-								form.render('select');
-								$("#detail_body tr:first").siblings("tr").remove();
+								$(".filter-form .filter-btn", parent.document).click();
+								var index = parent.layer.getFrameIndex(window.name);
+								setTimeout(function() {
+									parent.layer.close(index)
+								}, 1000);
 							}
 						}
 					});

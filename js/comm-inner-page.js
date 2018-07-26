@@ -48,7 +48,7 @@ layui.use('form', function() {
 	function fillContainer() {
 		$(".fill-container[fill-url]").each(function() {
 			var $this = $(this);
-			comm.getDataByCondition({
+			comm && comm.getDataByCondition({
 				ajax: {
 					url: $this.attr("fill-url"),
 					type: $this.attr("fill-type") || "get",
