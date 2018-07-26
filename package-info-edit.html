@@ -34,7 +34,7 @@
 						<li class="inline-nowrap">
 							<label class="layui-form-label">包裹追踪号</label>
 							<div class="layui-input-inline">
-								<input type="text" name="trackingnumber" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required">
+								<input type="text" name="trackingnumber" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
 							</div>
 						</li>
 					</div>
@@ -99,8 +99,6 @@
 			layui.use(['form', 'element', 'table'], function() {
 				var form = layui.form;
 				var table = layui.table;
-                
-				//$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 				//初始化表格选项数据
 				comm.getDataByCondition({
@@ -113,15 +111,30 @@
 								sepData.map(function(v) {
 									sel += '<option value="' + v.id + '">' + v.name + '</option>';
 								});
-
-								$('#package_edit_form select[initial-name="' + key + '"]').html(sel);
+								var $this = $('#package_edit_form select[initial-name="' + key + '"]');
+								$this.html(sel);
+								$this.data("data") && $this.val($this.data("data"));
 
 								form.render('select');
+
+								var cloneLine = $(".detail-tr").first().clone();
 								//添加行
 								$("#add_detail_tr_btn").unbind("click").on("click", function() {
-									$("#detail_body").append($(".detail-tr").first().clone());
+									$("#detail_body").append(cloneLine);
 									$("#detail_body .detail-tr").last().find("select, input").val("");
 									form.render('select');
+								});
+                                debugger;
+								var detaillist = data.detaillist;
+								detaillist.map(function(v, index, arr) {
+									if(index > 0) {
+										$("#detail_body").append(cloneLine);
+										$("#detail_body .detail-tr").last().find("select, input").val("");
+										for(var key in v) {
+											$("#detail_body .detail-tr").last().find("*[name='" + key + "']").val(v[key]);
+										}
+										form.render('select');
+									}
 								});
 							}
 						}
