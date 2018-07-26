@@ -24,7 +24,6 @@ layui.use('form', function() {
 							sel += '<option value="' + data["Data"][i][dataValue] + '">' + data["Data"][i][dataText] + '</option>';
 						}
 						$this.html(sel);
-						console.info($this.data("data"))
 						$this.data("data") && $this.val($this.data("data"));
 
 						if(selLength - 1 === index) {
@@ -56,14 +55,17 @@ layui.use('form', function() {
 					type: $this.attr("fill-type") || "get",
 					data: $this.attr("fill-data") || {},
 					success: function(data) {
-						console.info("===========")
-						console.info(data)
-						console.info(data.Object)
 						$this.hasClass("fill-page-container") && comm.fillPageByData(data, $this);
 						$this.hasClass("fill-form-container") && comm.fillFormByData(data, $this);
+						$this.attr("fill-cb") && eval($this.attr("fill-cb"));
+//						if (fillCallback) {
+//							fillContainer(data)
+//						}
+//						fillCallback && fillCallback(data);
 					}
 				}
 			});
 		});
 	}
 });
+
