@@ -7,26 +7,131 @@
 	</head>
 
 	<body>
-		<div class="layui-tab layui-tab-card" lay-filter="package-info-card">
+		<div class="layui-tab layui-tab-card" lay-filter="express-info-card">
 			<ul class="layui-tab-title">
-				<li class="layui-this">网站设置<span class="layui-badge">6</span></li>
-				<li>用户管理</li>
-				<li>权限分配</li>
-				<li>商品管理</li>
-				<li>订单管理</li>
+				<li class="layui-this">所有运单</li>
+				<li>转运下单</li>
+				<li>在线下单</li>
 			</ul>
 			<div class="layui-tab-content white-back">
-				<div class="layui-tab-item layui-show">内容1</div>
+				<div class="layui-tab-item layui-show">
+					<form class="layui-form filter-form" url="/api/OrderTransportOrder/OrderList" id="express_info_search_form">
+						<ul>
+							<li>
+								<span>来源</span>
+								<ul class="form-condition" name="isenter">
+									<li class="active" data-value="">全部</li>
+									<li data-value="true">转运</li>
+									<li data-value="false">快递</li>
+								</ul>
+							</li>
+							<li>
+								<span>送达仓库</span>
+								<select name="depotid" initial-name="depotlist"></select>
+							</li>
+							<li>
+								<span>线路名称</span>
+								<select name="routeid" initial-name=""></select>
+							</li>
+
+							<li>
+								<span>运单状态</span>
+								<ul class="form-condition" name="">
+									<li class="active" data-value="">全部</li>
+									<li data-value="true">待处理</li>
+									<li data-value="false">待付款</li>
+									<li data-value="false">待发货</li>
+									<li data-value="false">已发货</li>
+								</ul>
+							</li>
+							<li>
+								<span>运单号</span>
+								<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
+							</li>
+							<li>
+								<span>发货批次</span>
+								<select name="routeid" initial-name=""></select>
+							</li>
+							<li>
+								<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+							</li>
+						</ul>
+					</form>
+					<div class="data-table-container">
+						<table id="express_info_table" lay-filter="express-info-table"></table>
+					</div>
+				</div>
 				<div class="layui-tab-item">内容2</div>
 				<div class="layui-tab-item">内容3</div>
-				<div class="layui-tab-item">内容4</div>
-				<div class="layui-tab-item">内容5</div>
 			</div>
 		</div>
+		<script src="js/comm-inner-page.js"></script>
 		<script>
-			layui.use(['form','element'], function() {
-				
+			layui.use(['layer', 'form', 'element', 'table'], function() {
+				var form = layui.form;
+				var layer = layui.layer;
+				var table = layui.table;
+				comm.bindFilterForm({
+					formId: "express_info_search_form",
+					renderTable: {
+						elem: '#express_info_table',
+						cols: [
+							[{
+								checkbox: true
+							}, {
+								field: 'trackingnumber',
+								title: '来源',
+								sort: true,
+							}, {
+								field: 'depotname',
+								title: '运单号',
+								sort: true,
+							}, {
+								field: 'route_name',
+								title: '线路',
+								sort: true,
+							},{
+								field: 'depot_name',
+								title: '仓库',
+								sort: true,
+							}, {
+								field: 'weight',
+								title: '重量(磅)',
+								width: 120,
+								sort: true,
+							}, {
+								field: 'total_price',
+								title: '总计（$）',
+							}, {
+								field: 'deliver_name',
+								title: '发件人',
+								sort: true,
+							}, {
+								field: 'receiver_name',
+								title: '收件人',
+								sort: true,
+							}, {
+								field: 'expressdetails',
+								title: '发货批次',
+							}, {
+								field: 'transport_status',
+								title: '运输状态',
+								sort: true,
+							}, {
+								field: '',
+								title: '操作',
+								toolbar: '#operation'
+							}]
+						]
+					}
+				});
 			});
+		</script>
+		<script type="text/html" id="operation">
+			<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
+			<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">追踪</a>
+			<a class="layui-btn layui-btn-sm" lay-event="edit">打印</a>
 		</script>
 	</body>
 
