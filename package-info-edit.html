@@ -16,25 +16,25 @@
 	<body>
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show">
-				<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-url="/api/OrderPackage/UnInDetails?modelId=3A4E6959-42F3-4A4D-BF0C-4312A2E944B2" fill-type="get">
+				<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-type="get" fill-url="/api/OrderPackage/UnInDetails?modelId=f8e281e1-bd4f-40d6-a0f7-ed67a07f701d">
 					<div class="layui-form-item">
 						<li class="inline-nowrap">
 							<label class="layui-form-label">送达仓库</label>
 							<div class="layui-input-inline">
-								<select name="DepotID" lay-verify="required" initial-name="depotlist"></select>
+								<select name="depotid" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
 							</div>
 						</li>
 						<li class="inline-nowrap">
 							<label class="layui-form-label">送达方式</label>
 							<div class="layui-input-inline">
-								<select name="trackingname" lay-verify="required" initial-name="waylist"></select>
+								<select name="trackingname" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
 
 							</div>
 						</li>
 						<li class="inline-nowrap">
 							<label class="layui-form-label">包裹追踪号</label>
 							<div class="layui-input-inline">
-								<input type="text" name="trackingnumber" placeholder="请输入包裹追踪号" autocomplete="off" class="layui-input" lay-verify="required">
+								<input type="text" name="trackingnumber" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required">
 							</div>
 						</li>
 					</div>
@@ -99,6 +99,8 @@
 			layui.use(['form', 'element', 'table'], function() {
 				var form = layui.form;
 				var table = layui.table;
+                
+				//$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 				//初始化表格选项数据
 				comm.getDataByCondition({

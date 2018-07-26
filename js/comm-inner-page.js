@@ -23,7 +23,9 @@ layui.use('form', function() {
 						for(var i = 0, len = data.Data.length; i < len; i++) {
 							sel += '<option value="' + data["Data"][i][dataValue] + '">' + data["Data"][i][dataText] + '</option>';
 						}
-						$("select[url]").html(sel);
+						$this.html(sel);
+						console.info($this.data("data"))
+						$this.data("data") && $this.val($this.data("data"));
 
 						if(selLength - 1 === index) {
 							form.render('select');
@@ -43,19 +45,22 @@ layui.use('form', function() {
 		!filter && (filter = $(this).attr("id") || "form" + comm.uuid()) && $(this).attr("lay-filter", filter);
 		comm.submitForm(filter);
 	});
-	(selLength === 0) && fillContainer();
+	(selLength === 0) && (fillLength !== 0) && fillContainer();
 	//表单回填
 	function fillContainer() {
 		$(".fill-container[fill-url]").each(function() {
 			var $this = $(this);
-			comm && comm.getDataByCondition({
+			comm.getDataByCondition({
 				ajax: {
 					url: $this.attr("fill-url"),
 					type: $this.attr("fill-type") || "get",
 					data: $this.attr("fill-data") || {},
 					success: function(data) {
-						$this.hasClass("fill-page-container") && nemo.fillPage(".fill-page-container[url='" + $this.attr("fill-url") + "']", data.Obj);
-						$this.hasClass("fill-form-container") && nemo.fillForm(".fill-form-container[url='" + $this.attr("fill-url") + "']", data.Obj);
+						console.info("===========")
+						console.info(data)
+						console.info(data.Object)
+						$this.hasClass("fill-page-container") && comm.fillPageByData(data, $this);
+						$this.hasClass("fill-form-container") && comm.fillFormByData(data, $this);
 					}
 				}
 			});
