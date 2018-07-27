@@ -78,15 +78,19 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/plugin/layui/layui.js"></script>
 	<script type="text/javascript" src="js/comm.js"></script>
-	<script type="text/javascript" src="js/home.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
 	<script>
 		less = {
 			env: 'development'
 		};
 	</script>
 	<script src="./js/less.min.js"></script>
-	<!--<script>
-		less.watch();
-	</script>-->
+	<script>
+		window.onload = function() {
+			document.getElementById("exit_system_btn").onclick = function() {
+				comm.exitSystem();
+			};
+		};
+	</script>
 
 </html>
