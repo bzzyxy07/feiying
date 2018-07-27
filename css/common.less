@@ -6,6 +6,7 @@
 @shallow-gray1: #f1f1f1;
 @deep-gray: #ddd;
 @active-blue: #1e9fff;
+@shallow-blue: #f7fdff;
 a {
     cursor: pointer;
 }
@@ -38,6 +39,10 @@ a {
     padding: 0 !important;
 }
 
+.margin-0 {
+    margin: 0 !important;
+}
+
 .radius-3 {
     border-radius: 3px;
 }
@@ -61,6 +66,11 @@ a {
 .float-right {
     display: block;
     float: right;
+}
+
+.table-inner-table {
+    background: @shallow-blue;
+    border: none;
 }
 
 .border-box {
@@ -190,6 +200,10 @@ a {
     color: #01AAED;
 }
 
+.layui-table-cell {
+    padding: 0 8px;
+}
+
 .news-list {
     margin-left: 20px;
     li {
@@ -197,12 +211,19 @@ a {
         line-height: 28px;
     }
 }
+
 .layui-table-header .layui-table,
 .layui-table-body .layui-table {
     width: 100%;
 }
-.layui-table .padd-0 .layui-input {
-    border-color: #fff;
+
+.layui-table {
+    .padd-0 .layui-input {
+        border-color: #fff;
+    }
+    th {
+        background: #f2f2f2;
+    }
 }
 
 .filter-form {
@@ -261,9 +282,11 @@ a {
     display: inline-block;
     white-space: nowrap;
 }
+
 .layui-tab-item {
     position: relative;
 }
+
 .loading-container {
     position: absolute;
     top: 0;
@@ -274,13 +297,16 @@ a {
     align-items: center;
     justify-content: center;
 }
+
 .data-table-container {
     min-height: 200px;
 }
+
 .layui-table-cell {
     height: 30px;
     line-height: 30px;
 }
+
 //手机端变化
 @media screen and (max-width: 992px) {
     //  .layui-side {
