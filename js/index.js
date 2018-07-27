@@ -6,8 +6,4 @@
 		$("#page_address").html($(this).html());
 	});
 	document.querySelector("#left_menu .layui-nav-item").click();
-	
-	document.getElementById("exit_system_btn").onclick = function() {
-		nemo.exitSystem();
-	};
 }();

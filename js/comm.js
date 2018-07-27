@@ -1,61 +1,12 @@
-var path = "http://119.28.23.40:8081",
-	modelId,
-	userInfo;
-layui.use(['layer', 'form']);
-var layer = layui.layer;
-var form = layui.form;
+var path = "http://119.28.23.40:8081";
 var comm = {
-	/*退出系统 */
-	exitSystem: function() {
-		$.ajax({
-			url: "./logout",
-			success: function() {
-				sessionStorage.clear();
-				window.location.href = "./login.html";
-			},
-			error: function() {
-				layui.use('layer', function() {
-					var layer = layui.layer;
-					layer.msg("网络异常，无法正常退出！")
-				});
-			}
-		});
-	},
-	/*系统超时*/
-	systemTimeout: function() {
-		var msg = arguments[0] || "系统超时或非法访问！";
-		layui.use('layer', function() {
-			var layer = layui.layer;
-			layer.alert(msg + "系统将在<span id='interval_time'>5</span>秒后自动退出", {
-				skin: 'layui-layer-blue',
-				icon: arguments[1] || 2,
-				btn: ['立即退出'],
-				closeBtn: 0
-			}, function() {
-				sessionStorage.clear();
-				window.location.href = "./login.html";
-			});
-
-			var i = 5;
-			var interval = setInterval(function() {
-				i--;
-				$("#interval_time").text(i);
-				if(i === 0) {
-					clearInterval(interval);
-					sessionStorage.clear();
-					window.location.href = "./login.html";
-				}
-			}, 1000);
-		});
-		return false;
-	},
 	getDataByFilterform: function() {
 
 	},
 	getDataByCondition: function(condition) {
-		if(condition.loading) {
+		condition.loading &&
 			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
-		}
+
 		var ajaxData = $.extend({
 			url: '',
 			type: 'get',
@@ -288,5 +239,55 @@ var comm = {
 		var r = window.location.search.substr(1).match(reg);
 		if(r != null) return unescape(r[2]);
 		return null;
+	},
+	/*退出系统 */
+	exitSystem: function() {
+		layui.use('layer', function() {
+			var layer = layui.layer;
+			layer.confirm("确认退出本系统？", function() {
+				$.ajax({
+					url: path + '/api/auth/logoff',
+					type: 'post',
+					beforeSend: function(request) {
+						request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+					},
+					success: function(data) {
+						sessionStorage.clear();
+						window.location.href = "./login.html";
+					},
+					error: function() {
+
+						layer.msg("系统异常，退出失败，请重试！");
+
+					}
+				});
+			});
+		});
+	},
+	/*系统超时*/
+	systemTimeout: function() {
+		var msg = arguments[0] || "系统超时或非法访问！";
+		layui.use('layer', function() {
+			var layer = layui.layer;
+			layer.alert(msg + "系统将在<span id='interval_time'>5</span>秒后自动退出", {
+				skin: 'layui-layer-blue',
+				icon: arguments[1] || 2,
+				btn: ['立即退出'],
+				closeBtn: 0
+			}, function() {
+				comm.exitSystem();
+			});
+
+			var i = 5;
+			var interval = setInterval(function() {
+				i--;
+				$("#interval_time").text(i);
+				if(i === 0) {
+					clearInterval(interval);
+					comm.exitSystem();
+				}
+			}, 1000);
+		});
+		return false;
 	},
 }
