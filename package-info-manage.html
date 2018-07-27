@@ -187,9 +187,9 @@
 
 								$('#package_preview_form select[initial-name="' + key + '"], #package_info_search_form select[initial-name="' + key + '"]').html(sel);
 							}
-							
+
 							form.render('select');
-							
+
 							//添加行
 							$("#add_detail_tr_btn").on("click", function() {
 								$("#detail_body").append($(".detail-tr").first().clone());
@@ -242,6 +242,14 @@
 					var tr = obj.tr;
 
 					if(layEvent === 'detail') { //查看详情
+						layer.open({
+							type: 2,
+							title: '包裹详情',
+							shadeClose: true,
+							maxmin: true,
+							area: ['80%', '600px'],
+							content: './package-info-detail.html?id=' + data.id
+						});
 
 					} else if(layEvent === 'delete') { //删除包裹信息
 						layer.confirm('是否确认删除该包裹信息1？', function(index) {
