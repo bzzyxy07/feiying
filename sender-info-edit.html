@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="js/plugin/layui/css/layui.css" />
+		<link rel="stylesheet/less" href="./css/common.less" />
+		<title>发件人编辑</title>
+		<style>
+			#detail_body tr:first-child .del-detail-tr {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<form class="layui-form ignore-comm-submit fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form" fill-type="get">
+					<div class="layui-form-item">
+						<li class="inline-nowrap">
+							<label class="layui-form-label">姓名</label>
+							<div class="layui-input-inline">
+								<select name="depotid" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+							</div>
+						</li>
+						<li class="inline-nowrap">
+							<label class="layui-form-label">电话</label>
+							<div class="layui-input-inline">
+								<select name="trackingname" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
+
+							</div>
+						</li>
+						<li class="inline-nowrap">
+							<label class="layui-form-label">地址</label>
+							<div class="layui-input-inline">
+								<input type="text" name="trackingnumber" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
+							</div>
+						</li>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--[if lt IE 9]>
+	    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/plugin/layui/layui.js"></script>
+		<script type="text/javascript" src="js/comm.js"></script>
+		<script src="js/less.min.js"></script>
+		<script>
+			layui.use(['form', 'element', 'table'], function() {
+				var form = layui.form;
+				var table = layui.table;
+				$("#sender_edit_form").attr("fill-url", "/api/BasicDeliver/Get?id=" + comm.getUrlParam("id"));
+				comm.fillContainerByUrl({
+					cont: $("#sender_edit_form"),
+					cb: function(data) {
+					alert(data);
+						});
+					}
+				});
+
+				//删除行
+				$("#detail_body").on("click", ".del-detail-tr", function() {
+					$(this).parents("tr").remove();
+				});
+				//提交编辑的包裹信息
+				form.on('submit(package-edit-form)', function(data) {
+					var packageData = {
+						"depotid": $('#package_edit_form [name="depotid"]').val(),
+						"trackingname": $('#package_edit_form [name="trackingname"]').val(),
+						"trackingnumber": $('#package_edit_form [name="trackingnumber"]').val(),
+						"details": []
+					}
+
+					$(".detail-tr").each(function() {
+						var sepDetail = {}
+						$(this).find('input:not(.layui-unselect), select').each(function() {
+							sepDetail[$(this).attr("name")] = $(this).val();
+						});
+						packageData.details.push(sepDetail);
+					});
+					comm.getDataByCondition({
+						loading: true,
+						ajax: {
+							url: "/api/OrderPackage/Put",
+							type: "put",
+							data: packageData,
+							success: function(data) {
+								layer.msg("修改成功！");
+								$(".filter-form .filter-btn", parent.document).click();
+								var index = parent.layer.getFrameIndex(window.name);
+								setTimeout(function() {
+									parent.layer.close(index)
+								}, 1000);
+							}
+						}
+					});
+					return false;
+				});
+			});
+		</script>
+		<script src="js/comm-inner-page.js"></script>
+	</body>
+
+</html>
