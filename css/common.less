@@ -68,6 +68,20 @@ a {
     float: right;
 }
 
+.layui-btn-sm {
+    line-height: 28px;
+    height: 28px;
+}
+
+.comm-title-dot {
+    color: @active-blue;
+    font-size: 15px;
+    font-weight: 900;
+    .layui-badge-dot {
+        margin-right: 5px;
+    }
+}
+
 .table-inner-table {
     background: @shallow-blue;
     border: none;
@@ -182,7 +196,7 @@ a {
         .padd-all-15;
         .border-box;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: scroll;
     }
 }
 
@@ -236,7 +250,7 @@ a {
         display: inline-block;
         .layui-input {
             width: 180px;
-            height: 30px;
+            height: 28px;
             display: inline-block;
             margin: 0 0 0 3px;
         }
@@ -250,7 +264,7 @@ a {
                 border: 1px solid #ddd;
                 background: #ddd;
                 padding: 0 8px;
-                line-height: 28px;
+                line-height: 26px;
                 cursor: pointer;
                 &.active {
                     background: #fff;

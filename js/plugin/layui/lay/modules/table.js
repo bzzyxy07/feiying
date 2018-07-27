@@ -171,7 +171,7 @@ layui.define(["laytpl", "laypage", "layer", "form"], function(e) {
 					t[r.statusName] != r.statusCode ? (a.renderForm(), a.layMain.html('<div class="' + f + '">' + (t[r.msgName] || "返回的数据状态异常") + "</div>")) : ((t = t['Object']) && (a.renderData(t, e.Object, t[r.countName]), d(), n.time = (new Date).getTime() - a.startTime + " ms"), i && l.close(i), "function" == typeof n.done && n.done(tcopy, e.Object, t[r.countName]))
 				},
 				error: function(e, t) {
-					a.layMain.html('<div class="' + f + '">数据接口请求异常</div>'), a.renderForm(), i && l.close(i)
+					a.layMain.html('<div class="' + f + '">数据接口请求异常</div>'), a.renderForm(), i && l.close(i), "function" == typeof n.done && n.done(e)
 				}
 			})
 		} else if(n.data && n.data.constructor === Array) {

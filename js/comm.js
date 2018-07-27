@@ -164,12 +164,20 @@ var comm = {
 			var form = layui.form;
 			var filterForm = document.getElementById(param.formId);
 			$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
-			$("#" + param.formId + " .form-condition").each(function() {
+			$("#" + param.formId + " .form-condition:not(.auto-click-condition)").each(function() {
 				$(filterForm).append('<input type="hidden" name="' + $(this).attr("name") + '">');
 			});
-			$("#" + param.formId + " .form-condition li").on("click", function() {
+			$("#" + param.formId + " .form-condition.auto-click-condition").each(function() {
+				$(this).append('<input type="hidden" name="" class="auto-click-input">');
+			});
+			$("#" + param.formId + " .form-condition:not(.auto-click-condition) li").on("click", function() {
 				$(this).addClass("active").siblings("li").removeClass("active");
 				$("#" + param.formId + ' input[name="' + $(this).parent(".form-condition").attr("name") + '"]').val($(this).attr("data-value"));
+				$("#" + param.formId + " .filter-btn").click();
+			});
+			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
+				$(this).addClass("active").siblings("li").removeClass("active");
+				$(this).siblings(".auto-click-input").val($(this).attr("data-value")).attr("name", $(this).attr("click-name"));
 				$("#" + param.formId + " .filter-btn").click();
 			});
 			form.on('select()', function(data) {
@@ -178,9 +186,8 @@ var comm = {
 
 			$(filterForm).on("click", ".filter-btn", function() {
 				var $this = $(this);
-
+				//				debugger;
 				if(param.renderTable) {
-
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
 						method: filterForm.getAttribute("my-type") || "get",
