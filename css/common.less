@@ -7,6 +7,11 @@
 @deep-gray: #ddd;
 @active-blue: #1e9fff;
 @shallow-blue: #f7fdff;
+html,
+body {
+    height: 100%;
+}
+
 a {
     cursor: pointer;
 }
@@ -68,9 +73,17 @@ a {
     float: right;
 }
 
+.align-right {
+    text-align: right !important;
+}
+
 .layui-btn-sm {
     line-height: 28px;
     height: 28px;
+    i {
+        margin-right: 5px;
+        font-size: 14px !important;
+    }
 }
 
 .comm-title-dot {
@@ -79,6 +92,20 @@ a {
     font-weight: 900;
     .layui-badge-dot {
         margin-right: 5px;
+    }
+}
+
+.layui-layer-iframe {
+    .layui-layer-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 42px;
+        height: auto;
+    }
+    iframe {
+        height: 100% !important;
     }
 }
 
@@ -268,6 +295,11 @@ a {
                 cursor: pointer;
                 &.active {
                     background: #fff;
+                }
+                .layui-badge {
+                    height: 16px;
+                    line-height: 16px;
+                    margin-left: 5px;
                 }
             }
         }

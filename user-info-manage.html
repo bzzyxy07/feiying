@@ -90,14 +90,13 @@
 			</div>
 		</div>
 		<script>
-			$("#user_info_div").attr("fill-data", '{"modelId":'+modelId+'}');
+			$("#user_info_div").attr("fill-data", '{"modelId":' + sessionStorage("modelId") + '}');
 		</script>
 		<script src="./js/comm-inner-page.js"></script>
 		<script>
-			layui.use(['form','element'], function() {
-				
+			layui.use(['form', 'element'], function() {
+
 			});
-			
 		</script>
 	</body>
 
