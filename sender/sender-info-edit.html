@@ -1,24 +1,24 @@
 <div class="layui-tab-content">
 	<div class="layui-tab-item layui-show">
-		<form class="layui-form ignore-comm-submit fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form" fill-type="get">
+		<form class="layui-form ignore-comm-submit fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form"  fill-type="get">
 			<div class="layui-form-item">
 				<li class="inline-nowrap">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-inline">
-						<select name="depotid" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+						<select name="delivername" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
 					</div>
 				</li>
 				<li class="inline-nowrap">
 					<label class="layui-form-label">电话</label>
 					<div class="layui-input-inline">
-						<select name="trackingname" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
+						<select name="mobilephone" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
 
 					</div>
 				</li>
 				<li class="inline-nowrap">
 					<label class="layui-form-label">地址</label>
 					<div class="layui-input-inline">
-						<input type="text" name="trackingnumber" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
+						<input type="text" name="deliveraddress" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
 					</div>
 				</li>
 			</div>
@@ -30,3 +30,24 @@
 		</form>
 	</div>
 </div>
+
+<script>
+	layui.use(['form', 'table'], function() {
+		var form = layui.form;
+		var table = layui.table;
+		$("#sender_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" +comm.getUrlParamX("id"));
+	//特殊赋值
+	/*	comm.fillContainerByUrl({
+			cont: $("#sender_edit_form"),
+			cb: function(data) {
+				console.info(data);
+				
+			}
+		});*/
+
+		//删除行
+		
+		//提交编辑的包裹信息
+	
+	});
+</script>
