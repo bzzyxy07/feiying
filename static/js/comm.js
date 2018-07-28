@@ -17,7 +17,7 @@ var comm = {
 				});
 				layer.open(openParam);
 			});
-		});
+		}).attr("url", param.url);
 	},
 	getDataByFilterform: function() {
 
@@ -262,6 +262,13 @@ var comm = {
 	getUrlParam: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = window.location.search.substr(1).match(reg);
+		if(r != null) return unescape(r[2]);
+		return null;
+	},
+	getUrlParamX: function(name) {
+		var urlStr = $(".popup-page-store").attr("url");
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = urlStr.substring(urlStr.indexOf("?")).substr(1).match(reg);
 		if(r != null) return unescape(r[2]);
 		return null;
 	},

@@ -5,7 +5,7 @@
 		}
 	</style>
 </head>
-<form class="layui-form">
+<form class="layui-form init-select-group" group-init-url="/api/OrderTransportOrder/PostView">
 	<table class="layui-table" id="express_detail_cont" lay-filter="express-detail-cont">
 		<colgroup>
 			<col width="130">
@@ -29,11 +29,11 @@
 			</td>
 			<th class="align-right">送达仓库</th>
 			<td class="padd-0">
-				<select name=""></select>
+				<select name="" initial-name="depot_list"></select>
 			</td>
 			<th class="align-right">线路名称</th>
 			<td class="padd-0">
-				<select name=""></select>
+				<select name="" initial-name="routes"></select>
 			</td>
 		</tr>
 
@@ -85,7 +85,7 @@
 		<tr>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0" colspan="3">
-				<select name=""></select>
+				<select name="" initial-name="id_cards"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0" colspan="3">
@@ -173,7 +173,8 @@
 		<tr>
 			<th class="align-right">增值服务</th>
 			<td class="padd-0" colspan="7">
-				<input name="" class="form-field-cont layui-input">
+				<input type="checkbox" name="" title="箱子（1$）" lay-skin="primary"> 
+				<select name="" initial-name="servicelist"></select>
 			</td>
 		</tr>
 		<tr>
@@ -202,25 +203,35 @@
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
+		
 
-		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
-
-		comm.fillContainerByUrl({
-			cont: $("#express_detail_cont"),
-			cb: function(data) {
-				var detaillist = data.detaillist;
-				var len = detaillist.length - $("#detail_body .detail-tr").length;
-
-				detaillist.map(function(v, index, arr) {
-					for(var i = 0; i < len; i++) {
-						$("#detail_body").append(cloneLine);
+		//初始化表格选项数据
+		comm.getDataByCondition({
+			ajax: {
+				url: '/api/OrderTransportOrder/PostView',
+				success: function(data) {
+					console.info(data)
+					for(var key in data) {
+						var sel = '<option value="">请选择</option>',
+							sepData = data[key];
+						sepData.map(function(v) {
+							sel += '<option value="' + v.id + '">' + v.name + '</option>';
+						});
+						var $this = $('#express_detail_cont select[initial-name="' + key + '"]');
+						$this.html(sel).data("data") && $this.val($this.data("data"));
 					}
-					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.text(v[key]).data("data", v[key]);
-					}
-				});
+					form.render('select');
+
+					//添加行
+					$("#add_detail_tr_btn").on("click", function() {
+						$("#detail_body").append($(".detail-tr").first().clone());
+						$("#detail_body .detail-tr").last().find("select,input").val("");
+						form.render('select');
+					});
+				}
 			}
 		});
+		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
+
 	});
 </script>
