@@ -81,8 +81,9 @@
 		//初始化表格选项数据
 		comm.getDataByCondition({
 			ajax: {
-				url: '/api/OrderTransportOrder/PostView',
+				url: '/api/OrderPackage/PackageViewMy',
 				success: function(data) {
+					console.info(data);
 					for(var key in data) {
 						var sel = '<option value="">请选择</option>',
 							sepData = data[key];
