@@ -86,26 +86,31 @@ a {
     }
 }
 
+.popup-page-container {
+    >.popup-page-store {
+        display: none;
+    }
+    .popup-page-store {
+        padding: 10px;
+        height: 100%;
+        box-sizing: border-box;
+    }
+    .layui-layer-content {
+        position: absolute !important;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 42px;
+        height: auto !important;
+    }
+}
+
 .comm-title-dot {
     color: @active-blue;
     font-size: 15px;
     font-weight: 900;
     .layui-badge-dot {
         margin-right: 5px;
-    }
-}
-
-.layui-layer-iframe {
-    .layui-layer-content {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 42px;
-        height: auto;
-    }
-    iframe {
-        height: 100% !important;
     }
 }
 

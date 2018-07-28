@@ -1,27 +1,35 @@
-!! function() {
-	layui.use('element');
+layui.use(['element', 'layer'], function() {
+	var layer = layui.layer;
 	$("#left_menu .layui-nav-item").on("click", function(e) {
+		layer.closeAll();
 		//加载模块页面
 		$("#main_container").load($(this).attr("url"), function() {
 			var $activeTab = $('#main_container>.layui-tab-card>.layui-tab-title>li.layui-this[link-url]');
 			$activeTab.length &&
-			$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq(' + $activeTab.index() + ')').load($activeTab.attr("link-url"));
+				tabClickCb($activeTab);
 		});
 		$(this).addClass("layui-this").siblings(".layui-this").removeClass("layui-this");
 		$("#page_address").html($(this).html());
 	});
 	document.querySelector("#left_menu .layui-nav-item").click();
-}();
-//加载内部tab页面
-$('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]', function() {
-	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq(' + $(this).index() + ')').load($(this).attr("link-url"), function() {
+
+	//加载内部tab页面
+	$('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]', function() {
+		layer.closeAll();
+		tabClickCb($(this));
+	});
+});
+
+function tabClickCb($clickTab) {
+	var target = '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq(' + $clickTab.index() + ')';
+	$(target).load($clickTab.attr("link-url"), function() {
 		layui.use('form', function() {
 			var form = layui.form;
 			var searchUrlArr = [];
 			var selLength = $("select[url]").length;
 			var fillLength = $(".fill-container[fill-url]").length;
 			//从数据库中获取select选项
-			$("select[url]").each(function(index, element) {
+			$(target + " select[url]").each(function(index, element) {
 				var $this = $(this),
 					dataText = $this.attr("data-text"),
 					dataValue = $this.attr("data-value"),
@@ -56,7 +64,7 @@ $('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]
 					}
 				});
 			});
-			$(".layui-form:not(.ignore-comm-submit)").each(function() {
+			$(target + " .layui-form:not(.ignore-comm-submit)").each(function() {
 				var filter = $(this).attr("lay-filter");
 				!filter && (filter = $(this).attr("id") || "form" + comm.uuid()) && $(this).attr("lay-filter", filter);
 				comm.submitForm(filter);
@@ -64,7 +72,9 @@ $('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]
 			(selLength === 0) && (fillLength !== 0) && fillContainer();
 			//表单回填
 			function fillContainer() {
-				$(".fill-container[fill-url]").each(function() {
+
+				$(target + " .fill-container[fill-url]").each(function() {
+
 					var $this = $(this);
 					comm.getDataByCondition({
 						ajax: {
@@ -82,4 +92,4 @@ $('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]
 			}
 		});
 	});
-});
+}

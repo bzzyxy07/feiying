@@ -14,7 +14,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">确认密码</label>
 		<div class="layui-input-inline">
-			<input type="password" name="newpassword_confirm" required lay-verify="required" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+			<input type="password" name="newpassword_confirm" required lay-verify="required|same" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 
@@ -24,3 +24,15 @@
 		</div>
 	</div>
 </form>
+<script>
+	layui.use('form', function() {
+		var form = layui.form;
+		form.verify({
+			same: function(value, item) {
+				if(value != $('input[name="newpassword"]').val()) {
+					return '确认密码与新密码必须一致';
+				}
+			}
+		});
+	});
+</script>

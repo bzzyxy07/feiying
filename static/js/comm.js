@@ -1,9 +1,29 @@
 var path = "http://119.28.23.40:8081";
 var comm = {
+	/**
+	 * 临时二次封装layer.open用以打开页面
+	 */
+	openPage: function(param) {
+		!$(".popup-page-container").length &&
+			$("#index_body").append('<div class="popup-page-container"><div class="popup-page-store"></div></div>');
+
+		$(".popup-page-store").load(param.url, function() {
+			layui.use('layer', function() {
+				var layer = layui.layer;
+				var openParam = $.extend(param.open, {
+					type: 1,
+					shade: 0,
+					content: $('.popup-page-store')
+				});
+				layer.open(openParam);
+			});
+		});
+	},
 	getDataByFilterform: function() {
 
 	},
 	getDataByCondition: function(condition) {
+
 		condition.loading &&
 			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 
@@ -20,9 +40,12 @@ var comm = {
 
 		ajaxData.url = path + ajaxData.url;
 		ajaxData.success = function(data) {
+
 			condition.loading && $(condition.loading).parents(".layui-tab-item").children(".loading-container").remove();
 			if(!data.Success) {
-				layer.msg("系统异常：" + data.Errors[0]);
+				layer.msg(data.Errors[0], {
+					icon: 5
+				});
 				return false;
 			}
 
@@ -79,7 +102,7 @@ var comm = {
 	fillFormByData: function(data, $container) {
 		for(var key in data) {
 			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
-			sepCont.val(data[key]).data("data", data[key]);
+			sepCont.length && sepCont.val(data[key]).data("data", data[key]);
 		}
 		layui.use('form', function() {
 			var form = layui.form;
@@ -167,7 +190,9 @@ var comm = {
 								return false;
 							}
 							if(!data.Success) {
-								layer.msg("系统异常：" + data.Errors[0]);
+								layer.msg(data.Errors[0], {
+									icon: 5
+								});
 								return false;
 							}
 						}
@@ -256,9 +281,9 @@ var comm = {
 						window.location.href = "./login.html";
 					},
 					error: function() {
-
-						layer.msg("系统异常，退出失败，请重试！");
-
+						layer.msg("系统异常，退出失败，请重试！", {
+							icon: 5
+						});
 					}
 				});
 			});
@@ -291,5 +316,3 @@ var comm = {
 		return false;
 	},
 }
-
-

@@ -68,16 +68,14 @@
 					obj.del();
 					layer.alert("尚未开发，敬请期待");
 				});
-			} else if(layEvent === 'edit') { //编辑包裹信息
-				layer.open({
-					type: 2,
-					title: '包裹信息编辑',
-					shadeClose: true,
-					maxmin: true,
-					area: ['80%', '600px'],
-					content: './sender/sender-info-edit.html?id=' + data.id
+			} else if(layEvent === 'edit') { //编辑发件人信息
+				comm.openPage({
+					url: './sender/sender-info-edit.html?id=' + data.id
+					open: {
+						maxmin: true,
+    					area: ['80%', '600px'],
+					}
 				});
-
 			} else if(layEvent === 'reject') { //包裹退货
 				layer.alert("尚未开发，敬请期待");
 			}

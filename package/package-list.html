@@ -102,32 +102,30 @@
 			var layEvent = obj.event;
 			var tr = obj.tr;
 
-			if(layEvent === 'detail') { //查看详情
-				layer.open({
-					type: 2,
-					title: '包裹详情',
-					shadeClose: true,
-					maxmin: true,
-					area: ['80%', '600px'],
-					content: './package/package-info-detail.html?id=' + data.id
+			if(layEvent === 'detail') {
+				comm.openPage({
+					url: './package/package-info-detail.html?id=' + data.id,
+					open: {
+						maxmin: true,
+						area: ['80%', '600px'],
+					}
 				});
-
-			} else if(layEvent === 'delete') { //删除包裹信息
+			} else if(layEvent === 'delete') {
 				layer.confirm('是否确认删除该包裹信息1？', function(index) {
 					obj.del();
 					layer.alert("尚未开发，敬请期待");
 				});
-			} else if(layEvent === 'edit') { //编辑包裹信息
-				layer.open({
-					type: 2,
-					title: '包裹信息编辑',
-					shadeClose: true,
-					maxmin: true,
-					area: ['80%', '600px'],
-					content: './package/package-info-edit.html?id=' + data.id
+			} else if(layEvent === 'edit') {
+
+				comm.openPage({
+					url: './package/package-info-edit.html?id=' + data.id,
+					open: {
+						maxmin: true,
+						area: ['80%', '600px'],
+					}
 				});
 
-			} else if(layEvent === 'reject') { //包裹退货
+			} else if(layEvent === 'reject') {
 				layer.alert("尚未开发，敬请期待");
 			}
 		});
