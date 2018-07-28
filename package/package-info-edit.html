@@ -5,7 +5,6 @@
 		}
 	</style>
 </head>
-
 <form class="layui-form ignore-comm-submit fill-form-container" id="package_edit_form" lay-filter="package-edit-form" fill-type="get">
 	<div class="layui-form-item">
 		<li class="inline-nowrap">
@@ -18,7 +17,6 @@
 			<label class="layui-form-label">送达方式</label>
 			<div class="layui-input-inline">
 				<select name="trackingname" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
-
 			</div>
 		</li>
 		<li class="inline-nowrap">
@@ -83,7 +81,7 @@
 		//初始化表格选项数据
 		comm.getDataByCondition({
 			ajax: {
-				url: '/api/OrderPackage/PackageViewMy',
+				url: '/api/OrderTransportOrder/PostView',
 				success: function(data) {
 					for(var key in data) {
 						var sel = '<option value="">请选择</option>',

@@ -1,201 +1,202 @@
-<div class="layui-tab-content">
-	<div class="layui-tab-item layui-show">
-		<table class="fill-page-container layui-table" id="express_detail_cont" lay-filter="express-detail-cont" fill-type="get">
-			<colgroup>
-				<col width="130">
-				<col>
-				<col width="110">
-				<col>
-				<col width="130">
-				<col>
-				<col width="110">
-				<col>
-			</colgroup>
-			<tr>
-				<th colspan="8">
-					<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>运单信息</p>
-				</th>
-			</tr>
-			<tr>
-				<th class="align-right">运单编号</th>
-				<td>
-					<input name="" class="form-field-cont"></span>
-				</td>
-				<th class="align-right"></th>
-				<td>
-					<span name="" class="form-field-cont">批量在线下单</span>
-				</td>
-				<th class="align-right">送达仓库</th>
-				<td>
-					<select name="">
-						<option value=""></option>
-					</select>
-				</td>
-				<th class="align-right">线路名称</th>
-				<td>
-					<select name="">
-						<option value=""></option>
-					</select>
-				</td>
-			</tr>
+<head>
+	<style>
+		#detail_body tr:first-child .del-detail-tr {
+			display: none;
+		}
+	</style>
+</head>
+<form class="layui-form">
+	<table class="layui-table" id="express_detail_cont" lay-filter="express-detail-cont">
+		<colgroup>
+			<col width="130">
+			<col>
+			<col width="110">
+			<col>
+			<col width="130">
+			<col>
+			<col width="110">
+			<col>
+		</colgroup>
+		<tr>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>运单信息</p>
+			</th>
+		</tr>
+		<tr>
+			<th class="align-right">运单编号</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input"></span>
+			</td>
+			<th class="align-right">送达仓库</th>
+			<td class="padd-0">
+				<select name=""></select>
+			</td>
+			<th class="align-right">线路名称</th>
+			<td class="padd-0">
+				<select name=""></select>
+			</td>
+		</tr>
 
-			<tr>
-				<th colspan="8">
-					<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息</p>
-				</th>
-			</tr>
-			<tr>
-				<th class="align-right">姓名</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">电话</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">地址</th>
-				<td colspan="3">
-					<input name="" class="form-field-cont"></input>
-				</td>
+		<tr>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息</p>
+			</th>
+		</tr>
+		<tr>
+			<th class="align-right">姓名</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">电话</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">地址</th>
+			<td class="padd-0" colspan="3">
+				<input name="" class="form-field-cont layui-input">
+			</td>
 
-			</tr>
+		</tr>
 
-			<tr>
-				<th colspan="8">
-					<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息</p>
-				</th>
-			</tr>
-			<tr>
-				<th class="align-right">姓名</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">电话</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				
-				<th class="align-right">邮编</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">身份证号</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">证件号</th>
-				<select name="">
-					<option value=""></option>
-				</select>
-				<input name="" class="form-field-cont"></input>
-			</tr>
-			<tr>
-				<th class="align-right">身份证正面照片</th>
-				<td colspan="3">
-					<input type="file" name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">身份证反面照片</th>
-				<td colspan="3">
-					<input type="file" name="" class="form-field-cont"></input>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">地址</th>
-				<td colspan="7">
-					<select name="">
-						<option value=""></option>
-					</select>
-					<select name="">
-						<option value=""></option>
-					</select>
-					<input name="" class="form-field-cont"></input>
-				</td>
-			</tr>
+		<tr>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息</p>
+			</th>
+		</tr>
+		<tr>
+			<th class="align-right">姓名</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">电话</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
 
-			<tr>
-				<th colspan="8">
-					<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
-				</th>
-			</tr>
-			<tr>
-				<th class="align-right">物品明细</th>
-				<td colspan="7" class="padd-0">
-					<table class="layui-table margin-0 table-inner-table" lay-size="sm">
-						<thead>
-							<tr>
-								<th>类别</th>
-								<th>物品名称</th>
-								<th>规格</th>
-								<th>品牌</th>
-								<th>数量</th>
-								<th>单价($)</th>
-								<th>单位</th>
-							</tr>
-						</thead>
-						<tbody id="detail_body">
-							<tr class="detail-tr">
-								<td><input name="taxcategoryid"></input>
-								</td>
-								<td><input name="mingcheng"></input>
-								</td>
-								<td><input name="guige"></input>
-								</td>
-								<td><input name="pinpai"></input>
-								</td>
-								<td><input name="count"></input>
-								</td>
-								<td><input name="danjia"></input>
-								</td>
-								<td><input name="danwei"></input>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">重量</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">保险</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
-				<th class="align-right">备注</th>
-				<td>
-					<input name="" class="form-field-cont"></input>
-				</td>
+			<th class="align-right">邮编</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">身份证号</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">证件类型</th>
+			<td class="padd-0" colspan="3">
+				<select name=""></select>
+			</td>
+			<th class="align-right">证件号码</th>
+			<td class="padd-0" colspan="3">
+				<input type="text" name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">身份证正面照片</th>
+			<td class="padd-0" colspan="3">
+				<input type="file" name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">身份证反面照片</th>
+			<td class="padd-0" colspan="3">
+				<input type="file" name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">地址</th>
+			<td class="padd-0" colspan="7">
+				<div class="layui-input-inline">
+					<select name=""></select>
+				</div>
+				<div class="layui-input-inline">
+					<select name=""></select>
+				</div>
+				<div class="layui-input-inline">
+					<input name="" class="form-field-cont layui-input">
+				</div>
+			</td>
+		</tr>
 
-			</tr>
-			<tr>
-				<th class="align-right">增值服务</th>
-				<td colspan="7">
-					<input name="" class="form-field-cont"></input>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">费用</th>
-				<td colspan="7">
-					<input name="" class="form-field-cont"></input>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">可用积分</th>
-				<td colspan="7">
-					<select></select>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-right">备注</th>
-				<td colspan="7"><input name="remark"></input>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
+		<tr>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
+			</th>
+		</tr>
+		<tr>
+			<th class="align-right">物品明细</th>
+			<td class="padd-0" colspan="7" class="padd-0">
+				<table class="layui-table margin-0 table-inner-table" lay-size="sm">
+					<thead>
+						<tr>
+							<th>类别</th>
+							<th>物品名称</th>
+							<th>规格</th>
+							<th>品牌</th>
+							<th>数量</th>
+							<th>单价($)</th>
+							<th>单位</th>
+						</tr>
+					</thead>
+					<tbody id="detail_body">
+						<tr class="detail-tr">
+							<td class="padd-0">
+								<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
+							</td>
+							<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0">
+								<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+							</td>
+							<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">重量</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">保险</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+			<th class="align-right">备注</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">增值服务</th>
+			<td class="padd-0" colspan="7">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">费用</th>
+			<td class="padd-0" colspan="7">
+				<input name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">可用积分</th>
+			<td class="padd-0" colspan="7">
+				<select></select>
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">备注</th>
+			<td class="padd-0" colspan="7">
+				<input name="remark" class="layui-input">
+			</td>
+		</tr>
+	</table>
+	<button type="button" lay-submit class="layui-btn layui-btn-normal auto-center">保存</button>
+</form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
 		var cloneLine = $(".detail-tr").first().clone();
