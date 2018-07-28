@@ -68,9 +68,7 @@ var comm = {
 			(selLength === 0) && (fillLength !== 0) && fillContainer();
 			//表单回填
 			function fillContainer() {
-
 				$(target + " .fill-container[fill-url]").each(function() {
-
 					var $this = $(this);
 					comm.getDataByCondition({
 						ajax: {
@@ -336,10 +334,8 @@ var comm = {
 	},
 	getUrlParamX: function(name) {
 		var urlStr = $(".popup-page-store").attr("url");
-		console.info(urlStr)
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = urlStr.substring(urlStr.indexOf("?")).substr(1).match(reg);
-		console.info(name);
 		if(r != null) return unescape(r[2]);
 		return null;
 	},
