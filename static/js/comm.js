@@ -162,11 +162,13 @@ var comm = {
 	 * @param {string} container 容器 例：".container", "#container"
 	 */
 	fillPageByData: function(data, $container) {
+		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			$container.find('.page-field-cont[name="' + key + '"]').html(data[key]);
 		}
 	},
 	fillFormByData: function(data, $container) {
+		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
 			sepCont.length && sepCont.val(data[key]).data("data", data[key]);

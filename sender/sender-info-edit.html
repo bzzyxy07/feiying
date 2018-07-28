@@ -1,52 +1,48 @@
-<div class="layui-tab-content">
-	<div class="layui-tab-item layui-show">
-		<form class="layui-form fill-container fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form"  fill-type="get">
-			<div class="layui-form-item">
-				<li class="inline-nowrap">
-					<label class="layui-form-label">姓名</label>
-					<div class="layui-input-inline">   
-						<input type="text" name="delivername" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
-					</div>
-				</li>
-				<li class="inline-nowrap">
-					<label class="layui-form-label">电话</label> 
-					<div class="layui-input-inline">
-						<input type="text"  name="mobilephone" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
-					</div>
-				</li>
-				<li class="inline-nowrap">
-					<label class="layui-form-label">地址</label>
-					<div class="layui-input-inline">
-						<input type="text" name="deliveraddress" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
-					</div>
-				</li>
+<form class="layui-form fill-container fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form" fill-type="get">
+	<div class="layui-form-item">
+		<li class="inline-nowrap">
+			<label class="layui-form-label">姓名</label>
+			<div class="layui-input-inline">
+				<input type="text" name="delivername" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
 			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-block"> 
-					<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
-				</div>
+		</li>
+		<li class="inline-nowrap">
+			<label class="layui-form-label">电话</label>
+			<div class="layui-input-inline">
+				<input type="text" name="mobilephone" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
 			</div>
-		</form>
+		</li>
+		<li class="inline-nowrap">
+			<label class="layui-form-label">地址</label>
+			<div class="layui-input-inline">
+				<input type="text" name="deliveraddress" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
+			</div>
+		</li>
 	</div>
-</div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
+		</div>
+	</div>
+</form>
 
 <script>
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#sender_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" +comm.getUrlParamX("id"));
-	//特殊赋值
-	/*	comm.fillContainerByUrl({
-			cont: $("#sender_edit_form"),
-			cb: function(data) {
-				console.info(data);
-				
-			}
-		});*/
+		$("#sender_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + comm.getUrlParamX("id"));
+		//特殊赋值
+		/*	comm.fillContainerByUrl({
+				cont: $("#sender_edit_form"),
+				cb: function(data) {
+					console.info(data);
+					
+				}
+			});*/
 
 		//删除行
-		
+
 		//提交编辑的包裹信息
-	
+
 	});
 </script>
