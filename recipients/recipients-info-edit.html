@@ -63,23 +63,8 @@
 		comm.fillContainerByUrl({
 			cont: $("#add_recipients_form"),
 			cb: function(data) {
-				alert(data);
-				/*var detaillist = data.detaillist;
-				var len = detaillist.length - $("#detail_body .detail-tr").length;
-				var cloneLine = $(".detail-tr").first().clone();
-				detaillist.map(function(v, index, arr) {
-					for(var i = 0; i < len; i++) {
-						$("#detail_body").append(cloneLine);
-						$("#detail_body .detail-tr:last-child select,input").val("");
-					}
-
-					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.val(v[key]).data("data", v[key]);
-					}
-					form.render('select');*/
-
-				});
+				console.info(data);
+				
 			}
 		});
 
