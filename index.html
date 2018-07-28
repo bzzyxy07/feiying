@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="js/plugin/layui/css/layui.css" />
-		<link rel="stylesheet/less" href="./css/common.less" />
-		<link rel="stylesheet" href="js/plugin/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="static/js/plugin/layui/css/layui.css" />
+		<link rel="stylesheet/less" href="static/css/common.less" />
+		<link rel="stylesheet" href="static/js/plugin/font-awesome/css/font-awesome.css" />
 		<title>pojie.php</title>
 	</head>
 
@@ -14,7 +14,7 @@
 
 		<div class="layui-side">
 			<div class="logo-cont">
-				<img src="img/system-logo.webp" src="飞鹰快递" class="system-logo">
+				<img src="static/img/system-logo.webp" src="飞鹰快递" class="system-logo">
 			</div>
 
 			<ul class="layui-nav layui-nav-tree" id="left_menu">
@@ -22,31 +22,31 @@
 					<i class="fa fa-home"></i>
 					<label>首页</label>
 				</li>
-				<li class="layui-nav-item" url="package-info-manage.html">
+				<li class="layui-nav-item" url="package/package-manage.html">
 					<i class="fa fa-shopping-bag"></i>
 					<label>包裹</label>
 				</li>
-				<li class="layui-nav-item" url="express-info-manage.html">
+				<li class="layui-nav-item" url="express/express-manage.html">
 					<i class="fa fa-globe"></i>
 					<label>运单</label>
 				</li>
-				<li class="layui-nav-item" url="pay-info-manage.html">
+				<li class="layui-nav-item" url="finance/finance-manage.html">
 					<i class="fa fa-money"></i>
 					<label>财务</label>
 				</li>
-				<li class="layui-nav-item" url="abnormal-express-manage.html">
+				<li class="layui-nav-item" url="abnormalExpress/abnormal-express-manage.html">
 					<i class="fa fa-warning"></i>
 					<label>异常件</label>
 				</li>
-				<li class="layui-nav-item" url="sender-info-manage.html">
+				<li class="layui-nav-item" url="sender/sender-manage.html">
 					<i class="fa fa-envelope"></i>
 					<label>发件人</label>
 				</li>
-				<li class="layui-nav-item" url="recipients-info-manage.html">
+				<li class="layui-nav-item" url="recipients/recipients-manage.html">
 					<i class="fa fa-envelope-open"></i>
 					<label>收件人</label>
 				</li>
-				<li class="layui-nav-item" url="user-info-manage.html">
+				<li class="layui-nav-item" url="user/user-manage.html">
 					<i class="fa fa-user-circle-o"></i>
 					<label>账户</label>
 				</li>
@@ -73,16 +73,16 @@
 	    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 	    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/plugin/layui/layui.js"></script>
-	<script type="text/javascript" src="js/comm.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/plugin/layui/layui.js"></script>
+	<script type="text/javascript" src="static/js/comm.js"></script>
+	<script type="text/javascript" src="static/js/index.js"></script>
 	<script>
 		less = {
 			env: 'development'
 		};
 	</script>
-	<script src="./js/less.min.js"></script>
+	<script src="static/js/less.min.js"></script>
 	<script>
 		window.onload = function() {
 			document.getElementById("exit_system_btn").onclick = function() {

@@ -1,0 +1,38 @@
+<form class="layui-form" id="add_sender_form" url="" submit-url="/api/BasicDeliver/Post" submit-type="post" succ-msg="添加成功！">
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">姓名</label>
+		<div class="layui-input-inline">
+			<input type="text" name="delivername" required lay-verify="required" placeholder="请输入您的姓名" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">手机</label>
+		<div class="layui-input-inline">
+			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入您的手机号码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">邮编</label>
+		<div class="layui-input-inline">
+			<input type="text" name="zipcode" required lay-verify="required" placeholder="请输入您的邮编号码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">邮箱</label>
+		<div class="layui-input-inline">
+			<input type="text" name="email" required lay-verify="required|email" placeholder="请输入您的邮箱号码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">地址</label>
+		<div class="layui-input-block">
+			<input type="text" name="deliveraddress" required lay-verify="required" placeholder="请输入您的地址" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal" lay-submit>保存</button>
+		</div>
+	</div>
+</form>

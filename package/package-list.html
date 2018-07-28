@@ -1,0 +1,145 @@
+<form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
+	<ul>
+		<li>
+			<span>送达仓库</span>
+			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
+		</li>
+		<li>
+			<span>包裹追踪号</span>
+			<input class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
+		</li>
+		<li>
+			<span>运单号</span>
+			<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
+		</li>
+		<li>
+			<span>入库状态</span>
+			<ul class="form-condition" name="isenter">
+				<li class="active" data-value="">全部</li>
+				<li data-value="true">已入库<span class="layui-badge">3</span></li>
+				<li data-value="false">未入库<span class="layui-badge">4</span></li>
+			</ul>
+		</li>
+		<li>
+			<span>订单提交状态</span>
+			<ul class="form-condition" name="isdeliver">
+				<li class="active" data-value="">全部</li>
+				<li data-value="true">未提交</li>
+				<li data-value="false">已提交</li>
+			</ul>
+		</li>
+		<li>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		</li>
+	</ul>
+</form>
+<div class="data-table-container">
+	<table id="package_info_table" lay-filter="package-info-table"></table>
+</div>
+<script>
+	layui.use(['layer', 'form', 'table'], function() {
+		var form = layui.form;
+		var layer = layui.layer;
+		var table = layui.table;
+		comm.bindFilterForm({
+			formId: "package_info_search_form",
+			renderTable: {
+				elem: '#package_info_table',
+				cols: [
+					[{
+						checkbox: true
+					}, {
+						field: 'trackingnumber',
+						title: '包裹追踪号',
+						sort: true,
+					}, {
+						field: 'depotname',
+						title: '仓库',
+						sort: true,
+					}, {
+						field: 'enterdate',
+						title: '入库日期',
+						sort: true,
+					}, {
+						field: 'goodsweight',
+						title: '重量(磅)',
+						width: 120,
+						sort: true,
+					}, {
+						field: 'packagedetails',
+						title: '物品',
+					}, {
+						field: '',
+						title: '操作',
+						toolbar: '#operation'
+					}]
+				]
+			}
+		});
+		//初始化表格选项数据
+		comm.getDataByCondition({
+			ajax: {
+				url: '/api/OrderPackage/PackageViewMy',
+				success: function(data) {
+					for(var key in data) {
+						var sel = '<option value="">请选择</option>',
+							sepData = data[key];
+						sepData.map(function(v) {
+							sel += '<option value="' + v.id + '">' + v.name + '</option>';
+						});
+
+						$('#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+					}
+
+					form.render('select');
+				}
+			}
+		});
+
+		table.on('tool(package-info-table)', function(obj) {
+			var data = obj.data;
+			var layEvent = obj.event;
+			var tr = obj.tr;
+
+			if(layEvent === 'detail') { //查看详情
+				layer.open({
+					type: 2,
+					title: '包裹详情',
+					shadeClose: true,
+					maxmin: true,
+					area: ['80%', '600px'],
+					content: './package/package-info-detail.html?id=' + data.id
+				});
+
+			} else if(layEvent === 'delete') { //删除包裹信息
+				layer.confirm('是否确认删除该包裹信息1？', function(index) {
+					obj.del();
+					layer.alert("尚未开发，敬请期待");
+				});
+			} else if(layEvent === 'edit') { //编辑包裹信息
+				layer.open({
+					type: 2,
+					title: '包裹信息编辑',
+					shadeClose: true,
+					maxmin: true,
+					area: ['80%', '600px'],
+					content: './package/package-info-edit.html?id=' + data.id
+				});
+
+			} else if(layEvent === 'reject') { //包裹退货
+				layer.alert("尚未开发，敬请期待");
+			}
+		});
+	});
+</script>
+<script type="text/html" id="operation">
+	{{# if(d.isenter == true){ }}
+	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
+	{{# } else{ }}
+	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-disabled layui-btn-sm">删除</a>
+	<!--<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>-->
+	{{# } }}
+</script>

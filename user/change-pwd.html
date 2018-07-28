@@ -1,0 +1,26 @@
+<form class="layui-form" id="cge_pwd_form" submit-url="/api/BasicUser/ModifyPassword" submit-type="post" succ-cb='comm.systemTimeout("修改成功！", 1)'>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">原密码</label>
+		<div class="layui-input-inline">
+			<input type="password" name="oldpassword" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">新密码</label>
+		<div class="layui-input-inline">
+			<input type="password" name="newpassword" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">确认密码</label>
+		<div class="layui-input-inline">
+			<input type="password" name="newpassword_confirm" required lay-verify="required" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal" lay-submit>保存</button>
+		</div>
+	</div>
+</form>

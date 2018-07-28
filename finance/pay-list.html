@@ -1,0 +1,76 @@
+<form class="layui-form filter-form" url="/api/FreeFinancialRecord/GetMy" id="finance_info_search_form">
+	<ul>
+		<li>
+			<span>类型</span>
+			<ul class="form-condition" name="financialtype">
+				<li class="active" data-value="">全部</li>
+				<li data-value="1">现金支付</li>
+				<li data-value="2">消费余额</li>
+				<li data-value="3">支付</li>
+				<li data-value="4">消费现金</li>
+			</ul>
+		</li>
+		<li>
+			<span>操作号</span>
+			<input class="layui-input form-input" placeholder="请输入操作号" name="orderid">
+		</li>
+		<li>
+			<span>备注</span>
+			<input class="layui-input form-input" placeholder="请输入备注" name="remark">
+		</li>
+		<li>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		</li>
+	</ul>
+</form>
+<div class="data-table-container">
+	<table id="finance_info_table" lay-filter="finance-info-table"></table>
+</div>
+<script>
+	layui.use(['layer', 'form', 'table'], function() {
+		var form = layui.form;
+		var layer = layui.layer;
+		var table = layui.table;
+		comm.bindFilterForm({
+			formId: "finance_info_search_form",
+			renderTable: {
+				elem: '#finance_info_table',
+				cols: [
+					[{
+						field: 'orderid',
+						title: '运单号',
+						sort: true,
+					}, {
+						field: 'financialtype',
+						title: '交易类型',
+						sort: true,
+					}, {
+						field: 'createtime',
+						title: '时间',
+						sort: true,
+					}, {
+						field: 'amount',
+						title: '金额($)',
+						sort: true,
+					}, {
+						field: 'property',
+						title: '状态',
+						width: 120,
+						templet: '#status',
+						sort: true,
+					}, {
+						field: 'remark',
+						title: '备注',
+					}]
+				]
+			}
+		});
+	});
+</script>
+<script type="text/html" id="status">
+	{{# if(d.property == "0"){ }}
+	<span class="layui-badge layui-bg-blue">启用</span> {{# } else if(d.property == "1"){ }}
+	<span class="layui-badge layui-bg-orange">禁用</span> {{# } else{ }}
+	<span class="layui-badge layui-bg-gray">已删除</span> {{# } }}
+</script>

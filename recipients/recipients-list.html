@@ -1,0 +1,103 @@
+<form class="layui-form filter-form" url="/api/BasicReceiver/GetMy" id="recipients_info_search_form">
+	<ul>
+		<li>
+			<span>姓名</span>
+			<input class="layui-input form-input" placeholder="请输入姓名" name="receivername">
+		</li>
+		<li>
+			<span>联系电话</span>
+			<input class="layui-input form-input" placeholder="请输入联系电话" name="mobilephone">
+		</li>
+		<li>
+			<span>身份证号码</span>
+			<input class="layui-input form-input" placeholder="请输入身份证号码" name="idcardnumber">
+		</li>
+		<li>
+			<span>地址</span>
+			<input class="layui-input form-input" placeholder="请输入地址" name="receiveraddress">
+		</li>
+		<li>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		</li>
+	</ul>
+</form>
+<div class="data-table-container">
+	<table id="recipients_info_table" lay-filter="recipients_info_table"></table>
+</div>
+<script>
+	layui.use(['form', 'table'], function() {
+		var table = layui.table;
+		comm.bindFilterForm({
+			formId: "recipients_info_search_form",
+			renderTable: {
+				elem: '#recipients_info_table',
+				cols: [
+					[{
+						checkbox: true
+					}, {
+						field: 'receivername',
+						title: '姓名',
+					}, {
+						field: '',
+						title: '购买人',
+					}, {
+						field: 'mobilephone',
+						title: '电话',
+						sort: true,
+					}, {
+						field: 'regioncity',
+						title: '地区',
+						width: 120,
+					}, {
+						field: 'receiveraddress',
+						title: '地址',
+					}, {
+						field: 'idcardnumber',
+						title: '身份证',
+					}, {
+						field: 'idcardzheng',
+						title: '正面',
+					}, {
+						field: 'idcardfan',
+						title: '反面',
+					}, {
+						field: '',
+						title: '操作',
+						toolbar: '#operation'
+					}]
+				]
+			}
+		});
+		table.on('tool(recipients_info_table)', function(obj) {
+			var data = obj.data;
+			var layEvent = obj.event;
+			var tr = obj.tr;
+
+			if(layEvent === 'detail') { //查看详情
+
+			} else if(layEvent === 'delete') { //删除包裹信息
+				layer.confirm('是否确认删除该包裹信息1？', function(index) {
+					obj.del();
+					layer.alert("尚未开发，敬请期待");
+				});
+			} else if(layEvent === 'edit') { //编辑包裹信息
+				layer.open({
+					type: 2,
+					title: '包裹信息编辑',
+					shadeClose: true,
+					maxmin: true,
+					area: ['80%', '600px'],
+					//	content: './package-info-edit.html?id='+data.id
+				});
+
+			} else if(layEvent === 'reject') { //包裹退货
+				layer.alert("尚未开发，敬请期待");
+			}
+		});
+	});
+</script>
+<script type="text/html" id="operation">
+	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
+</script>

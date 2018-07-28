@@ -1,0 +1,139 @@
+<form id="package_preview_form" lay-filter="package-preview-form" class="layui-form ignore-comm-submit">
+	<div class="layui-form-item">
+		<li class="inline-nowrap">
+			<label class="layui-form-label">送达仓库</label>
+			<div class="layui-input-inline">
+				<select name="DepotID" lay-verify="required" initial-name="depotlist"></select>
+			</div>
+		</li>
+		<li class="inline-nowrap">
+			<label class="layui-form-label">送达方式</label>
+			<div class="layui-input-inline">
+				<select name="trackingname" lay-verify="required" initial-name="waylist"></select>
+
+			</div>
+		</li>
+		<li class="inline-nowrap">
+			<label class="layui-form-label">包裹追踪号</label>
+			<div class="layui-input-inline">
+				<input type="text" name="trackingnumber" placeholder="请输入包裹追踪号" autocomplete="off" class="layui-input" lay-verify="required">
+			</div>
+		</li>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">物品明细</label>
+		<div class="layui-input-block">
+			<table class="layui-table" lay-size="sm">
+				<thead>
+					<tr>
+						<th>类别</th>
+						<th>物品名称</th>
+						<th>规格</th>
+						<th>品牌</th>
+						<th>数量</th>
+						<th>单价($)</th>
+						<th>单位</th>
+						<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
+					</tr>
+				</thead>
+				<tbody id="detail_body">
+					<tr class="detail-tr">
+						<td class="padd-0">
+							<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
+						</td>
+						<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0">
+							<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+						</td>
+						<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">备注</label>
+		<div class="layui-input-block">
+			<input type="text" name="remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
+		</div>
+	</div>
+</form>
+
+<script>
+	layui.use(['layer', 'form', 'element', 'table'], function() {
+		var form = layui.form;
+		var layer = layui.layer;
+		var table = layui.table;
+		//初始化表格选项数据
+		comm.getDataByCondition({
+			ajax: {
+				url: '/api/OrderPackage/PackageViewMy',
+				success: function(data) {
+					for(var key in data) {
+						var sel = '<option value="">请选择</option>',
+							sepData = data[key];
+						sepData.map(function(v) {
+							sel += '<option value="' + v.id + '">' + v.name + '</option>';
+						});
+
+						$('#package_preview_form select[initial-name="' + key + '"]').html(sel);
+					}
+
+					form.render('select');
+
+					//添加行
+					$("#add_detail_tr_btn").on("click", function() {
+						$("#detail_body").append($(".detail-tr").first().clone());
+						$("#detail_body .detail-tr:last-child select,input").val("");
+						form.render('select');
+					});
+				}
+			}
+		});
+		//删除行
+		$("#detail_body").on("click", ".del-detail-tr", function() {
+			$(this).parents("tr").remove();
+		});
+		//提交包裹预告
+		form.on('submit(package-preview-form)', function(data) {
+			var packageData = {
+				"DepotID": $('#package_preview_form [name="DepotID"]').val(),
+				"trackingname": $('#package_preview_form [name="trackingname"]').val(),
+				"trackingnumber": $('#package_preview_form [name="trackingnumber"]').val(),
+				"details": []
+			}
+
+			$(".detail-tr").each(function() {
+				var sepDetail = {}
+				$(this).find('input:not(.layui-unselect), select').each(function() {
+					sepDetail[$(this).attr("name")] = $(this).val();
+				});
+				packageData.details.push(sepDetail);
+			});
+			comm.getDataByCondition({
+				loading: true,
+				ajax: {
+					url: "/api/OrderPackage/PostMy",
+					type: "post",
+					data: packageData,
+					success: function(data) {
+						layer.msg("提交成功，可继续上传包裹预告！");
+						document.getElementById("package_preview_form").reset();
+						form.render('select');
+						$("#detail_body tr:first").siblings("tr").remove();
+					}
+				}
+			});
+			return false;
+		});
+	});
+</script>

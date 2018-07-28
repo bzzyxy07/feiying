@@ -5,7 +5,7 @@ var comm = {
 	},
 	getDataByCondition: function(condition) {
 		condition.loading &&
-			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 
 		var ajaxData = $.extend({
 			url: '',
@@ -27,9 +27,9 @@ var comm = {
 			}
 
 			if(condition.login) {
-				modelId = data.modelId;
 				userInfo = data.Object;
-				//					sessionStorage.setItem("userInfo", data.Object);
+				//sessionStorage.setItem("userInfo", data.Object);
+				sessionStorage.setItem("modelId", data.modelId);
 				sessionStorage.setItem("authen", data.Token);
 			}
 			condition.ajax.success && condition.ajax.success(data.Object);
@@ -114,7 +114,7 @@ var comm = {
 		layui.use('form', function() {
 			var form = layui.form;
 			var filterForm = document.getElementById(param.formId);
-			$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+			$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 			$("#" + param.formId + " .form-condition:not(.auto-click-condition)").each(function() {
 				$(filterForm).append('<input type="hidden" name="' + $(this).attr("name") + '">');
 			});
@@ -291,3 +291,5 @@ var comm = {
 		return false;
 	},
 }
+
+
