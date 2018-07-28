@@ -39,8 +39,8 @@
 				<tr style="height: 65px;">
 					<th colspan="2" style="width: 40%; font-size: 30px; font-weight: normal;">飞鹰快递</th>
 					<th colspan="4" style="position: relative;">
-						<img class="print" src="./code128.aspx?num=10000103906" style="width: 234px; left: 3px; position: absolute; top: 0px;" alt="10000103906">
-						<span style="width: 100%; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;">10000103906</span>
+						<img class="print"  src="./code128.aspx?num=10000103906" style="width: 234px; left: 3px; position: absolute; top: 0px;" alt="10000103906">
+						<span style="width: 100%; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum" >10000103906</span>
 					</th>
 				</tr>
 				<tr style="height: 50px;">
@@ -48,7 +48,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">寄件：</span>
 							<div style="float: left;">
-								时先生 18561602222 <br> 所在地址所在地址所在地址所在地址所在地址
+								<span name="delivername" >时先生</span> <span name="delivermobile" >18561602222</span> <br> <span name="deliveraddress" >所在地址所在地址所在地址所在地址所在地址</span>
 							</div>
 						</div>
 					</td>
@@ -58,7 +58,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">收件：</span>
 							<div style="float: left; font-size: 15px;">
-								153 12345678912 350001<br> 福建省福州市16818
+								<span name="receivername" >ff先生</span> <span name="receivemobile" >18561602222</span> <span name="receivemobile" >350001</span><br> <span name="receiveaddress" >福建省福州市16818</span>
 							</div>
 						</div>
 					</td>
@@ -66,13 +66,13 @@
 				<tr style="height: 70px;">
 					<td style="position: relative;" colspan="2">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							付款方式：<br> 计费重量(磅)：123.00
-							<br> 保价金额($)：
+							付款方式：<span name="" >XXXX</span> <br> 计费重量(磅)：<span name="volumeweight" >123.00</span>
+							<br> 保价金额($)：<span name="" >XXXX</span>
 						</div>
 					</td>
 					<td style="position: relative;" colspan="4">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							收件人\代收人：<br> 签收时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时
+							收件人\代收人：XXXX<br> 签收时间：XXXX
 							<br>
 							<span style="font-size: 11px;">快件送达收货人地址，经收件人允许的代收人签字，视为送达</span>
 						</div>
@@ -81,7 +81,7 @@
 				<tr>
 					<td style="position: relative;" colspan="6">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							<span style="width: 100px; float: left;">件数：</span><span style="width: 100px; float: left;">重量(磅)：123.00</span><br> 配货信息：454462瓶；
+							<span style="width: 100px; float: left;">件数：XXXX</span><span style="width: 100px; float: left;">重量(磅)：</span><span name="volumeweight" >123.00</span><br> 配货信息：<span name="freeservicenote" >111瓶</span> ；
 						</div>
 
 					</td>
@@ -89,7 +89,7 @@
 				<tr style="height: 70px;">
 					<th style="position: relative;" colspan="6">
 						<img class="print" src="./code128.aspx?num=10000103906" style="width: 234px; left: 3px; position: absolute; top: 0px;" alt="10000103906">
-						<span style="width: 234px; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;">10000103906</span>
+						<span style="width: 234px; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum">10000103906</span>
 
 					</th>
 				</tr>
@@ -98,7 +98,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">寄件：</span>
 							<div style="float: left;">
-								时先生 18561602222 <br> 所在地址所在地址所在地址所在地址所在地址
+									<span name="delivername" >时先生</span> <span name="delivermobile" >18561602222</span> <br> <span name="deliveraddress" >所在地址所在地址所在地址所在地址所在地址</span>
 							</div>
 						</div>
 					</td>
@@ -106,7 +106,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">收件：</span>
 							<div style="float: left;">
-								153 12345678912 350001<br> 福建省福州市16818
+									<span name="receivername" >ff先生</span> <span name="receivemobile" >18561602222</span> <span name="receivemobile" >350001</span><br> <span name="receiveaddress" >福建省福州市16818</span>
 							</div>
 						</div>
 					</td>
@@ -114,7 +114,7 @@
 				<tr style="height: 70px;">
 					<td colspan="7" style="position: relative;">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							备注：1
+							备注：<span name="note" >11</span>
 						</div>
 					</td>
 
