@@ -1,10 +1,49 @@
 var path = "http://119.28.23.40:8081";
 var comm = {
 	/**
+	 * 根据统一接口初始化全部选项
+	 * @param {
+	 * url: '接口路径'，
+	 * cont: '.a' //统一容器（根据initial-name进行渲染） 
+	 * cb：回调函数
+	 * } 
+	 */
+	groupInitial: function(param) {
+
+		//初始化表格选项数据
+		comm.getDataByCondition({
+			ajax: {
+				url: param.url,
+				success: function(data) {
+					$(param.cont + ' select[initial-name]').each(function() {
+						var m = $(this),
+							key = m.attr("initial-name"),
+							sel = '<option value="">请选择</option>',
+							sepData = data[key],
+							id = m.attr("initial-value"),
+							name = m.attr("initial-text");
+
+						sepData && sepData.map(function(v) {
+							(sepid = v[id] || v.id) &&
+							(sepname = v[name] || v.name) &&
+							(sel += '<option value="' + sepid + '">' + sepname + '</option>');
+						});
+						m.html(sel).data("data") && m.val(m.data("data"));
+					})
+					layui.use('form', function() {
+						var form = layui.form;
+						form.render('select');
+					});
+					param.cb && param.cb(data);
+				}
+			}
+		});
+	},
+	/**
 	 * 临时二次封装layer.open用以打开页面
 	 */
 	openPage: function(param) {
-		$(".popup-page-store").attr("url", param.url).load(param.url, function() {
+		$(".popup-page-store").data("url", param.url).load(param.url, function() {
 			layui.use('layer', function() {
 				var layer = layui.layer;
 				var openParam = $.extend(param.open, {
@@ -90,7 +129,6 @@ var comm = {
 
 	},
 	getDataByCondition: function(condition) {
-
 		condition.loading &&
 			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 
@@ -228,8 +266,9 @@ var comm = {
 			});
 
 			$(filterForm).on("click", ".filter-btn", function() {
+				!$(filterForm).parents(".layui-tab-item").find(".loading-container").length &&
+					$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 				var $this = $(this);
-				//				debugger;
 				if(param.renderTable) {
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
@@ -265,7 +304,6 @@ var comm = {
 								return false;
 							}
 						}
-
 					}, param.renderTable)
 
 					comm.renderTable({
@@ -335,7 +373,7 @@ var comm = {
 		return null;
 	},
 	getUrlParamX: function(name) {
-		var urlStr = $(".popup-page-store").attr("url");
+		var urlStr = $(".popup-page-store").data("url");
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = urlStr.substring(urlStr.indexOf("?")).substr(1).match(reg);
 		if(r != null) return unescape(r[2]);

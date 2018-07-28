@@ -84,16 +84,14 @@
 						sepData.map(function(v) {
 							sel += '<option value="' + v.id + '">' + v.name + '</option>';
 						});
-
 						$('#package_preview_form select[initial-name="' + key + '"]').html(sel);
 					}
 
 					form.render('select');
-
 					//添加行
 					$("#add_detail_tr_btn").on("click", function() {
 						$("#detail_body").append($(".detail-tr").first().clone());
-						$("#detail_body .detail-tr:last-child select,input").val("");
+						$("#detail_body .detail-tr").length && $("#detail_body .detail-tr").last().find("select,input").val("");
 						form.render('select');
 					});
 				}

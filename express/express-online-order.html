@@ -6,7 +6,7 @@
 	</style>
 </head>
 <form class="layui-form init-select-group" group-init-url="/api/OrderTransportOrder/PostView">
-	<table class="layui-table" id="express_detail_cont" lay-filter="express-detail-cont">
+	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
 			<col>
@@ -33,7 +33,7 @@
 			</td>
 			<th class="align-right">线路名称</th>
 			<td class="padd-0">
-				<select name="" initial-name="routes"></select>
+				<select name="" initial-name="routes" initial-text="routename"></select>
 			</td>
 		</tr>
 
@@ -85,7 +85,7 @@
 		<tr>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0" colspan="3">
-				<select name="" initial-name="id_cards"></select>
+				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0" colspan="3">
@@ -140,7 +140,7 @@
 					<tbody id="detail_body">
 						<tr class="detail-tr">
 							<td class="padd-0">
-								<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
+								<select name="taxcategoryid" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
 							</td>
 							<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
 							<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
@@ -148,7 +148,7 @@
 							<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 							<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 							<td class="padd-0">
-								<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+								<select name="danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname"></select>
 							</td>
 							<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
 						</tr>
@@ -173,7 +173,7 @@
 		<tr>
 			<th class="align-right">增值服务</th>
 			<td class="padd-0" colspan="7">
-				<input type="checkbox" name="" title="箱子（1$）" lay-skin="primary"> 
+				<input type="checkbox" name="" title="箱子（1$）" lay-skin="primary">
 				<select name="" initial-name="servicelist"></select>
 			</td>
 		</tr>
@@ -203,32 +203,18 @@
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
-		
 
 		//初始化表格选项数据
-		comm.getDataByCondition({
-			ajax: {
-				url: '/api/OrderTransportOrder/PostView',
-				success: function(data) {
-					console.info(data)
-					for(var key in data) {
-						var sel = '<option value="">请选择</option>',
-							sepData = data[key];
-						sepData.map(function(v) {
-							sel += '<option value="' + v.id + '">' + v.name + '</option>';
-						});
-						var $this = $('#express_detail_cont select[initial-name="' + key + '"]');
-						$this.html(sel).data("data") && $this.val($this.data("data"));
-					}
+		comm.groupInitial({
+			url: '/api/OrderTransportOrder/PostView',
+			cont: '#express_detail_cont',
+			cb: function(data) {
+				//添加行
+				$("#add_detail_tr_btn").on("click", function() {
+					$("#detail_body").append($(".detail-tr").first().clone());
+					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
-
-					//添加行
-					$("#add_detail_tr_btn").on("click", function() {
-						$("#detail_body").append($(".detail-tr").first().clone());
-						$("#detail_body .detail-tr").last().find("select,input").val("");
-						form.render('select');
-					});
-				}
+				});
 			}
 		});
 		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));

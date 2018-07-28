@@ -175,7 +175,7 @@
 		var form = layui.form;
 		var table = layui.table;
 
-		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
+		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParamX("id"));
 
 		comm.fillContainerByUrl({
 			cont: $("#express_detail_cont"),

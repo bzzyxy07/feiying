@@ -78,32 +78,20 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		//初始化表格选项数据
-		comm.getDataByCondition({
-			ajax: {
-				url: '/api/OrderPackage/PackageViewMy',
-				success: function(data) {
-					console.info(data);
-					for(var key in data) {
-						var sel = '<option value="">请选择</option>',
-							sepData = data[key];
-						sepData.map(function(v) {
-							sel += '<option value="' + v.id + '">' + v.name + '</option>';
-						});
-						var $this = $('#package_edit_form select[initial-name="' + key + '"]');
-						$this.html(sel).data("data") && $this.val($this.data("data"));
-					}
+		comm.groupInitial({
+			url: '/api/OrderPackage/PackageViewMy',
+			cont: '#package_edit_form',
+			cb: function(data) {
+				console.info(data)
+				//添加行
+				$("#add_detail_tr_btn").on("click", function() {
+					$("#detail_body").append($(".detail-tr").first().clone());
+					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
-
-					//添加行
-					$("#add_detail_tr_btn").on("click", function() {
-						$("#detail_body").append($(".detail-tr").first().clone());
-						$("#detail_body .detail-tr").last().find("select,input").val("");
-						form.render('select');
-					});
-				}
+				});
 			}
 		});
+
 		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParamX("id"));
 		comm.fillContainerByUrl({
 			cont: $("#package_edit_form"),
@@ -114,12 +102,11 @@
 				detaillist.map(function(v, index, arr) {
 					for(var i = 0; i < len; i++) {
 						$("#detail_body").append(cloneLine);
-						$("#detail_body .detail-tr:last-child select,input").val("");
 					}
 
 					for(var key in v) {
 						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.val(v[key]).data("data", v[key]);
+						$cont.val("").val(v[key]).data("data", v[key]);
 					}
 					form.render('select');
 
@@ -147,7 +134,7 @@
 				});
 				packageData.details.push(sepDetail);
 			});
-			
+
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
@@ -155,12 +142,9 @@
 					type: "put",
 					data: packageData,
 					success: function(data) {
+						layer.closeAll();
 						layer.msg("修改成功！");
-						$(".filter-form .filter-btn", parent.document).click();
-						var index = parent.layer.getFrameIndex(window.name);
-						setTimeout(function() {
-							parent.layer.close(index)
-						}, 1000);
+						$(".filter-form .filter-btn").click();
 					}
 				}
 			});

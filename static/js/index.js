@@ -21,7 +21,7 @@ layui.use(['element', 'layer'], function() {
 });
 
 function tabClickCb($clickTab) {
-	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').load($clickTab.attr("link-url"), function() {
+	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq('+$clickTab.index()+')').load($clickTab.attr("link-url"), function() {
 		comm.fillSelAndCont();
 	});
 }

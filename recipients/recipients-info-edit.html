@@ -1,8 +1,8 @@
-<form class="layui-form fill-container fill-form-container " id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
+<form class="layui-form" id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
-			<input type="text" name="receivername" required lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="receivername" required lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -15,37 +15,37 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">地址</label>
 		<div class="layui-input-inline">
-			<input type="text" name="receiveraddress" required lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="receiveraddress" required lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">手机</label>
 		<div class="layui-input-inline">
-			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮箱</label>
 		<div class="layui-input-inline">
-			<input type="text" name="title" required lay-verify="required|email" placeholder="请输入收件人的邮箱号码" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="title" required lay-verify="required|email" placeholder="请输入收件人的邮箱号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input type="text" name="idcardnumber" required lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="idcardnumber" required lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证正面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
+			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证反面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
+			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -59,14 +59,29 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#add_recipients_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParamX("id"));
-		/*comm.fillContainerByUrl({
+		$("#add_recipients_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParam("id"));
+		comm.fillContainerByUrl({
 			cont: $("#add_recipients_form"),
 			cb: function(data) {
-				console.info(data);
-				
-			}
-		});*/
+				alert(data);
+				/*var detaillist = data.detaillist;
+				var len = detaillist.length - $("#detail_body .detail-tr").length;
+				var cloneLine = $(".detail-tr").first().clone();
+				detaillist.map(function(v, index, arr) {
+					for(var i = 0; i < len; i++) {
+						$("#detail_body").append(cloneLine);
+						$("#detail_body .detail-tr:last-child select,input").val("");
+					}
+
+					for(var key in v) {
+						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+						$cont.val(v[key]).data("data", v[key]);
+					}
+					form.render('select');*/
+}
+				});
+			
+		});
 
 		//删除行
 		
