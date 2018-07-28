@@ -1,24 +1,23 @@
 <div class="layui-tab-content">
 	<div class="layui-tab-item layui-show">
-		<form class="layui-form ignore-comm-submit fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form"  fill-type="get">
+		<form class="layui-form fill-container fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form"  fill-type="get">
 			<div class="layui-form-item">
 				<li class="inline-nowrap">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-inline">
-						<select name="delivername" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+						<input type="text" name="delivername" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
 					</div>
 				</li>
 				<li class="inline-nowrap">
 					<label class="layui-form-label">电话</label>
 					<div class="layui-input-inline">
-						<select name="mobilephone" class="form-field-cont" lay-verify="required" initial-name="waylist"></select>
-
+						<input type="text" name="mobilephone" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
 					</div>
 				</li>
 				<li class="inline-nowrap">
 					<label class="layui-form-label">地址</label>
 					<div class="layui-input-inline">
-						<input type="text" name="deliveraddress" class="form-field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
+						<input type="text" name="deliveraddress" required lay-verify="required" autocomplete="off" class="layui-input form-field-cont">
 					</div>
 				</li>
 			</div>
