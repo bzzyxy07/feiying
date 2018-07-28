@@ -1,4 +1,4 @@
-<form class="layui-form" id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
+<form class="layui-form fill-container fill-form-container " id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
@@ -59,14 +59,14 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#add_recipients_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParam("id"));
-		comm.fillContainerByUrl({
+		$("#add_recipients_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParamX("id"));
+		/*comm.fillContainerByUrl({
 			cont: $("#add_recipients_form"),
 			cb: function(data) {
 				console.info(data);
 				
 			}
-		});
+		});*/
 
 		//删除行
 		
