@@ -4,7 +4,7 @@ var comm = {
 	 * 临时二次封装layer.open用以打开页面
 	 */
 	openPage: function(param) {
-		$(".popup-page-store").load(param.url, function() {
+		$(".popup-page-store").attr("url", param.url).load(param.url, function() {
 			layui.use('layer', function() {
 				var layer = layui.layer;
 				var openParam = $.extend(param.open, {
@@ -13,17 +13,17 @@ var comm = {
 					content: $('.popup-page-store')
 				});
 				layer.open(openParam);
-				comm.fillSelAndCont();
+				comm.fillSelAndCont('.popup-page-store');
 			});
-		}).attr("url", param.url);
+		});
 	},
 	fillSelAndCont: function() {
-		var target = '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
+		var target = arguments[0] || '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
 		layui.use('form', function() {
 			var form = layui.form;
 			var searchUrlArr = [];
-			var selLength = $("select[url]").length;
-			var fillLength = $(".fill-container[fill-url]").length;
+			var selLength = $(target + " select[url]").length;
+			var fillLength = $(target + " .fill-container[fill-url]").length;
 			//从数据库中获取select选项
 			$(target + " select[url]").each(function(index, element) {
 				var $this = $(this),
@@ -336,8 +336,10 @@ var comm = {
 	},
 	getUrlParamX: function(name) {
 		var urlStr = $(".popup-page-store").attr("url");
+		console.info(urlStr)
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = urlStr.substring(urlStr.indexOf("?")).substr(1).match(reg);
+		console.info(name);
 		if(r != null) return unescape(r[2]);
 		return null;
 	},

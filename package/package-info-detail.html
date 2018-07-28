@@ -55,7 +55,7 @@
 		var form = layui.form;
 		var table = layui.table;
 
-		$("#package_detail_cont").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParam("id"));
+		$("#package_detail_cont").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParamX("id"));
 
 		comm.fillContainerByUrl({
 			cont: $("#package_detail_cont"),

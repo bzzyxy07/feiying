@@ -103,7 +103,7 @@
 				}
 			}
 		});
-		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParam("id"));
+		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParamX("id"));
 		comm.fillContainerByUrl({
 			cont: $("#package_edit_form"),
 			cb: function(data) {
