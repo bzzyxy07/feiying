@@ -3,10 +3,12 @@
 		#detail_body tr:first-child .del-detail-tr {
 			display: none;
 		}
+		
 		#express_detail_cont th {
 			font-weight: 600;
-			background: #fff;
+			background: none;
 		}
+		
 		#express_detail_cont th[colspan="8"] {
 			background: #f2f2f2;
 		}
@@ -46,7 +48,8 @@
 
 		<tr>
 			<th colspan="8">
-				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息</p>
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息<button type="button" class="layui-btn layui-btn-sm float-right" id="add_sender">添加发件人</button></p>
+				
 			</th>
 		</tr>
 		<tr>
@@ -67,7 +70,7 @@
 
 		<tr>
 			<th colspan="8">
-				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息</p>
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息<button type="button" class="layui-btn layui-btn-sm" id="add_recipients">添加收件人</button></p>
 			</th>
 		</tr>
 		<tr>
@@ -102,18 +105,30 @@
 		<tr>
 			<th class="align-right">身份证正面照片</th>
 			<td class="padd-0" colspan="3">
-				<input type="file" name="" class="form-field-cont layui-input">
+				<div class="upload-img-container">
+					<a href="javascript:;">
+						<span>点此上传</span>
+						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					</a>
+					<img class="upload-img" alt="暂无图片">
+				</div>
 			</td>
 			<th class="align-right">身份证反面照片</th>
 			<td class="padd-0" colspan="3">
-				<input type="file" name="" class="form-field-cont layui-input">
+				<div class="upload-img-container">
+					<a href="javascript:;">
+						<span>点此上传</span>
+						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					</a>
+					<img class="upload-img" alt="暂无图片">
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">地址</th>
 			<td class="padd-0 relation-select" colspan="7">
 				<div class="layui-input-inline">
-					<select name="" id="provinde"></select>
+					<select name="" id="province"></select>
 				</div>
 				<div class="layui-input-inline">
 					<select name="" id="city"></select>
@@ -142,6 +157,7 @@
 							<th>数量</th>
 							<th>单价($)</th>
 							<th>单位</th>
+							<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
 						</tr>
 					</thead>
 					<tbody id="detail_body">
@@ -217,17 +233,21 @@
 			cont: '#express_detail_cont',
 			cb: function(data) {
 				//初始化省市联动
-                comm.initRelateSelect({
-                	container: ["#province", "#city"],
-                	data: data["region_list"]
-                });
+				comm.initRelateSelect({
+					container: ["#province", "#city"],
+					data: data["region_list"]
+				});
 				//添加行
-				$("#add_detail_tr_btn").on("click", function() {
+				$("#add_detail_tr_btn").unbind("click").on("click", function() {
 					$("#detail_body").append($(".detail-tr").first().clone());
 					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
 				});
 			}
+		});
+		//删除行
+		$("#detail_body").on("click", ".del-detail-tr", function() {
+			$(this).parent().parent("tr").remove();
 		});
 
 		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));

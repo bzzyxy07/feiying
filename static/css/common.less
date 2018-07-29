@@ -282,6 +282,9 @@ a {
     th {
         background: #f2f2f2;
     }
+    img {
+        max-width: 1000px;
+    }
 }
 
 .filter-form {
@@ -505,6 +508,7 @@ a {
 .upload-img-container {
     height: 160px;
     width: 250px;
+    max-width: 100%;
     border: 1px solid #f2f2f2;
     position: relative;
     a {
@@ -524,6 +528,7 @@ a {
         color: #1c98f4;
         border: 1px solid;
         font-size: 15px;
+        z-index: 101;
         &:hover {
             background: #fff;
         }
@@ -534,7 +539,7 @@ a {
             width: 100%;
             height: 100%;
             padding: 0;
-            cursor: pointer
+            cursor: pointer;
         }
     }
     img {
@@ -542,6 +547,6 @@ a {
         height: 100%;
         position: absolute;
         top: 0;
-        z-index: -1;
+        z-index: 100;
     }
 }
