@@ -79,6 +79,7 @@ a {
 
 .auto-center {
     margin: 0 auto;
+    display: block;
 }
 
 .layui-btn-sm {
@@ -318,6 +319,11 @@ a {
                 }
             }
         }
+        >span {
+            padding-left: 3px;
+            color: @active-blue;
+            font-weight: 600;
+        }
     }
 }
 
@@ -366,6 +372,12 @@ a {
 .layui-table-cell {
     height: 30px;
     line-height: 30px;
+}
+
+.relation-select {
+    .layui-input.layui-unselect {
+        border: 1px solid #e6e6e6;
+    }
 }
 
 //手机端变化

@@ -1,18 +1,6 @@
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
 	<ul>
 		<li>
-			<span>送达仓库</span>
-			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
-		</li>
-		<li>
-			<span>包裹追踪号</span>
-			<input class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
-		</li>
-		<li>
-			<span>运单号</span>
-			<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
-		</li>
-		<li>
 			<span>入库状态</span>
 			<ul class="form-condition" name="isenter">
 				<li class="active" data-value="">全部</li>
@@ -28,6 +16,21 @@
 				<li data-value="false">已提交</li>
 			</ul>
 		</li>
+	</ul>
+	<ul>
+		<li>
+			<span>送达仓库</span>
+			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
+		</li>
+		<li>
+			<span>包裹追踪号</span>
+			<input class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
+		</li>
+		<li>
+			<span>运单号</span>
+			<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
+		</li>
+
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
@@ -104,7 +107,7 @@
 
 			if(layEvent === 'detail') {
 				comm.openPage({
-					url: './package/package-info-detail.html?id=' + data.id,
+					url: './package/package-detail.html?id=' + data.id,
 					open: {
 						maxmin: true,
 						area: ['80%', '600px'],
@@ -118,7 +121,7 @@
 			} else if(layEvent === 'edit') {
 
 				comm.openPage({
-					url: './package/package-info-edit.html?id=' + data.id,
+					url: './package/package-edit.html?id=' + data.id,
 					open: {
 						maxmin: true,
 						area: ['80%', '600px'],

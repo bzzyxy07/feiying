@@ -3,6 +3,13 @@
 		#detail_body tr:first-child .del-detail-tr {
 			display: none;
 		}
+		#express_detail_cont th {
+			font-weight: 600;
+			background: #fff;
+		}
+		#express_detail_cont th[colspan="8"] {
+			background: #f2f2f2;
+		}
 	</style>
 </head>
 <form class="layui-form init-select-group" group-init-url="/api/OrderTransportOrder/PostView">
@@ -104,15 +111,15 @@
 		</tr>
 		<tr>
 			<th class="align-right">地址</th>
-			<td class="padd-0" colspan="7">
+			<td class="padd-0 relation-select" colspan="7">
 				<div class="layui-input-inline">
-					<select name=""></select>
+					<select name="" id="provinde"></select>
 				</div>
 				<div class="layui-input-inline">
-					<select name=""></select>
+					<select name="" id="city"></select>
 				</div>
-				<div class="layui-input-inline">
-					<input name="" class="form-field-cont layui-input">
+				<div class="layui-input-inline" style="width: 300px;">
+					<input name="" class="form-field-cont layui-input" placeholder="请输入详细地址">
 				</div>
 			</td>
 		</tr>
@@ -196,7 +203,7 @@
 			</td>
 		</tr>
 	</table>
-	<button type="button" lay-submit class="layui-btn layui-btn-normal auto-center">保存</button>
+	<button type="button" lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">保存</button>
 </form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
@@ -209,6 +216,11 @@
 			url: '/api/OrderTransportOrder/PostView',
 			cont: '#express_detail_cont',
 			cb: function(data) {
+				//初始化省市联动
+                comm.initRelateSelect({
+                	container: ["#province", "#city"],
+                	data: data["region_list"]
+                });
 				//添加行
 				$("#add_detail_tr_btn").on("click", function() {
 					$("#detail_body").append($(".detail-tr").first().clone());
@@ -217,6 +229,7 @@
 				});
 			}
 		});
+
 		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 	});

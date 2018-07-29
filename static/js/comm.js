@@ -264,6 +264,7 @@ var comm = {
 			form.on('select()', function(data) {
 				$("#" + param.formId + " .filter-btn").click();
 			});
+			form.render();
 
 			$(filterForm).on("click", ".filter-btn", function() {
 				!$(filterForm).parents(".layui-tab-item").find(".loading-container").length &&
@@ -437,4 +438,37 @@ var comm = {
 		});
 		return false;
 	},
+	/**
+	 * 二级省市联动
+	 * @param {
+	 * 	container: ["#cont1", "#cont2"],
+	 *  data
+	 * } 
+	 */
+	initRelateSelect: function(param) {
+		var container0 = param.container[0],
+			container1 = param.container[1],
+			relateList = param.data,
+			provinceSel = '<option value="">请选择省</option>',
+			idArr = [];
+
+		relateList.map(function(v) {
+			provinceSel += '<option value="' + v.id + '">' + v.regionname + '</option>';
+			idArr.push(v.id);
+		});
+
+		$(container0).attr("lay-filter", "relate-province").html(provinceSel);
+		$(container1).attr("lay-filter", "relate-city").html('<option value="">请选择市</option>');
+		form.render('select');
+
+		form.on('select(relate-province)', function(data) {
+			var citySel = '<option value="">请选择市</option>';
+			var cityList = relateList[idArr.indexOf(data.value)]['children'];
+			cityList.map(function(v) {
+				citySel += '<option value="' + v.id + '">' + v.regionname + '</option>';
+			});
+			$(container1).html(citySel);
+			form.render('select');
+		});
+	}
 }
