@@ -353,6 +353,7 @@ a {
 .layui-tab-item {
     position: relative;
 }
+
 .idcard-img {
     width: 100%;
     height: 100%;
@@ -497,4 +498,49 @@ a {
 
 .layui-form-select dl dd.layui-this {
     background-color: @main-nav-background-color;
+}
+
+//上传图片
+.upload-img-container {
+    height: 160px;
+    width: 250px;
+    border: 1px solid #f2f2f2;
+    position: relative;
+    a {
+        width: 100px;
+        background: rgba(255, 255, 255, .5);
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 3px;
+        top: 50%;
+        left: 50%;
+        margin-top: -15px;
+        margin-left: -50px;
+        cursor: pointer;
+        color: #1c98f4;
+        border: 1px solid;
+        font-size: 15px;
+        &:hover {
+            background: #fff;
+        }
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            cursor: pointer
+        }
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
 }

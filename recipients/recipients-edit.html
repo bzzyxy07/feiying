@@ -5,7 +5,7 @@
 		}
 	</style>
 </head>
-<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" lay-filter="recipients_edit_form" fill-type="get" submit-url="/api/BasicReceiver/Put" succ-close submit-type="put" succ-msg="修改成功！" >
+<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" submit-type="put" succ-msg="修改成功！">
 	<input type="hidden" name="id">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
@@ -17,6 +17,8 @@
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
 			<select name="regionprovince" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+		</div>
+		<div class="layui-input-inline">
 			<select name="regioncity" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
 		</div>
 	</div>
@@ -35,25 +37,37 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input type="text" name="zipcode" required lay-verify="required" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="zipcode" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input type="text" name="idcardnumber" required lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input form-field-cont">
+			<input type="text" name="idcardnumber" lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证正面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont judge-img-file">
+			<div class="upload-img-container">
+				<a href="javascript:;">
+					<span>点此上传</span>
+					<input type="file" name="idcardzheng" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+				</a>
+				<img class="upload-img" alt="暂无图片">
+			</div>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证反面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont judge-img-file">
+			<div class="upload-img-container">
+				<a href="javascript:;">
+					<span>点此上传</span>
+					<input type="file" name="idcardfan" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+				</a>
+				<img class="upload-img" alt="暂无图片">
+			</div>
 		</div>
 	</div>
 	<div class="layui-form-item">

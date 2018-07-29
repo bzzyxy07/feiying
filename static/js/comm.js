@@ -99,6 +99,10 @@ var comm = {
 					}
 				});
 			});
+			$(target + " .upload-img-file").on("change", function(e) {
+				comm.showImgFile(e, $(this));
+			}).parent("a").next("img").attr("src", "./static/img/default-img.jpg");
+
 			$(target + " .layui-form:not(.ignore-comm-submit)").each(function() {
 				var filter = $(this).attr("lay-filter");
 				!filter && (filter = $(this).attr("id") || "form" + comm.uuid()) && $(this).attr("lay-filter", filter);
@@ -131,7 +135,6 @@ var comm = {
 	getDataByCondition: function(condition) {
 		condition.loading &&
 			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
-
 		var ajaxData = $.extend({
 			url: '',
 			type: 'get',
@@ -209,15 +212,10 @@ var comm = {
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
-
-			sepCont.hasClass("judge-img-file") &&
-				sepCont.attr("accept", "image/png, image/jpg, image/jpeg") &&
-				sepCont.after('<img src="./static/img/default-img.jpg" alt="暂无图片" width="150px" height="100px">') && 
-				(sepCont.on("change",function(e) {
-					comm.initImgFile(e, sepCont.next("img"));
-				}).change()) ;
-
-			sepCont.length && sepCont.val(data[key]).data("data", data[key]);
+			if(!data[key] || !sepCont.length) continue;
+			sepCont.hasClass("upload-img-file") ?
+				sepCont.parent("a").next("img").attr("src", data[key]) :
+				sepCont.val(data[key]).data("data", data[key]);
 		}
 		layui.use('form', function() {
 			var form = layui.form;
@@ -225,22 +223,20 @@ var comm = {
 		});
 	},
 
-	initImgFile: function(e, $img) {
-		for(var i = 0; i < e.target.files.length; i++) {
-			var file = e.target.files.item(i);
-			if(!(/^image\/.*$/i.test(file.type))) {
-				layui.use('layer', function() {
-					var layer = layui.layer;
-					layer.alert("请上传图片格式的文件！");
-				});
-				continue; 
-			}
-			var freader = new FileReader();
-			freader.readAsDataURL(file);
-			freader.onload = function(e) {
-				$img.attr("src", e.target.result);
-			};
+	showImgFile: function(e, $input) {
+		var file = e.target.files[0];
+		if(!(/^image\/.*$/i.test(file.type))) {
+			layui.use('layer', function() {
+				var layer = layui.layer;
+				layer.alert("请上传图片格式的文件！");
+			});
+			return false;
 		}
+		var freader = new FileReader();
+		freader.readAsDataURL(file);
+		freader.onload = function(e) {
+			$input.parent("a").next("img").attr("src", e.target.result);
+		};
 	},
 	initImageByData: function() {
 
@@ -248,7 +244,6 @@ var comm = {
 	getFormData: function($form) {
 		var unindexed_array = $form.serializeArray();
 		var indexed_array = {};
-
 		$.map(unindexed_array, function(n, i) {
 			indexed_array[n['name']] = n['value'];
 		});
@@ -375,6 +370,7 @@ var comm = {
 							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
 							$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+							$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
 						}
 					}
 				});
