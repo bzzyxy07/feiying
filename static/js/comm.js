@@ -212,7 +212,7 @@ var comm = {
 
 			sepCont.hasClass("judge-img-file") &&
 				sepCont.attr("accept", "image/png, image/jpg, image/jpeg") &&
-				sepCont.after('<img src="" alt="暂无图片" height="100px" width="150px">') && 
+				sepCont.after('<img src="./static/img/default-img.jpg" alt="暂无图片" width="150px" height="100px">') && 
 				(sepCont.on("change",function(e) {
 					comm.initImgFile(e, sepCont.next("img"));
 				}).change()) ;
