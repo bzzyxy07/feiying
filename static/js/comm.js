@@ -381,27 +381,35 @@ var comm = {
 	},
 	/*退出系统 */
 	exitSystem: function() {
-		layui.use('layer', function() {
-			var layer = layui.layer;
-			layer.confirm("确认退出本系统？", function() {
-				$.ajax({
-					url: path + '/api/auth/logoff',
-					type: 'post',
-					beforeSend: function(request) {
-						request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
-					},
-					success: function(data) {
-						sessionStorage.clear();
-						window.location.href = "./login.html";
-					},
-					error: function() {
-						layer.msg("系统异常，退出失败，请重试！", {
-							icon: 5
-						});
-					}
+		if(arguments.length) {
+			layui.use('layer', function() {
+				var layer = layui.layer;
+				layer.confirm("确认退出本系统？", function() {
+					exit();
 				});
 			});
-		});
+		} else {
+			exit();
+		}
+
+		function exit() {
+			$.ajax({
+				url: path + '/api/auth/logoff',
+				type: 'post',
+				beforeSend: function(request) {
+					request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+				},
+				success: function(data) {
+					sessionStorage.clear();
+					window.location.href = "./login.html";
+				},
+				error: function() {
+					layer.msg("系统异常，退出失败，请重试！", {
+						icon: 5
+					});
+				}
+			});
+		}
 	},
 	/*系统超时*/
 	systemTimeout: function() {

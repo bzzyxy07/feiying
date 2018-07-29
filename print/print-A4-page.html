@@ -5,9 +5,13 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="shortcut icon" href="http://tmp.fychinago.com/favicon.ico">
 		<title>运单打印</title>
 		<style>
+			body {
+				padding: 0 0 40px;
+				margin: 0;
+			}
+			
 			.print-table-A4 {
 				margin: 0px auto;
 				width: 780px;
@@ -17,7 +21,6 @@
 				margin-top: 10px;
 				margin-bottom: 10px;
 				height: 424px;
-				float: left;
 			}
 			
 			.print-table-A4 b {
@@ -43,6 +46,24 @@
 			
 			.print-table-A4 td b {
 				float: left;
+			}
+			#confirm_print_btn {
+				height: 38px;
+				line-height: 38px;
+				padding: 0 18px;
+				background-color: #009688;
+				color: #fff;
+				white-space: nowrap;
+				text-align: center;
+				font-size: 14px;
+				border: none;
+				border-radius: 2px;
+				cursor: pointer;
+				display: block;
+				width: 100%;
+				position: fixed;
+				bottom: 0;
+				z-index: 100;
 			}
 		
 			
@@ -180,6 +201,7 @@
 					</td>
 				</tr>
 			</tbody>
+			<button type="button" class="layui-btn" id="confirm_print_btn">确认打印</button>
 		</table>
 		<script src="../static/js/jquery.min.js"></script>
 		<script src="../static/js/plugin/layui/layui.js"></script>
