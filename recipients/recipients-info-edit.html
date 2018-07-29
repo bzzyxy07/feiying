@@ -1,56 +1,56 @@
-<form class="layui-form" id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
+<form class="layui-form  ignore-comm-submit fill-container fill-form-container" id="recipients_edit_form" lay-filter="recipients_edit_form" fill-type="get">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
-			<input type="text" name="receivername" required lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input">
+			<input type="text" name="receivername" required lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="">请选择省份</select>
-			<select name="">请选择城市</select>
+			<select name="regionprovince" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+			<select name="regioncity" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">地址</label>
 		<div class="layui-input-inline">
-			<input type="text" name="receiveraddress" required lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input">
+			<input type="text" name="receiveraddress" required lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">手机</label>
 		<div class="layui-input-inline">
-			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
+			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">邮箱</label>
+		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input type="text" name="title" required lay-verify="required|email" placeholder="请输入收件人的邮箱号码" autocomplete="off" class="layui-input">
+			<input type="text" name="zipcode" required lay-verify="required" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input type="text" name="idcardnumber" required lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input">
+			<input type="text" name="idcardnumber" required lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证正面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证反面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">保存</button>
+			<button class="layui-btn layui-btn-normal" lay-submit>提交</button>
 		</div>
 	</div>
 </form>
@@ -59,33 +59,35 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#add_recipients_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParam("id"));
-		comm.fillContainerByUrl({
-			cont: $("#add_recipients_form"),
-			cb: function(data) {
-				alert(data);
-				/*var detaillist = data.detaillist;
-				var len = detaillist.length - $("#detail_body .detail-tr").length;
-				var cloneLine = $(".detail-tr").first().clone();
-				detaillist.map(function(v, index, arr) {
-					for(var i = 0; i < len; i++) {
-						$("#detail_body").append(cloneLine);
-						$("#detail_body .detail-tr:last-child select,input").val("");
-					}
-
-					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.val(v[key]).data("data", v[key]);
-					}
-					form.render('select');*/
-}
-				});
-			
-		});
-
+		$("#recipients_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParamX("id"));
+		
 		//删除行
 		
 		//提交编辑的包裹信息
+		form.on('submit(recipients_edit_form)', function(data) {
 	
+			var packageData = {
+				"receivername": $('#recipients_edit_form [name="receivername"]').val(),
+				"receiveraddress": $('#recipients_edit_form [name="receiveraddress"]').val(),
+				"mobilephone": $('#recipients_edit_form [name="mobilephone"]').val(),
+				"zipcode": $('#recipients_edit_form [name="zipcode"]').val(),
+				"idcardnumber": $('#recipients_edit_form [name="idcardnumber"]').val(),
+				"id":comm.getUrlParamX("id")
+			}
+			comm.getDataByCondition({
+				loading: true,
+				ajax: {
+					url: "/api/BasicReceiver/Put",
+					type: "put",
+					data: packageData,
+					success: function(data) {
+						layer.closeAll();
+						layer.msg("修改成功！");
+						$(".filter-form .filter-btn").click();
+					}
+				}
+			});
+			return false;
+		});
 	});
 </script>
