@@ -5,8 +5,7 @@
 		}
 	</style>
 </head>
-<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" submit-type="put" succ-msg="修改成功！">
-	<input type="hidden" name="id">
+<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" enctype="multipart/form-data" submit-type="put" succ-msg="修改成功！">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
@@ -16,20 +15,20 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="regionprovince" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+			<select name="regionprovince" class="form-field-cont"  initial-name="depotlist"></select>
 		</div>
 		<div class="layui-input-inline">
-			<select name="regioncity" class="form-field-cont" lay-verify="required" initial-name="depotlist"></select>
+			<select name="regioncity" class="form-field-cont" initial-name="depotlist"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">地址</label>
+		<label class="layui-form-label required-logo">地址</label>
 		<div class="layui-input-inline">
 			<input type="text" name="receiveraddress" lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input form-field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">手机</label>
+		<label class="layui-form-label required-logo">手机</label>
 		<div class="layui-input-inline">
 			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>
@@ -41,7 +40,7 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">身份证号码</label>
+		<label class="layui-form-label required-logo">身份证号码</label>
 		<div class="layui-input-inline">
 			<input type="text" name="idcardnumber" lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input form-field-cont">
 		</div>

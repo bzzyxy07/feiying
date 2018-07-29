@@ -6,6 +6,7 @@
 	</style>
 </head>
 <form class="layui-form" id="recipients_add_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
+	<input type="file" name="idcardzheng" >
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
@@ -15,18 +16,20 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="">请选择省份</select>
-			<select name="">请选择城市</select>
+			<select name="regionprovince" class="form-field-cont" initial-name="depotlist"></select>
+		</div>
+		<div class="layui-input-inline">
+			<select name="regioncity" class="form-field-cont" initial-name="depotlist"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">地址</label>
+		<label class="layui-form-label required-logo">地址</label>
 		<div class="layui-input-inline">
 			<input type="text" name="receiveraddress" lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">手机</label>
+		<label class="layui-form-label required-logo">手机</label>
 		<div class="layui-input-inline">
 			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
 		</div>
@@ -38,7 +41,7 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">身份证号码</label>
+		<label class="layui-form-label required-logo">身份证号码</label>
 		<div class="layui-input-inline">
 			<input type="text" name="idcardnumber" lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input">
 		</div>
@@ -49,7 +52,7 @@
 			<div class="upload-img-container">
 				<a href="javascript:;">
 					<span>点此上传</span>
-					<input type="file" name="idcardzheng" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<!--<input type="file" name="idcardzheng" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">-->
 				</a>
 				<img class="upload-img" alt="暂无图片">
 			</div>
