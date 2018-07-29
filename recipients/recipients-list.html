@@ -59,9 +59,11 @@
 					}, {
 						field: 'idcardzheng',
 						title: '正面',
+						templet: '#idcardzheng'
 					}, {
 						field: 'idcardfan',
 						title: '反面',
+						templet: '#idcardfan'
 					}, {
 						field: '',
 						title: '操作',
@@ -77,8 +79,8 @@
 
 			if(layEvent === 'detail') { //查看详情
 
-			} else if(layEvent === 'delete') { //删除包裹信息
-				layer.confirm('是否确认删除该包裹信息1？', function(index) {
+			} else if(layEvent === 'delete') { //删除收件人
+				layer.confirm('是否确认删除该收件人？', function(index) {
 					obj.del();
 					layer.alert("尚未开发，敬请期待");
 				});
@@ -87,15 +89,35 @@
 					url: './recipients/recipients-edit.html?id=' + data.id,
 					open: {
 						maxmin: true,
-    					area: ['80%', '600px'],
+						area: ['80%', '600px'],
 					}
 				});
 
-			} else if(layEvent === 'reject') { //包裹退货
-				layer.alert("尚未开发，敬请期待");
+			} else if(layEvent === 'check-zhengmian' || layEvent === 'check-fanmian') {
+				var imgSrc = (layEvent === 'check-zhengmian') ? data.idcardzheng : data.idcardfan;
+				layer.open({
+					type: 1,
+					closeBtn: 0,
+					anim: 2,
+					shadeClose: true,
+					content: '<img class="idcard-img" src="' + imgSrc + '" alt="无法正常显示照片，请核对路径：' + imgSrc + '">',
+					title: '',
+					area: ['400px', '300px']
+				})
+
 			}
 		});
 	});
+</script>
+<script type="text/html" id="idcardzheng">
+	{{#if(d.idcardzheng) { }}
+	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-zhengmian">查看照片</button> {{# } else { }}
+	<button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">无照片</button> {{# } }}
+</script>
+<script type="text/html" id="idcardfan">
+	{{#if(d.idcardfan) { }}
+	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-fanmian">查看照片</button> {{# } else { }}
+	<button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">无照片</button> {{# } }}
 </script>
 <script type="text/html" id="operation">
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</a>

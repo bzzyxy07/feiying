@@ -209,12 +209,38 @@ var comm = {
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
+
+			sepCont.hasClass("judge-img-file") &&
+				sepCont.attr("accept", "image/png, image/jpg, image/jpeg") &&
+				sepCont.after('<img src="" alt="暂无图片" height="100px" width="150px">') && 
+				(sepCont.on("change",function(e) {
+					comm.initImgFile(e, sepCont.next("img"));
+				}).change()) ;
+
 			sepCont.length && sepCont.val(data[key]).data("data", data[key]);
 		}
 		layui.use('form', function() {
 			var form = layui.form;
 			form.render();
 		});
+	},
+
+	initImgFile: function(e, $img) {
+		for(var i = 0; i < e.target.files.length; i++) {
+			var file = e.target.files.item(i);
+			if(!(/^image\/.*$/i.test(file.type))) {
+				layui.use('layer', function() {
+					var layer = layui.layer;
+					layer.alert("请上传图片格式的文件！");
+				});
+				continue; 
+			}
+			var freader = new FileReader();
+			freader.readAsDataURL(file);
+			freader.onload = function(e) {
+				$img.attr("src", e.target.result);
+			};
+		}
 	},
 	initImageByData: function() {
 
@@ -346,9 +372,9 @@ var comm = {
 						type: $form.attr("submit-type") || "get",
 						data: $form.serialize(),
 						success: function(data) {
+							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
 							$form.attr("succ-cb") && eval($form.attr("succ-cb"));
-
 						}
 					}
 				});

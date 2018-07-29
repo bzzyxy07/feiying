@@ -1,4 +1,11 @@
-<form class="layui-form" id="add_recipients_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
+<head>
+	<style>
+		#recipients_add_form .layui-form-label {
+			width: 120px;
+		}
+	</style>
+</head>
+<form class="layui-form" id="recipients_add_form" submit-url="/api/BasicReceiver/Post" submit-type="post" enctype="multipart/form-data" succ-msg="添加成功！">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">

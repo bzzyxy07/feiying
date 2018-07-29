@@ -1,4 +1,12 @@
-<form class="layui-form  ignore-comm-submit fill-container fill-form-container" id="recipients_edit_form" lay-filter="recipients_edit_form" fill-type="get">
+<head>
+	<style>
+		#recipients_edit_form .layui-form-label {
+			width: 120px;
+		}
+	</style>
+</head>
+<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" lay-filter="recipients_edit_form" fill-type="get" submit-url="/api/BasicReceiver/Put" succ-close submit-type="put" succ-msg="修改成功！" >
+	<input type="hidden" name="id">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
@@ -39,13 +47,13 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证正面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
+			<input type="file" name="idcardzheng" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont judge-img-file">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证反面照片</label>
 		<div class="layui-input-inline">
-			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont">
+			<input type="file" name="idcardfan" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input form-field-cont judge-img-file">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -57,37 +65,8 @@
 
 <script>
 	layui.use(['form', 'table'], function() {
-		var form = layui.form;
-		var table = layui.table;
-		$("#recipients_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + comm.getUrlParamX("id"));
-		
-		//删除行
-		
-		//提交编辑的包裹信息
-		form.on('submit(recipients_edit_form)', function(data) {
-	
-			var packageData = {
-				"receivername": $('#recipients_edit_form [name="receivername"]').val(),
-				"receiveraddress": $('#recipients_edit_form [name="receiveraddress"]').val(),
-				"mobilephone": $('#recipients_edit_form [name="mobilephone"]').val(),
-				"zipcode": $('#recipients_edit_form [name="zipcode"]').val(),
-				"idcardnumber": $('#recipients_edit_form [name="idcardnumber"]').val(),
-				"id":comm.getUrlParamX("id")
-			}
-			comm.getDataByCondition({
-				loading: true,
-				ajax: {
-					url: "/api/BasicReceiver/Put",
-					type: "put",
-					data: packageData,
-					success: function(data) {
-						layer.closeAll();
-						layer.msg("修改成功！");
-						$(".filter-form .filter-btn").click();
-					}
-				}
-			});
-			return false;
-		});
+		var id = comm.getUrlParamX("id");
+		$("#recipients_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
+		$("#recipients_edit_form input[name='id']").val(id);
 	});
 </script>
