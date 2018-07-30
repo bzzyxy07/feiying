@@ -27,6 +27,8 @@
 </div>
 <script>
 	layui.use(['form', 'table'], function() {
+		var targetPage = $(".popup-page-store").data("url") ? comm.getUrlParamX("target") : "";
+		var operationParam = (targetPage != "express-online-order") ? "#operation" : "#operation-express";
 		var table = layui.table;
 		comm.bindFilterForm({
 			formId: "sender_info_search_form",
@@ -34,9 +36,6 @@
 				elem: '#sender_info_table',
 				cols: [
 					[{
-						field: 'id',
-						title: 'id',
-					}, {
 						field: 'delivername',
 						title: '姓名',
 					}, {
@@ -51,7 +50,7 @@
 					}, {
 						field: '',
 						title: '操作',
-						toolbar: '#operation'
+						toolbar: operationParam
 					}]
 				]
 			}
@@ -79,6 +78,10 @@
 				});
 			} else if(layEvent === 'reject') { //包裹退货
 				layer.alert("尚未开发，敬请期待");
+			} else if(layEvent === 'choose-sender') { //选定该发件人
+				comm.fillFormByDataX(data, ".express-sender-container");
+				console.info(data);
+				comm.closeOpenPage();
 			}
 		});
 
@@ -87,4 +90,7 @@
 <script type="text/html" id="operation">
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
+</script>
+<script type="text/html" id="operation-express">
+	<a class="layui-btn layui-btn-sm" lay-event="choose-sender">选择发件人</a>
 </script>

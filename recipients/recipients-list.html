@@ -27,6 +27,8 @@
 </div>
 <script>
 	layui.use(['form', 'table'], function() {
+		var targetPage = $(".popup-page-store").data("url") ? comm.getUrlParamX("target") : "";
+		var operationParam = (targetPage != "express-online-order") ? "#operation" : "#operation-express";
 		var table = layui.table;
 		comm.bindFilterForm({
 			formId: "recipients_info_search_form",
@@ -34,9 +36,6 @@
 				elem: '#recipients_info_table',
 				cols: [
 					[{
-						field: 'id',
-						title: 'id',
-					}, {
 						field: 'receivername',
 						title: '姓名',
 					}, {
@@ -67,11 +66,15 @@
 					}, {
 						field: '',
 						title: '操作',
-						toolbar: '#operation'
+						toolbar: operationParam,
+						width: 120,
+						align: 'center',
+						fixed: 'right',
 					}]
 				]
 			}
 		});
+
 		table.on('tool(recipients_info_table)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
@@ -79,12 +82,12 @@
 
 			if(layEvent === 'detail') { //查看详情
 
-			} else if(layEvent === 'delete') { //删除收件人
+			} else if(layEvent === 'delete-recipents') { //删除收件人
 				layer.confirm('是否确认删除该收件人？', function(index) {
 					obj.del();
 					layer.alert("尚未开发，敬请期待");
 				});
-			} else if(layEvent === 'edit') { //编辑收件人信息
+			} else if(layEvent === 'edit-recipents') { //编辑收件人信息
 				comm.openPage({
 					url: './recipients/recipients-edit.html?id=' + data.id,
 					open: {
@@ -93,7 +96,7 @@
 					}
 				});
 
-			} else if(layEvent === 'check-zhengmian' || layEvent === 'check-fanmian') {
+			} else if(layEvent === 'check-zhengmian-recipents' || layEvent === 'check-fanmian-recipents') { //检查身份证照片
 				var imgSrc = (layEvent === 'check-zhengmian') ? data.idcardzheng : data.idcardfan;
 				layer.open({
 					type: 1,
@@ -105,21 +108,28 @@
 					area: ['400px', '300px']
 				})
 
+			} else if(layEvent === 'choose-recipients') { //选定该收件人
+				comm.fillFormByDataX(data, $(".express-recipients-container"));
+				console.info(data);
+				comm.closeOpenPage();
 			}
 		});
 	});
 </script>
 <script type="text/html" id="idcardzheng">
 	{{#if(d.idcardzheng) { }}
-	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-zhengmian">查看照片</button> {{# } else { }}
+	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-zhengmian-recipents">查看照片</button> {{# } else { }}
 	<button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">无照片</button> {{# } }}
 </script>
 <script type="text/html" id="idcardfan">
 	{{#if(d.idcardfan) { }}
-	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-fanmian">查看照片</button> {{# } else { }}
+	<button type="button" class="layui-btn layui-btn-sm" lay-event="check-fanmian-recipents">查看照片</button> {{# } else { }}
 	<button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">无照片</button> {{# } }}
 </script>
 <script type="text/html" id="operation">
-	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
+	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit-recipents">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete-recipients">删除</a>
+</script>
+<script type="text/html" id="operation-express">
+	<a class="layui-btn layui-btn-sm" lay-event="choose-recipients">选择收件人</a>
 </script>

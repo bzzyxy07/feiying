@@ -53,6 +53,8 @@
 						field: 'amount',
 						title: '金额($)',
 						sort: true,
+						templet: '#amount',
+						style: 'text-align:right;font-weight: 600;'
 					}, {
 						field: 'property',
 						title: '状态',
@@ -73,4 +75,9 @@
 	<span class="layui-badge layui-bg-blue">启用</span> {{# } else if(d.property == "1"){ }}
 	<span class="layui-badge layui-bg-orange">禁用</span> {{# } else{ }}
 	<span class="layui-badge layui-bg-gray">已删除</span> {{# } }}
+</script>
+<script type="text/html" id="amount">
+	{{# if(d.amount >= 0){ }}
+	<span style="color:#5FB878">{{d.amount}}</span> {{# }  else{ }}
+	<span style="color:red">{{d.amount}}</span> {{# } }}
 </script>

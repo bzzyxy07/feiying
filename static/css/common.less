@@ -76,6 +76,13 @@ a {
 .align-right {
     text-align: right !important;
 }
+.hide {
+    display: block;
+}
+
+.layui-table-fixed-r {
+    right: 0 !important;
+}
 
 .auto-center {
     margin: 0 auto;
@@ -113,6 +120,7 @@ a {
         bottom: 0;
         top: 42px;
         height: auto !important;
+        overflow-y: scroll !important;
     }
 }
 
@@ -120,6 +128,8 @@ a {
     color: @active-blue;
     font-size: 15px;
     font-weight: 900;
+    line-height: 28px;
+    height: 28px;
     .layui-badge-dot {
         margin-right: 5px;
     }
@@ -261,7 +271,9 @@ a {
 .layui-table-cell {
     padding: 0 8px;
 }
-
+.layui-table-view .layui-table td, .layui-table-view .layui-table th {
+    padding: 3px 0 !important;
+}
 .news-list {
     margin-left: 20px;
     li {
@@ -282,9 +294,13 @@ a {
     th {
         background: #f2f2f2;
     }
+    th,td {
+        padding: 3px 8px;
+    }
     img {
         max-width: 1000px;
     }
+   
 }
 
 .filter-form {

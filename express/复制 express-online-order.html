@@ -6,45 +6,38 @@
 		
 		#express_detail_cont th {
 			font-weight: 600;
-			background: #f6fcff;
+			background: none;
 		}
 		
-		#express_detail_cont th[colspan="6"] {
+		#express_detail_cont th[colspan="8"] {
 			background: #f2f2f2;
-			border-top: 2px solid #ccc;
-			padding: 8px;
 		}
-		
 		#express_detail_cont .upload-img-container {
 			margin: 0 auto;
 		}
-		
-		#express_detail_cont tbody tr:hover {
-			background-color: #fff;
-		}
 	</style>
 </head>
-<form class="layui-form init-select-group" group-init-url="/api/OrderTransportOrder/PostView" submit-url="/api/OrderTransportOrder/PostMy" submit-type="post" succ-msg="在线下单成功！">
+<form class="layui-form init-select-group" group-init-url="/api/OrderTransportOrder/PostView">
 	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
 			<col>
-			<col width="120">
+			<col width="110">
 			<col>
-			<col width="140">
+			<col width="130">
 			<col>
 			<col width="110">
 			<col>
 		</colgroup>
 		<tr>
-			<th colspan="6">
+			<th colspan="8">
 				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>运单信息</p>
 			</th>
 		</tr>
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" disabled="disabled"></span>
+				<input name="" class="form-field-cont layui-input"></span>
 			</td>
 			<th class="align-right">送达仓库</th>
 			<td class="padd-0">
@@ -57,109 +50,102 @@
 		</tr>
 
 		<tr>
-			<th colspan="6">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>发件人信息
-					<span class="float-right">
-						<input type="checkbox" name="" title="保存发件人" lay-skin="primary" checked>
-						<button type="button" class="layui-btn layui-btn-sm float-right" id="choose_sender">选择发件人</button>
-					</span>
-				</p>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息<button type="button" class="layui-btn layui-btn-sm float-right" id="add_sender">添加发件人</button></p>
+				
 			</th>
 		</tr>
-		<tr class="express-sender-container">
+		<tr>
 			<th class="align-right">姓名</th>
 			<td class="padd-0">
-				<ul class="select-url" url="/api/BasicDeliver/GetMy" data-value="id" data-text="delivername"></ul>
-				<input name="" class="form-field-cont layui-input" fill-name="delivername">
+				<select url="/api/BasicDeliver/GetMy" data-value="id" data-text="delivername"></select>
+				<input name="" class="form-field-cont layui-input">
 			</td>
 			<th class="align-right">电话</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" fill-name="mobilephone">
+				<input name="" class="form-field-cont layui-input">
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="" class="form-field-cont layui-input" fill-name="deliveraddress">
+				<input name="" class="form-field-cont layui-input">
 			</td>
+
 		</tr>
 
 		<tr>
-			<th colspan="6">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>收件人信息
-					<span class="float-right">
-						<input type="checkbox" name="" title="保存收件人" lay-skin="primary" checked>
-						<button type="button" class="layui-btn layui-btn-sm" id="choose_recipients">选择收件人</button>
-					</span>
-				</p>
+			<th colspan="8">
+				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息<button type="button" class="layui-btn layui-btn-sm" id="add_recipients">添加收件人</button></p>
 			</th>
 		</tr>
 		<tr>
-			<th class="align-right">收件人姓名</th>
+			<th class="align-right">姓名</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" id="express_recipients_id" type="text" fill-name="receivername">
+				<select url="/api/BasicReceiver/GetMy" data-value="id" data-text="receivername"></select>
+				<input name="" class="form-field-cont layui-input">
 			</td>
-			<th class="align-right">证件类型</th>
-			<td class="padd-0">
-				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype"></select>
-			</td>
-			<th class="align-right">证件号码</th>
-			<td class="padd-0">
-				<input type="text" name="" class="form-field-cont layui-input" fill-name="idcardnumber">
-			</td>
-		</tr>
-		<tr class="express-reciver-container">
 			<th class="align-right">电话</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" fill-name="mobilephone">
+				<input name="" class="form-field-cont layui-input">
 			</td>
-			<th class="align-right" rowspan="4">证件正面照片</th>
-			<td class="padd-0" rowspan="4">
-				<div class="upload-img-container">
-					<a href="javascript:;">
-						<span>点此上传</span>
-						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardzheng">
-					</a>
-					<img class="upload-img" alt="暂无图片">
-				</div>
-			</td>
-			<th class="align-right" rowspan="4">证件反面照片</th>
-			<td class="padd-0" rowspan="4">
-				<div class="upload-img-container">
-					<a href="javascript:;">
-						<span>点此上传</span>
-						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardfan">
-					</a>
-					<img class="upload-img" alt="暂无图片">
-				</div>
-			</td>
-		</tr>
-		<tr class="express-reciver-container">
+
 			<th class="align-right">邮编</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" fill-name="zipcode">
+				<input name="" class="form-field-cont layui-input">
 			</td>
-		</tr>
-
-		<tr class="express-reciver-container">
-			<th class="align-right">省市地址</th>
-			<td class="padd-0 relation-select">
-				<div class="layui-input-inline">
-					<select name="" id="province" fill-name="regionprovince"></select>
-				</div>
-				<div class="layui-input-inline">
-					<select name="" id="city" fill-name="regioncity"></select>
-				</div>
-			</td>
-		</tr>
-		<tr class="express-reciver-container">
-			<th class="align-right">详细地址</th>
-			<td class="padd-0 ">
-				<input name="" class="form-field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress">
+			<th class="align-right">身份证号</th>
+			<td class="padd-0">
+				<input name="" class="form-field-cont layui-input">
 			</td>
 		</tr>
 		<tr>
-			<th colspan="6">
+			<th class="align-right">证件类型</th>
+			<td class="padd-0" colspan="3">
+				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value"></select>
+			</td>
+			<th class="align-right">证件号码</th>
+			<td class="padd-0" colspan="3">
+				<input type="text" name="" class="form-field-cont layui-input">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">身份证正面照片</th>
+			<td class="padd-0" colspan="3">
+				<div class="upload-img-container">
+					<a href="javascript:;">
+						<span>点此上传</span>
+						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					</a>
+					<img class="upload-img" alt="暂无图片">
+				</div>
+			</td>
+			<th class="align-right">身份证反面照片</th>
+			<td class="padd-0" colspan="3">
+				<div class="upload-img-container">
+					<a href="javascript:;">
+						<span>点此上传</span>
+						<input type="file" name="" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					</a>
+					<img class="upload-img" alt="暂无图片">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right">地址</th>
+			<td class="padd-0 relation-select" colspan="7">
+				<div class="layui-input-inline">
+					<select name="" id="province"></select>
+				</div>
+				<div class="layui-input-inline">
+					<select name="" id="city"></select>
+				</div>
+				<div class="layui-input-inline" style="width: 300px;">
+					<input name="" class="form-field-cont layui-input" placeholder="请输入详细地址">
+				</div>
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="8">
 				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
 			</th>
 		</tr>
@@ -214,26 +200,26 @@
 		</tr>
 		<tr>
 			<th class="align-right">增值服务</th>
-			<td class="padd-0" colspan="5">
+			<td class="padd-0" colspan="7">
 				<input type="checkbox" name="" title="箱子（1$）" lay-skin="primary">
 				<select name="" initial-name="servicelist"></select>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">费用</th>
-			<td class="padd-0" colspan="5">
+			<td class="padd-0" colspan="7">
 				<input name="" class="form-field-cont layui-input">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">可用积分</th>
-			<td class="padd-0" colspan="5">
+			<td class="padd-0" colspan="7">
 				<select></select>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">备注</th>
-			<td class="padd-0" colspan="5">
+			<td class="padd-0" colspan="7">
 				<input name="remark" class="layui-input">
 			</td>
 		</tr>
@@ -270,35 +256,6 @@
 		});
 
 		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
-
-		//选定收件人
-		$("#choose_recipients").on("click", function() {
-			comm.openPage({
-				url: './recipients/recipients-list.html?target=express-online-order',
-				open: {
-					maxmin: true,
-					area: ['800px', '700px'],
-					title: '选择收件人'
-				},
-				cb: function() {
-
-				}
-			});
-		});
-		//选定发件人
-		$("#choose_sender").on("click", function() {
-			comm.openPage({
-				url: './sender/sender-list.html?target=express-online-order',
-				open: {
-					maxmin: true,
-					area: ['800px', '700px'],
-					title: '选择发件人'
-				},
-				cb: function() {
-
-				}
-			});
-		});
 
 	});
 </script>

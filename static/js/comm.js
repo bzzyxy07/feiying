@@ -9,7 +9,6 @@ var comm = {
 	 * } 
 	 */
 	groupInitial: function(param) {
-
 		//初始化表格选项数据
 		comm.getDataByCondition({
 			ajax: {
@@ -43,18 +42,31 @@ var comm = {
 	 * 临时二次封装layer.open用以打开页面
 	 */
 	openPage: function(param) {
+		var wid = param.open.area && param.open.area[0] || "100%";
+		$(".popup-page-container").css("width", wid).html('<div class="popup-page-store"></div>')
 		$(".popup-page-store").data("url", param.url).load(param.url, function() {
 			layui.use('layer', function() {
 				var layer = layui.layer;
 				var openParam = $.extend(param.open, {
 					type: 1,
-					shade: 0,
-					content: $('.popup-page-store')
+					shadeClose: true,
+					//					shade: 0,
+					content: $('.popup-page-store'),
+					end: function() {
+						$(".popup-page-container").html("");
+					}
 				});
 				layer.open(openParam);
 				comm.fillSelAndCont('.popup-page-store');
 			});
+			param.cb && param.cb();
 		});
+	},
+	closeOpenPage: function() {
+		$(".layui-layer-shade").remove();
+		$(".popup-page-store").data("url", "");
+		$(".popup-page-container").html("");
+		layer.closeAll();
 	},
 	fillSelAndCont: function() {
 		var target = arguments[0] || '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
@@ -64,21 +76,21 @@ var comm = {
 			var selLength = $(target + " select[url]").length;
 			var fillLength = $(target + " .fill-container[fill-url]").length;
 			//从数据库中获取select选项
-			$(target + " select[url]").each(function(index, element) {
+			$(target + " select[url]," + target + " ul.select-ul[url]").each(function(index, element) {
 				var $this = $(this),
 					dataText = $this.attr("data-text"),
 					dataValue = $this.attr("data-value"),
 					searchUrl = $this.attr("url");
 
 				if(searchUrlArr.indexOf(searchUrl) != -1) return false;
-
 				searchUrlArr.push(searchUrl);
 				comm.getDataByCondition({
 					ajax: {
 						url: searchUrl,
 						type: $this.attr("my-type"),
 						success: function(data) {
-							if(data && data.Data && data.Data.length) {
+							if((!data) || (!data.Data) || (!data.Data.length)) return false;
+							if($this.prop("tagName") === 'SELECT') {
 								var sel = '<option value="">未选择</option>';
 								for(var i = 0, len = data.Data.length; i < len; i++) {
 									sel += '<option value="' + data["Data"][i][dataValue] + '">' + data["Data"][i][dataText] + '</option>';
@@ -90,6 +102,8 @@ var comm = {
 									form.render('select');
 									(fillLength !== 0) && fillContainer();
 								}
+							} else if($this.prop("tagName") === 'UL') {
+
 							}
 						},
 						error: function(data) {
@@ -109,6 +123,8 @@ var comm = {
 				comm.submitForm(filter);
 			});
 			(selLength === 0) && (fillLength !== 0) && fillContainer();
+			
+			form.render();
 			//表单回填
 			function fillContainer() {
 				$(target + " .fill-container[fill-url]").each(function() {
@@ -208,13 +224,38 @@ var comm = {
 			$container.find('.page-field-cont[name="' + key + '"]').html(data[key]);
 		}
 	},
+	fillPageByDataSimple: function(data, $container) {
+		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
+		for(var key in data) {
+			$container.find('.page-field-cont-simple[fill-name="' + key + '"]').html(data[key]);
+		}
+	},
+	fillFormByDataX: function(data, $container) {
+		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
+		for(var key in data) {
+			var sepCont = $container.find('.form-field-cont[fill-name="' + key + '"]');
+			if(!data[key] || !sepCont.length) continue;
+			if(sepCont.hasClass("upload-img-file")) {
+				var $img = sepCont.parent("a").next("img");
+				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
+
+			} else {
+				sepCont.val(data[key]).data("data", data[key]);
+			}
+		}
+
+		layui.use('form', function() {
+			var form = layui.form;
+			form.render();
+		});
+	},
 	fillFormByData: function(data, $container) {
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
 			if(!data[key] || !sepCont.length) continue;
 			if(sepCont.hasClass("upload-img-file")) {
-                var $img = sepCont.parent("a").next("img");
+				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
 
 			} else {
