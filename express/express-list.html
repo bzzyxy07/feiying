@@ -129,8 +129,6 @@
 						area: ['80%', '600px'],
 					}
 				});
-			} else if(layEvent === 'track') { //追踪运单信息
-				layer.alert("尚未开发，敬请期待");
 			} else if(layEvent === 'print-rm' || layEvent === 'print-A4') { //热敏 400 打印A4打印 790
 				comm.getDataByCondition({
 					loading: true,
@@ -154,17 +152,38 @@
 				});
 			} else if(layEvent === 'edit') { //编辑运单信息
 				console.info(1)
-                comm.openPage({
+				comm.openPage({
 					url: './express/express-edit.html',
 					data: data,
 					open: {
 						maxmin: true,
-						area: ['80%', '600px'],
+						area: ['80%', '80%'],
 					}
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
 				//              接口/api/OrderTransportOrder/Handle
 				console.info(data);
+			} else if(layEvent === 'track') { //运单追踪
+				
+				comm.getDataByCondition({
+					loading: true,
+					ajax: {
+						url: '/api/OrderProcessStatusChange/Changes?elementid=' + data.id,
+						success: function(rlt) {
+							rlt = rlt["Data"];
+							if (!rlt.length) layer.msg("尚无追踪信息");
+//							console.info(data);
+//							comm.openPage({
+//								url: './express/express-track.html',
+//								data: data['Data'],
+//								open: {
+//									maxmin: true,
+//									area: ['80%', '80%'],
+//								}
+//							});
+						}
+					}
+				});
 			}
 		});
 	});
