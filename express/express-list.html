@@ -151,10 +151,12 @@
 							});
 						}
 					}
-				})
+				});
 			} else if(layEvent === 'edit') { //编辑运单信息
+				console.info(1)
                 comm.openPage({
-					url: './express/express-edit.html?data=' + data,
+					url: './express/express-edit.html',
+					data: data,
 					open: {
 						maxmin: true,
 						area: ['80%', '600px'],
@@ -170,7 +172,7 @@
 <script type="text/html" id="operation">
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
 	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track">追踪</a>
-	<a class="layui-btn layui-bg-cyan layui-btn-sm" lay-event="delete">编辑</a>
+	<a class="layui-btn layui-bg-cyan layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
 	<a class="layui-btn layui-btn-sm" lay-event="print-rm">热敏打印</a>
 	<a class="layui-btn layui-btn-sm" lay-event="print-A4">A4打印</a>

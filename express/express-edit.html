@@ -44,16 +44,16 @@
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" disabled="disabled"></span>
+				<input name="" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 
 			<th class="align-right required-logo">送达仓库</th>
 			<td class="padd-0">
-				<select name="depotid" initial-name="depot_list" lay-verify="required"></select>
+				<select name="depotid" initial-name="depot_list" lay-verify="required" fill-name="depotid"></select>
 			</td>
 			<th class="align-right required-logo">线路名称</th>
 			<td class="padd-0">
-				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required"></select>
+				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" fill-name="routeid"></select>
 			</td>
 		</tr>
 
@@ -71,15 +71,15 @@
 		<tr>
 			<th class="align-right required-logo">姓名</th>
 			<td class="padd-0">
-				<input name="delivername" class="form-field-cont layui-input" fill-sender="delivername" lay-verify="required">
+				<input name="delivername" class="field-cont layui-input" fill-sender="delivername" lay-verify="required">
 			</td>
 			<th class="align-right required-logo">电话</th>
 			<td class="padd-0">
-				<input name="delivermobile" class="form-field-cont layui-input" fill-sender="mobilephone" lay-verify="required">
+				<input name="delivermobile" class="field-cont layui-input" fill-sender="mobilephone" lay-verify="required">
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="" class="form-field-cont layui-input" fill-sender="deliveraddress">
+				<input name="" class="field-cont layui-input" fill-sender="deliveraddress">
 			</td>
 		</tr>
 		<tr>
@@ -96,7 +96,7 @@
 		<tr>
 			<th class="align-right required-logo">收件人姓名</th>
 			<td class="padd-0">
-				<input name="receivername" class="form-field-cont layui-input" id="express_recipients_id" type="text" fill-recipients="receivername" lay-verify="required">
+				<input name="receivername" class="field-cont layui-input" id="express_recipients_id" type="text" fill-recipients="receivername" lay-verify="required">
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
@@ -104,20 +104,20 @@
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="form-field-cont layui-input" fill-recipients="idcardnumber">
+				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-recipients="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="form-field-cont layui-input" fill-recipients="mobilephone" lay-verify="required|phone">
+				<input name="receivermobile" class="field-cont layui-input" fill-recipients="mobilephone" lay-verify="required|phone">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_zheng" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardzheng">
+						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -127,7 +127,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_fan" class="layui-input form-field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardfan">
+						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -136,7 +136,7 @@
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" class="form-field-cont layui-input" fill-recipients="zipcode" lay-verify="required|number">
+				<input name="receiverpostcard" class="field-cont layui-input" fill-recipients="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 
@@ -154,7 +154,7 @@
 		<tr>
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
-				<input name="receiveraddress" class="form-field-cont layui-input" placeholder="请输入详细地址" fill-recipients="receiveraddress" lay-verify="required">
+				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-recipients="receiveraddress" lay-verify="required">
 			</td>
 		</tr>
 		<tr>
@@ -200,15 +200,15 @@
 		<tr>
 			<th class="align-right required-logo">重量</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" lay-verify="required|number">
+				<input name="" class="field-cont layui-input" lay-verify="required|number">
 			</td>
 			<th class="align-right required-logo">保额</th>
 			<td class="padd-0">
-				<input name="" class="form-field-cont layui-input" lay-verify="required|number">
+				<input name="" class="field-cont layui-input" lay-verify="required|number">
 			</td>
 			<th class="align-right">备注</th>
 			<td class="padd-0">
-				<input name="note" class="form-field-cont layui-input">
+				<input name="note" class="field-cont layui-input">
 			</td>
 		</tr>
 		<tr>
@@ -227,7 +227,7 @@
 		<tr>
 			<th class="align-right">费用</th>
 			<td class="padd-0" colspan="5">
-				<input name="" class="form-field-cont layui-input" lay-verify="number">
+				<input name="" class="field-cont layui-input" lay-verify="number">
 			</td>
 		</tr>
 		<tr>
@@ -243,7 +243,6 @@
 </form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
-		console.info(comm.getUrlParamX("data"));
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
@@ -264,6 +263,8 @@
 					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
 				});
+				
+				comm.fillFormByData(comm.getObjParam(), $("#express_online_order_form"), "fill-name");
 			}
 		});
 		//删除行

@@ -46,6 +46,7 @@ var comm = {
 		var index = layer.load(1);
 		var wid = param.open.area && param.open.area[0] || "100%";
 		$(".popup-page-container").css("width", wid).html('<div class="popup-page-store"></div>');
+		param.data && $(".popup-page-store").data("data", param.data);
 		$(".popup-page-store").data("url", param.url).load(param.url, function() {
 			layui.use('layer', function() {
 				var layer = layui.layer;
@@ -235,15 +236,16 @@ var comm = {
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
-			$container.find('.page-field-cont[' + fieldName + '="' + key + '"]').html(data[key]);
+			$container.find('.field-cont[' + fieldName + '="' + key + '"]').html(data[key]);
 		}
 	},
 	fillFormByData: function(data, $container, fieldName) {
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
-			var sepCont = $container.find('.form-field-cont[' + fieldName + '="' + key + '"]');
+			var sepCont = $container.find('.field-cont[' + fieldName + '="' + key + '"]');
 			if(!data[key] || !sepCont.length) continue;
+			
 			if(sepCont.hasClass("upload-img-file")) {
 				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
@@ -449,6 +451,10 @@ var comm = {
 		var r = urlStr.substring(urlStr.indexOf("?")).substr(1).match(reg);
 		if(r != null) return unescape(r[2]);
 		return null;
+	},
+	getObjParam: function(name) {
+		if (!name) return $(".popup-page-store").data("data");
+	    return $(".popup-page-store").data("data")[name];
 	},
 	/*退出系统 */
 	exitSystem: function() {
