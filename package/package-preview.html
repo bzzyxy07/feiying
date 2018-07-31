@@ -124,10 +124,14 @@
 					type: "post",
 					data: packageData,
 					success: function(data) {
-						layer.msg("提交成功，可继续上传包裹预告！");
-						document.getElementById("package_preview_form").reset();
-						form.render('select');
-						$("#detail_body tr:first").siblings("tr").remove();
+						layer.confirm('包裹预告添加成功！是否跳转到包裹列表页？', {
+							icon: 1,
+							title: '提示',
+							btn: ['确认', '取消']
+						}, function(index) {
+							layer.close(index);
+							$(".layui-tab-title li[link-url='./package/package-list.html']").click();
+						});
 					}
 				}
 			});

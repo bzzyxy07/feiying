@@ -109,7 +109,7 @@
 				})
 
 			} else if(layEvent === 'choose-recipients') { //选定该收件人
-				comm.fillFormByDataX(data, $(".express-recipients-container"));
+				comm.fillFormByData(data, $("#express_detail_cont"), "fill-recipients");
 				console.info(data);
 				comm.closeOpenPage();
 			}

@@ -46,7 +46,6 @@
 			<td class="padd-0">
 				<input name="" class="form-field-cont layui-input" disabled="disabled"></span>
 			</td>
-
 			<th class="align-right required-logo">送达仓库</th>
 			<td class="padd-0">
 				<select name="depotid" initial-name="depot_list" lay-verify="required"></select>
@@ -56,31 +55,16 @@
 				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required"></select>
 			</td>
 		</tr>
-
 		<tr>
-			<th colspan="6">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>发件人信息
-					<span class="float-right">
-						<input type="checkbox" name="" title="保存发件人" lay-skin="primary" checked>
-						<button type="button" class="layui-btn layui-btn-sm float-right" id="choose_sender">选择发件人</button>
-					</span>
-				</p>
-			</th>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">姓名</th>
+			<th class="align-right required-logo">包裹追踪号</th>
 			<td class="padd-0">
-				<input name="delivername" class="form-field-cont layui-input" fill-sender="delivername" lay-verify="required">
+				<input name="" class="form-field-cont layui-input" lay-verify="required"></span>
 			</td>
-			<th class="align-right required-logo">电话</th>
+			<th class="align-righ">送达方式</th>
 			<td class="padd-0">
-				<input name="delivermobile" class="form-field-cont layui-input" fill-sender="mobilephone" lay-verify="required">
+				<select name="" initial-name="disc_send"></select>
 			</td>
-			<th class="align-right">地址</th>
-			<td class="padd-0" colspan="3">
-				<input name="" class="form-field-cont layui-input" fill-sender="deliveraddress">
-			</td>
+			<td colspan="2"></td>
 		</tr>
 		<tr>
 			<th colspan="6">
@@ -286,20 +270,6 @@
 				}
 			});
 		});
-		//选定发件人
-		$("#choose_sender").on("click", function() {
-			comm.openPage({
-				url: './sender/sender-list.html?target=express-online-order',
-				open: {
-					maxmin: true,
-					area: ['800px', '700px'],
-					title: '选择发件人'
-				},
-				cb: function() {
-
-				}
-			});
-		});
 
 		//在线提交运单
 		form.on('submit(express-online-order-form)', function(data) {
@@ -326,7 +296,7 @@
 					data: expressOnlineOrderData,
 					success: function(data) {
 						layer.closeAll();
-						layer.msg("在线下单成功！");
+						layer.msg("转运下单成功！");
 						$("#express_online_order_form").reset();
 						$("#detail_body tr:first").siblings("tr").remove();
 					}

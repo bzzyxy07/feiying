@@ -42,8 +42,10 @@ var comm = {
 	 * 临时二次封装layer.open用以打开页面
 	 */
 	openPage: function(param) {
+		comm.initLoading();
+		var index = layer.load(1);
 		var wid = param.open.area && param.open.area[0] || "100%";
-		$(".popup-page-container").css("width", wid).html('<div class="popup-page-store"></div>')
+		$(".popup-page-container").css("width", wid).html('<div class="popup-page-store"></div>');
 		$(".popup-page-store").data("url", param.url).load(param.url, function() {
 			layui.use('layer', function() {
 				var layer = layui.layer;
@@ -57,10 +59,18 @@ var comm = {
 					}
 				});
 				layer.open(openParam);
+				layer.close(index);
 				comm.fillSelAndCont('.popup-page-store');
 			});
 			param.cb && param.cb();
 		});
+	},
+	initLoading: function() {
+		if ($(".popup-page-store .loading-container").length) return false;
+		$(".popup-page-store").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+	},
+	closeLoading: function() {
+		$(".popup-page-store").remove(".loading-container");
 	},
 	closeOpenPage: function() {
 		$(".layui-layer-shade").remove();
@@ -76,7 +86,7 @@ var comm = {
 			var selLength = $(target + " select[url]").length;
 			var fillLength = $(target + " .fill-container[fill-url]").length;
 			//从数据库中获取select选项
-			$(target + " select[url]," + target + " ul.select-ul[url]").each(function(index, element) {
+			$(target + " select[url]").each(function(index, element) {
 				var $this = $(this),
 					dataText = $this.attr("data-text"),
 					dataValue = $this.attr("data-value"),
@@ -85,10 +95,12 @@ var comm = {
 				if(searchUrlArr.indexOf(searchUrl) != -1) return false;
 				searchUrlArr.push(searchUrl);
 				comm.getDataByCondition({
+					loading: true,
 					ajax: {
 						url: searchUrl,
 						type: $this.attr("my-type"),
 						success: function(data) {
+							if (index == selLength) comm.closeLoading();
 							if((!data) || (!data.Data) || (!data.Data.length)) return false;
 							if($this.prop("tagName") === 'SELECT') {
 								var sel = '<option value="">未选择</option>';
@@ -107,6 +119,7 @@ var comm = {
 							}
 						},
 						error: function(data) {
+							if (index == selLength) comm.closeLoading();
 							layer.close(index);
 							layer.msg("服务器错误：查询" + $this.prev("span").text() + "失败");
 						}
@@ -123,7 +136,7 @@ var comm = {
 				comm.submitForm(filter);
 			});
 			(selLength === 0) && (fillLength !== 0) && fillContainer();
-			
+
 			form.render();
 			//表单回填
 			function fillContainer() {
@@ -143,14 +156,14 @@ var comm = {
 					});
 				});
 			}
+			comm.closeLoading();
 		});
 	},
 	getDataByFilterform: function() {
 
 	},
 	getDataByCondition: function(condition) {
-		condition.loading &&
-			$(condition.loading).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+		condition.loading && comm.initLoading();
 		var ajaxData = $.extend({
 			url: '',
 			type: 'get',
@@ -164,8 +177,7 @@ var comm = {
 
 		ajaxData.url = path + ajaxData.url;
 		ajaxData.success = function(data) {
-
-			condition.loading && $(condition.loading).parents(".layui-tab-item").children(".loading-container").remove();
+			comm.closeLoading();
 			if(!data.Success) {
 				layer.msg(data.Errors[0], {
 					icon: 5
@@ -183,7 +195,7 @@ var comm = {
 			return data.Object;
 		};
 		ajaxData.error = function(data) {
-			condition.loading && $(condition.loading).parents(".layui-tab-item").children(".loading-container").remove();
+			comm.closeLoading();
 			if(data.status == 401) {
 				comm.systemTimeout();
 				return false;
@@ -217,42 +229,20 @@ var comm = {
 	 * 根据数据填充页面
 	 * @param {Object} data  数据
 	 * @param {string} container 容器 例：".container", "#container"
+	 * @param {string} fleldName 填充字段名称 "id" 默认为"name"
 	 */
-	fillPageByData: function(data, $container) {
+	fillPageByData: function(data, $container, fieldName) {
+		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
-			$container.find('.page-field-cont[name="' + key + '"]').html(data[key]);
+			$container.find('.page-field-cont[' + fieldName + '="' + key + '"]').html(data[key]);
 		}
 	},
-	fillPageByDataSimple: function(data, $container) {
+	fillFormByData: function(data, $container, fieldName) {
+		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
-			$container.find('.page-field-cont-simple[fill-name="' + key + '"]').html(data[key]);
-		}
-	},
-	fillFormByDataX: function(data, $container) {
-		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
-		for(var key in data) {
-			var sepCont = $container.find('.form-field-cont[fill-name="' + key + '"]');
-			if(!data[key] || !sepCont.length) continue;
-			if(sepCont.hasClass("upload-img-file")) {
-				var $img = sepCont.parent("a").next("img");
-				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
-
-			} else {
-				sepCont.val(data[key]).data("data", data[key]);
-			}
-		}
-
-		layui.use('form', function() {
-			var form = layui.form;
-			form.render();
-		});
-	},
-	fillFormByData: function(data, $container) {
-		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
-		for(var key in data) {
-			var sepCont = $container.find('.form-field-cont[name="' + key + '"]');
+			var sepCont = $container.find('.form-field-cont[' + fieldName + '="' + key + '"]');
 			if(!data[key] || !sepCont.length) continue;
 			if(sepCont.hasClass("upload-img-file")) {
 				var $img = sepCont.parent("a").next("img");
@@ -287,14 +277,27 @@ var comm = {
 	initImageByData: function() {
 
 	},
-	getFormData: function($form) {
+	/**
+	 * 获取表单数据
+	 * @param {Object} $form $("#form") 待处理的form表单dom对象
+	 * @param {Object} fieldArr 获取的字段数组 可选
+	 */
+	getFormData: function($form, fieldArr) {
 		var unindexed_array = $form.serializeArray();
 		var indexed_array = {};
-		$.map(unindexed_array, function(n, i) {
-			indexed_array[n['name']] = n['value'];
-		});
+		if(!fieldArr || !fieldArr.length) {
+			$.map(unindexed_array, function(n, i) {
+				indexed_array[n['name']] = n['value'];
+			});
+		} else {
+			$.map(unindexed_array, function(n, i) {
+				if(fieldArr.indexOf(n['name']) == -1) return false;
+				indexed_array[n['name']] = n['value'];
+			});
+		}
 		return indexed_array;
 	},
+	
 	/**
 	 * 绑定搜索表单的点击事件
 	 * @param {
@@ -311,7 +314,6 @@ var comm = {
 		layui.use('form', function() {
 			var form = layui.form;
 			var filterForm = document.getElementById(param.formId);
-			$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 			$("#" + param.formId + " .form-condition:not(.auto-click-condition)").each(function() {
 				$(filterForm).append('<input type="hidden" name="' + $(this).attr("name") + '">');
 			});
@@ -334,8 +336,7 @@ var comm = {
 			form.render();
 
 			$(filterForm).on("click", ".filter-btn", function() {
-				!$(filterForm).parents(".layui-tab-item").find(".loading-container").length &&
-					$(filterForm).parents(".layui-tab-item").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+				comm.initLoading();
 				var $this = $(this);
 				if(param.renderTable) {
 					var renderData = $.extend({
@@ -360,7 +361,7 @@ var comm = {
 						},
 						where: comm.getFormData($(filterForm)),
 						done: function(data) {
-							$(filterForm).parents(".layui-tab-item").children(".loading-container").remove();
+							comm.closeLoading();
 							if(data.status == 401) {
 								comm.systemTimeout();
 								return false;
@@ -415,6 +416,7 @@ var comm = {
 						success: function(data) {
 							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
+							$form.attr("succ-reset") && $form[0].reset();
 							$form.attr("succ-cb") && eval($form.attr("succ-cb"));
 							$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
 						}
