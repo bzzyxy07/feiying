@@ -1,12 +1,12 @@
-<form class="layui-form filter-form" url="/api/OrderPackage/Get" id="abnormal_info_search_form">
+<form class="layui-form filter-form" url="/api/OrderTransportOrder/BatchDelete" my-type="post" id="abnormal_express_search_form">
 	<ul>
 		<li>
 			<span>运单号</span>
-			<input class="layui-input form-input" placeholder="请输入姓名" name="">
+			<input class="layui-input form-input" placeholder="请输入运单号" name="cnum">
 		</li>
 		<li>
 			<span>备注</span>
-			<input class="layui-input form-input" placeholder="请输入联系电话" name="">
+			<input class="layui-input form-input" placeholder="请输入备注关键词" name="operatemessage">
 		</li>
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
@@ -15,41 +15,40 @@
 	</ul>
 </form>
 <div class="data-table-container">
-	<table id="abnormal_info_table"></table>
+	<table id="abnormal_express_table"></table>
 </div>
 <script>
 	layui.use(['form', 'element'], function() {
 		comm.bindFilterForm({
-			formId: "abnormal_info_search_form",
+			formId: "abnormal_express_search_form",
 			renderTable: {
-				elem: '#abnormal_info_table',
+				elem: '#abnormal_express_table',
 				cols: [
 					[{
 						checkbox: true
 					}, {
-						field: 'trackingnumber',
+						field: 'Cnum',
 						title: '运单号',
 					}, {
-						field: 'depotname',
+						field: 'createtime',
 						title: '添加时间',
 						sort: true,
 					}, {
-						field: 'enterdate',
-						title: '类型',
+						field: 'operatername',
+						title: '异常类型',
 					}, {
-						field: 'goodsweight',
+						field: 'property',
 						title: '处理状态',
 					}, {
-						field: 'depotname',
+						field: 'operatername',
 						title: '处理人',
 					}, {
-						field: 'depotname',
+						field: 'operatetime',
 						title: '处理时间',
 						sort: true,
 					}, {
-						field: 'depotname',
-						title: '备注',
-						width: 120,
+						field: 'operatemessage',
+						title: '备注'
 					}, {
 						field: '',
 						title: '操作',
