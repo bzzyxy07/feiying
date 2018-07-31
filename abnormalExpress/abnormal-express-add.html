@@ -1,27 +1,44 @@
-<form class="layui-form" action="" id="add_abnormal_form" url="" enctype="multipart/form-data">
+<form class="layui-form" action="" id="add_abnormal_form" submit-url="/api/OrderTransportAbnornal/PostMy" submit-type="post" enctype="multipart/form-data">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">运单号</label>
 		<div class="layui-input-inline">
-			<input type="text" name="title"  lay-verify="required" placeholder="请输入您的运单号" autocomplete="off" class="layui-input">
+			<input type="text" name="cnum" lay-verify="required" placeholder="请输入您的运单号" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
-		<label class="layui-form-label">类型</label>
+		<label class="layui-form-label required-logo">异常类型</label>
 		<div class="layui-input-inline">
-			<select name="">请选择类型</select>
+			<select name="operatetypeid" lay-verify="required">
+				<option value="">请选择异常件类型</option>
+				<option value="长时间未收到包裹">长时间未收到包裹</option>
+				<option value="修改地址">修改地址</option>
+				<option value="修改身份证">修改身份证</option>
+				<option value="退单">退单</option>
+				<option value="丢失">丢失</option>
+				<option value="XYL反馈">XYL反馈</option>
+				<option value="遗留件">遗留件</option>
+				<option value="收件人信息更改">收件人信息更改</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">图片</label>
+		<div class="layui-input-inline">
+			<div class="upload-img-container">
+				<a href="javascript:;">
+					<span>点此上传</span>
+					<input type="file" name="AbnormalPic" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+				</a>
+				<img class="upload-img" alt="暂无图片">
+			</div>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">备注</label>
-		<div class="layui-input-inline">
-			<input type="text" name="title"  lay-verify="required" placeholder="请输入您的备注" autocomplete="off" class="layui-input">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label required-logo">图片</label>
-		<div class="layui-input-block">
-			<input type="file" name="title"  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+		<div class="layui-input-inline" style="width: 500px;">
+			<input type="text" name="AbnormalMessage" placeholder="请输入您的备注" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">

@@ -180,9 +180,7 @@ var comm = {
 		ajaxData.success = function(data) {
 			comm.closeLoading();
 			if(!data.Success) {
-				layer.msg(data.Errors[0], {
-					icon: 5
-				});
+				layer.msg(data.Errors[0] || data.Message);
 				return false;
 			}
 

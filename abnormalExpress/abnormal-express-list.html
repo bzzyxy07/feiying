@@ -1,4 +1,4 @@
-<form class="layui-form filter-form" url="/api/OrderTransportOrder/BatchDelete" my-type="post" id="abnormal_express_search_form">
+<form class="layui-form filter-form" url="/api/OrderTransportAbnornal/GetMy" my-type="get" id="abnormal_express_search_form">
 	<ul>
 		<li>
 			<span>运单号</span>
@@ -15,10 +15,12 @@
 	</ul>
 </form>
 <div class="data-table-container">
-	<table id="abnormal_express_table"></table>
+	<table id="abnormal_express_table" lay-filter="abnormal-express-table"></table>
 </div>
 <script>
-	layui.use(['form', 'element'], function() {
+	layui.use(['table','layer'], function() {
+		var layer = layui.layer;
+		var table = layui.table;
 		comm.bindFilterForm({
 			formId: "abnormal_express_search_form",
 			renderTable: {
@@ -27,18 +29,19 @@
 					[{
 						checkbox: true
 					}, {
-						field: 'Cnum',
+						field: 'cnum',
 						title: '运单号',
 					}, {
 						field: 'createtime',
 						title: '添加时间',
 						sort: true,
 					}, {
-						field: 'operatername',
+						field: 'typename',
 						title: '异常类型',
 					}, {
 						field: 'property',
 						title: '处理状态',
+						templet: '#property'
 					}, {
 						field: 'operatername',
 						title: '处理人',
@@ -58,8 +61,44 @@
 			}
 		});
 
+		table.on('tool(abnormal-express-table)', function(obj) {
+			var data = obj.data;
+			var layEvent = obj.event;
+			var tr = obj.tr;
+
+			if(layEvent === 'delete') { //删除该异常件
+				layer.confirm("是否确认删除？", function() {
+					comm.getDataByCondition({
+						loading: true,
+						ajax: {
+							url: '/api/OrderTransportAbnornal/PutMy?Id=' + data.id,
+							type: 'put',
+							success: function(data) {
+								obj.del();
+								layer.closeAll();
+								layer.msg("删除成功");
+							}
+						}
+					});
+				});
+			}
+		});
 	});
 </script>
 <script type="text/html" id="operation">
-	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
+	{{# if(d.property == "0"){ }}
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
+	{{# } }}
+</script>
+<script type="text/html" id="property">
+	{{# if(d.property == "0"){ }}
+	<span class="layui-badge layui-bg-blue">处理中</span>
+	{{# } else if(d.property == "1"){ }}
+	<span class="layui-badge layui-bg-green">已处理</span>
+	{{# } else if(d.property == "2"){ }}
+	<span class="layui-badge-rim">已取消</span>
+	{{# } else{ }}
+	<span class="layui-badge layui-bg-gray">状态有误</span>
+	{{# } }}
 </script>
