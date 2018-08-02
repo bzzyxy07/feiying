@@ -200,18 +200,31 @@
 				console.info(data);
 			} else if(layEvent === 'track') { //运单追踪
 				var that = this;
-				layer.tips('<div id="express_track_cont"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></ul></div>', that, {
-					time: 0,
-					tips: [2, '#ddd']
-				});
+				//				if($("#express_track_cont").length) {
+				//					layer.closeAll();
+				//					$("#express_track_cont").html('<img src="./static/img/loading.gif" alt="加载中..." width="37" height="37">');
+				//				} else {
+				//					layer.tips('<div id="express_track_cont"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>', that, {
+				//						time: 0,
+				//						tips: [2, '#ddd']
+				//					});
+				//				}
+				if($("#express_track_cont").length) {
+					layer.closeAll();
+
+				}
+
 				comm.getDataByCondition({
 					loading: true,
 					ajax: {
 						url: '/api/OrderProcessStatusChange/Changes?elementid=' + data.id,
 						success: function(rlt) {
 							rlt = rlt["Data"];
-							if(!rlt.length) {
-								$("#express_track_cont").text("暂无运单信息");
+							if(!rlt || !rlt.length) {
+								layer.tips('<div id="express_track_cont">暂无运单信息</div>', that, {
+									time: 0,
+									tips: [2, '#ddd']
+								});
 							} else {
 								var timelineStr = "";
 								rlt.map(function(v) {
@@ -225,7 +238,11 @@
 									console.info(timelineStr);
 								});
 								console.info(timelineStr)
-								$("#express_track_cont").html('<ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul>');
+								layer.tips('<div id="express_track_cont"><ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul></div>', that, {
+										time: 0,
+										tips: [2, '#ddd']
+									});
+//								$("#express_track_cont").html('<ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul>');
 							}
 
 							//							comm.openPage({
@@ -236,6 +253,9 @@
 							//									area: ['80%', '80%'],
 							//								}
 							//							});
+						},
+						error: function() {
+							$("#express_track_cont").html("网络异常，未查询到运单信息");
 						}
 					}
 				});

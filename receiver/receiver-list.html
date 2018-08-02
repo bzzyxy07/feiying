@@ -1,4 +1,4 @@
-<form class="layui-form filter-form" url="/api/BasicReceiver/GetMy" id="recipients_info_search_form">
+<form class="layui-form filter-form" url="/api/BasicReceiver/GetMy" id="receiver_info_search_form">
 	<ul>
 		<li>
 			<span>姓名</span>
@@ -23,7 +23,7 @@
 	</ul>
 </form>
 <div class="data-table-container">
-	<table id="recipients_info_table" lay-filter="recipients_info_table"></table>
+	<table id="receiver_info_table" lay-filter="receiver_info_table"></table>
 </div>
 <script>
 	layui.use(['form', 'table'], function() {
@@ -31,9 +31,9 @@
 		var operationParam = (targetPage != "express-online-order") ? "#operation" : "#operation-express";
 		var table = layui.table;
 		comm.bindFilterForm({
-			formId: "recipients_info_search_form",
+			formId: "receiver_info_search_form",
 			renderTable: {
-				elem: '#recipients_info_table',
+				elem: '#receiver_info_table',
 				cols: [
 					[{
 						field: 'receivername',
@@ -75,7 +75,7 @@
 			}
 		});
 
-		table.on('tool(recipients_info_table)', function(obj) {
+		table.on('tool(receiver_info_table)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
 			var tr = obj.tr;
@@ -89,7 +89,7 @@
 				});
 			} else if(layEvent === 'edit-recipents') { //编辑收件人信息
 				comm.openPage({
-					url: './recipients/recipients-edit.html?id=' + data.id,
+					url: './receiver/receiver-edit.html?id=' + data.id,
 					open: {
 						maxmin: true,
 						area: ['80%', '600px'],
@@ -108,8 +108,8 @@
 					area: ['400px', '300px']
 				})
 
-			} else if(layEvent === 'choose-recipients') { //选定该收件人
-				comm.fillFormByData(data, $("#express_detail_cont"), "fill-recipients");
+			} else if(layEvent === 'choose-receiver') { //选定该收件人
+				comm.fillFormByData(data, $("#express_detail_cont"), "fill-receiver");
 				console.info(data);
 				comm.closeOpenPage();
 			}
@@ -128,8 +128,8 @@
 </script>
 <script type="text/html" id="operation">
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit-recipents">编辑</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete-recipients">删除</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete-receiver">删除</a>
 </script>
 <script type="text/html" id="operation-express">
-	<a class="layui-btn layui-btn-sm" lay-event="choose-recipients">选择收件人</a>
+	<a class="layui-btn layui-btn-sm" lay-event="choose-receiver">选择收件人</a>
 </script>

@@ -72,7 +72,7 @@
 					<span class="layui-badge-dot layui-bg-blue"></span>收件人信息
 					<span class="float-right">
 						<input type="checkbox" name="" title="保存收件人" lay-skin="primary" checked>
-						<button type="button" class="layui-btn layui-btn-sm" id="choose_recipients">选择收件人</button>
+						<button type="button" class="layui-btn layui-btn-sm" id="choose_receiver">选择收件人</button>
 					</span>
 				</p>
 			</th>
@@ -80,28 +80,28 @@
 		<tr>
 			<th class="align-right required-logo">收件人姓名</th>
 			<td class="padd-0">
-				<input name="receivername" class="field-cont layui-input" id="express_recipients_id" type="text" fill-recipients="receivername" lay-verify="required">
+				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-receiver="receivername" lay-verify="required">
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
-				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-recipients="receiveridcardtype"></select>
+				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-receiver="receiveridcardtype"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-recipients="idcardnumber">
+				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-receiver="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-recipients="mobilephone" lay-verify="required|phone">
+				<input name="receivermobile" class="field-cont layui-input" fill-receiver="mobilephone" lay-verify="required|phone">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardzheng">
+						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -111,7 +111,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-recipients="idcardfan">
+						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -120,7 +120,7 @@
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" class="field-cont layui-input" fill-recipients="zipcode" lay-verify="required|number">
+				<input name="receiverpostcard" class="field-cont layui-input" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 
@@ -128,17 +128,17 @@
 			<th class="align-right required-logo">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
-					<select name="receiverregion_province" id="province" fill-recipients="regionprovince" lay-verify="required"></select>
+					<select name="receiverregion_province" id="province" fill-receiver="regionprovince" lay-verify="required"></select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="receiverregion_city" id="city" fill-recipients="regioncity" lay-verify="required"></select>
+					<select name="receiverregion_city" id="city" fill-receiver="regioncity" lay-verify="required"></select>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
-				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-recipients="receiveraddress" lay-verify="required">
+				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
 			</td>
 		</tr>
 		<tr>
@@ -257,9 +257,9 @@
 		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 		//选定收件人
-		$("#choose_recipients").on("click", function() {
+		$("#choose_receiver").on("click", function() {
 			comm.openPage({
-				url: './recipients/recipients-list.html?target=express-online-order',
+				url: './receiver/receiver-list.html?target=express-online-order',
 				open: {
 					maxmin: true,
 					area: ['800px', '700px'],

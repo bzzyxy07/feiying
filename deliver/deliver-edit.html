@@ -1,4 +1,4 @@
-<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="sender_edit_form" lay-filter="sender_edit_form" fill-type="get">
+<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="deliver_edit_form" lay-filter="deliver_edit_form" fill-type="get">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 			<div class="layui-input-inline">
@@ -29,10 +29,10 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#sender_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + comm.getUrlParamX("id"));
+		$("#deliver_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + comm.getUrlParamX("id"));
 		//特殊赋值
 		/*	comm.fillContainerByUrl({
-				cont: $("#sender_edit_form"),
+				cont: $("#deliver_edit_form"),
 				cb: function(data) {
 					console.info(data);
 					
@@ -41,13 +41,13 @@
 
 		//删除行
 		//提交编辑的包裹信息
-		form.on('submit(sender_edit_form)', function(data) {
+		form.on('submit(deliver_edit_form)', function(data) {
 	
 			var packageData = {
 				"id": $('#package_edit_form [name="id"]').val(),
-				"delivername": $('#sender_edit_form [name="delivername"]').val(),
-				"mobilephone": $('#sender_edit_form [name="mobilephone"]').val(),
-				"deliveraddress": $('#sender_edit_form [name="deliveraddress"]').val(),
+				"delivername": $('#deliver_edit_form [name="delivername"]').val(),
+				"mobilephone": $('#deliver_edit_form [name="mobilephone"]').val(),
+				"deliveraddress": $('#deliver_edit_form [name="deliveraddress"]').val(),
 				"id":comm.getUrlParamX("id")
 			}
 			comm.getDataByCondition({

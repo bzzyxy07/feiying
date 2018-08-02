@@ -24,13 +24,7 @@
 		}
 	</style>
 </head>
-<form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_online_order_form">
-	<input type="hidden" name="caozuo" value="1">
-	<input type="hidden" name="kkfs" value="1">
-	<input type="hidden" name="isenter" value="">
-		<!--//1.caozuo=1；
-			//2.kkfs随意填入不影响结果 ；
-			//3.isenter传入页面原来的值-->
+<form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
 	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
@@ -53,13 +47,13 @@
 				<input name="" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 
-			<th class="align-right required-logo">送达仓库</th>
+			<th class="align-right">送达仓库</th>
 			<td class="padd-0">
-				<select name="depotid" initial-name="depot_list" lay-verify="required" fill-name="depotid"></select>
+				<select name="depotid" initial-name="depot_list" lay-verify="required"></select>
 			</td>
-			<th class="align-right required-logo">线路名称</th>
+			<th class="align-right">线路名称</th>
 			<td class="padd-0">
-				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" fill-name="routeid"></select>
+				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required"></select>
 			</td>
 		</tr>
 
@@ -75,11 +69,11 @@
 			</th>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">姓名</th>
+			<th class="align-right">姓名</th>
 			<td class="padd-0">
 				<input name="delivername" class="field-cont layui-input" fill-deliver="delivername" lay-verify="required">
 			</td>
-			<th class="align-right required-logo">电话</th>
+			<th class="align-right">电话</th>
 			<td class="padd-0">
 				<input name="delivermobile" class="field-cont layui-input" fill-deliver="mobilephone" lay-verify="required">
 			</td>
@@ -100,7 +94,7 @@
 			</th>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">收件人姓名</th>
+			<th class="align-right">收件人姓名</th>
 			<td class="padd-0">
 				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-receiver="receivername" lay-verify="required">
 			</td>
@@ -114,9 +108,9 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">手机号码</th>
+			<th class="align-right">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-receiver="mobilephone" lay-verify="required|phone">
+				<input name="receivermobile" class="field-cont layui-input" fill-receiver="mobilephone">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
@@ -140,14 +134,14 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">邮编</th>
+			<th class="align-right">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" class="field-cont layui-input" fill-receiver="zipcode" lay-verify="required|number">
+				<input name="receiverpostcard" class="field-cont layui-input" fill-receiver="zipcode">
 			</td>
 		</tr>
 
 		<tr>
-			<th class="align-right required-logo">省市地址</th>
+			<th class="align-right">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
 					<select name="receiverregion_province" id="province" fill-receiver="regionprovince" lay-verify="required"></select>
@@ -158,7 +152,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">详细地址</th>
+			<th class="align-right">详细地址</th>
 			<td class="padd-0 ">
 				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
 			</td>
@@ -169,19 +163,19 @@
 			</th>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">物品明细</th>
+			<th class="align-right">物品明细</th>
 			<td class="padd-0" colspan="7" class="padd-0">
 				<table class="layui-table margin-0 table-inner-table" lay-size="sm">
 					<thead>
 						<tr>
-							<th class="required-logo">类别</th>
-							<th class="required-logo">物品名称</th>
-							<th class="required-logo">规格</th>
-							<th class="required-logo">品牌</th>
-							<th class="required-logo">数量</th>
-							<th class="required-logo">单价($)</th>
-							<th class="required-logo">单位</th>
-							<th class="required-logo"><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
+							<th>类别</th>
+							<th>物品名称</th>
+							<th>规格</th>
+							<th>品牌</th>
+							<th>数量</th>
+							<th>单价($)</th>
+							<th>单位</th>
+							<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
 						</tr>
 					</thead>
 					<tbody id="detail_body">
@@ -204,13 +198,13 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">重量</th>
+			<th class="align-right">重量</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="" class="field-cont layui-input">
 			</td>
-			<th class="align-right required-logo">保额</th>
+			<th class="align-right">保险</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="" class="field-cont layui-input">
 			</td>
 			<th class="align-right">备注</th>
 			<td class="padd-0">
@@ -219,29 +213,21 @@
 		</tr>
 		<tr>
 			<th class="align-right">增值服务</th>
-			<td>
-				<input type="checkbox" name="" title="箱子（1$/个）" lay-skin="primary">
-			</td>
-			<td>修改发货方式</td>
-			<td colspan="3">
-				<div class="layui-input-inline">
-					<select name="" initial-name="servicelist"></select>
-				</div>
-				<div class="layui-form-mid layui-word-aux">请在发货之前修改发货方式</div>
+			<td class="padd-0" colspan="5">
+				<input type="checkbox" name="" title="箱子（1$）" lay-skin="primary">
+				<select name="" initial-name="servicelist"></select>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">费用</th>
 			<td class="padd-0" colspan="5">
-				<input name="" class="field-cont layui-input" lay-verify="number">
+				<input name="" class="field-cont layui-input">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">可用积分</th>
-			<td colspan="5">
-				<div class="layui-input-inline">
-					<select></select>
-				</div>
+			<td class="padd-0" colspan="5">
+				<select></select>
 			</td>
 		</tr>
 	</table>
@@ -269,8 +255,6 @@
 					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
 				});
-
-				comm.fillFormByData(comm.getObjParam(), $("#express_online_order_form"), "fill-name");
 			}
 		});
 		//删除行
@@ -313,8 +297,7 @@
 		form.on('submit(express-edit-form)', function(data) {
 			var expressOnlineOrderData = comm.getFormData(
 				$("#express_edit_form"), [
-					'Cnum', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'deliverpostcard', 'delivermobile', 'deliveremail', 'receivercompany', 'Receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'receiverpostcard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'volumeweight', 'cnum', 'note', 'freeservice', 'freeservicenote', 'idcard_fan', 'receiveridcardnum', 'idcard_zheng'
-				]
+				'Cnum', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'deliverpostcard', 'delivermobile', 'deliveremail', 'receivercompany', 'Receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'receiverpostcard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'volumeweight', 'cnum', 'note', 'freeservice', 'freeservicenote', 'idcard_fan', 'receiveridcardnum', 'idcard_zheng']
 			);
 			var details = [];
 			$(".detail-tr").each(function() {
@@ -325,15 +308,15 @@
 				details.push(sepDetail);
 			});
 			expressOnlineOrderData.details = details;
+			1.caozuo=1；
+2.kkfs随意填入不影响结果 ；
+3.isenter传入页面原来的值
 
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
 					url: "/api/OrderTransportOrder/PostMy",
 					type: "post",
-					processData: false,
-					contentType: false,
-//					data: new FormData($form[0]),
 					data: expressOnlineOrderData,
 					success: function(data) {
 						layer.msg("编辑成功！");

@@ -9,17 +9,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">异常类型</label>
 		<div class="layui-input-inline">
-			<select name="operatetypeid" lay-verify="required">
-				<option value="">请选择异常件类型</option>
-				<option value="长时间未收到包裹">长时间未收到包裹</option>
-				<option value="修改地址">修改地址</option>
-				<option value="修改身份证">修改身份证</option>
-				<option value="退单">退单</option>
-				<option value="丢失">丢失</option>
-				<option value="XYL反馈">XYL反馈</option>
-				<option value="遗留件">遗留件</option>
-				<option value="收件人信息更改">收件人信息更改</option>
-			</select>
+			<select url="/api/OrderTransportAbnornal/Type" name="operatetypeid" lay-verify="required"></select>
 		</div>
 	</div>
 

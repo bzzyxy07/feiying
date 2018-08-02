@@ -1,11 +1,11 @@
 <head>
 	<style>
-		#recipients_edit_form .layui-form-label {
+		#receiver_edit_form .layui-form-label {
 			width: 120px;
 		}
 	</style>
 </head>
-<form class="layui-form fill-container fill-form-container" id="recipients_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" enctype="multipart/form-data" submit-type="put" succ-msg="修改成功！">
+<form class="layui-form fill-container fill-form-container" id="receiver_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" enctype="multipart/form-data" submit-type="put" succ-msg="修改成功！">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
@@ -79,7 +79,7 @@
 <script>
 	layui.use(['form', 'table'], function() {
 		var id = comm.getUrlParamX("id");
-		$("#recipients_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
-		$("#recipients_edit_form input[name='id']").val(id);
+		$("#receiver_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
+		$("#receiver_edit_form input[name='id']").val(id);
 	});
 </script>

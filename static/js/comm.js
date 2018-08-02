@@ -67,7 +67,7 @@ var comm = {
 		});
 	},
 	initLoading: function() {
-		if ($(".popup-page-store .loading-container").length) return false;
+		if($(".popup-page-store .loading-container").length) return false;
 		$(".popup-page-store").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
 	},
 	closeLoading: function() {
@@ -89,8 +89,8 @@ var comm = {
 			//从数据库中获取select选项
 			$(target + " select[url]").each(function(index, element) {
 				var $this = $(this),
-					dataText = $this.attr("data-text"),
-					dataValue = $this.attr("data-value"),
+					dataText = $this.attr("data-text") || "name",
+					dataValue = $this.attr("data-value") || "id",
 					searchUrl = $this.attr("url");
 
 				if(searchUrlArr.indexOf(searchUrl) != -1) return false;
@@ -101,12 +101,13 @@ var comm = {
 						url: searchUrl,
 						type: $this.attr("my-type"),
 						success: function(data) {
-							if (index == selLength) comm.closeLoading();
-							if((!data) || (!data.Data) || (!data.Data.length)) return false;
+							if(index == selLength) comm.closeLoading();
+							data = data['Data'] || data;
+							if((!data) || (!data.length)) return false;
 							if($this.prop("tagName") === 'SELECT') {
 								var sel = '<option value="">未选择</option>';
-								for(var i = 0, len = data.Data.length; i < len; i++) {
-									sel += '<option value="' + data["Data"][i][dataValue] + '">' + data["Data"][i][dataText] + '</option>';
+								for(var i = 0, len = data.length; i < len; i++) {
+									sel += '<option value="' + data[i][dataValue] + '">' + data[i][dataText] + '</option>';
 								}
 								$this.html(sel);
 								$this.data("data") && $this.val($this.data("data"));
@@ -120,7 +121,7 @@ var comm = {
 							}
 						},
 						error: function(data) {
-							if (index == selLength) comm.closeLoading();
+							if(index == selLength) comm.closeLoading();
 							layer.close(index);
 							layer.msg("服务器错误：查询" + $this.prev("span").text() + "失败");
 						}
@@ -165,6 +166,7 @@ var comm = {
 	},
 	getDataByCondition: function(condition) {
 		condition.loading && comm.initLoading();
+		
 		var ajaxData = $.extend({
 			url: '',
 			type: 'get',
@@ -243,7 +245,7 @@ var comm = {
 		for(var key in data) {
 			var sepCont = $container.find('.field-cont[' + fieldName + '="' + key + '"]');
 			if(!data[key] || !sepCont.length) continue;
-			
+
 			if(sepCont.hasClass("upload-img-file")) {
 				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
@@ -297,7 +299,7 @@ var comm = {
 		}
 		return indexed_array;
 	},
-	
+
 	/**
 	 * 绑定搜索表单的点击事件
 	 * @param {
@@ -407,6 +409,27 @@ var comm = {
 			var form = layui.form;
 			form.on('submit(' + filter + ')', function(data) {
 				var $form = $(".layui-form[lay-filter=" + filter + "]");
+				//上传文件
+				if($(".layui-form[lay-filter=" + filter + "] input[type=file]").length) {
+					comm.getDataByCondition({
+						loading: ".layui-form[lay-filter=" + filter + "]",
+						ajax: {
+							url: $form.attr("submit-url"),
+							type: $form.attr("submit-type") || "get",
+							processData: false,
+							contentType: false,
+							data: new FormData($form[0]),
+							success: function(data) {
+								$form.attr("succ-close") && layer.closeAll();
+								$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
+								$form.attr("succ-reset") && $form[0].reset();
+								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
+							}
+						}
+					});
+					return false;
+				}
 				comm.getDataByCondition({
 					loading: ".layui-form[lay-filter=" + filter + "]",
 					ajax: {
@@ -451,8 +474,8 @@ var comm = {
 		return null;
 	},
 	getObjParam: function(name) {
-		if (!name) return $(".popup-page-store").data("data");
-	    return $(".popup-page-store").data("data")[name];
+		if(!name) return $(".popup-page-store").data("data");
+		return $(".popup-page-store").data("data")[name];
 	},
 	/*退出系统 */
 	exitSystem: function() {
