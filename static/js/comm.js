@@ -196,8 +196,8 @@ var comm = {
 			condition.ajax.success && condition.ajax.success(data.Object);
 			return data.Object;
 		};
-		ajaxData.processData = false;
-		ajax.contentType = false;
+//		ajaxData.processData = false;
+//		ajaxData.contentType = false;
 		ajaxData.error = function(data) {
 			comm.closeLoading();
 			if(data.status == 401) {
