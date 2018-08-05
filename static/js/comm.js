@@ -196,8 +196,8 @@ var comm = {
 			condition.ajax.success && condition.ajax.success(data.Object);
 			return data.Object;
 		};
-//		ajaxData.processData = false;
-//		ajaxData.contentType = false;
+		//		ajaxData.processData = false;
+		//		ajaxData.contentType = false;
 		ajaxData.error = function(data) {
 			comm.closeLoading();
 			if(data.status == 401) {
@@ -344,6 +344,19 @@ var comm = {
 				comm.initLoading();
 				var $this = $(this);
 				if(param.renderTable) {
+					if(param.order) {
+						!$("#indexTpl").length &&
+							$("body").append('<script type="text/html" id="indexTpl">{{d.LAY_TABLE_INDEX+1}}</script>');
+                        
+                        
+array.splice(2, 0, "three");
+						param.renderTable.cols[0].push({
+							title: '序号',
+							templet: '#indexTpl',
+							align: 'center',
+							width: 60,
+						});
+					}
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
 						method: filterForm.getAttribute("my-type") || "get",
