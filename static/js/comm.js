@@ -92,7 +92,6 @@ var comm = {
 					dataText = $this.attr("data-text") || "name",
 					dataValue = $this.attr("data-value") || "id",
 					searchUrl = $this.attr("url");
-
 				if(searchUrlArr.indexOf(searchUrl) != -1) return false;
 				searchUrlArr.push(searchUrl);
 				comm.getDataByCondition({
@@ -101,12 +100,15 @@ var comm = {
 						url: searchUrl,
 						type: $this.attr("my-type"),
 						success: function(data) {
+							console.info(data)
 							if(index == selLength) comm.closeLoading();
-							data = data['Data'] || data;
+							var data = data.Data || data;
 							if((!data) || (!data.length)) return false;
 							if($this.prop("tagName") === 'SELECT') {
+
 								var sel = '<option value="">未选择</option>';
 								for(var i = 0, len = data.length; i < len; i++) {
+									console.info(data[i])
 									sel += '<option value="' + data[i][dataValue] + '">' + data[i][dataText] + '</option>';
 								}
 								$this.html(sel);
@@ -166,7 +168,6 @@ var comm = {
 	},
 	getDataByCondition: function(condition) {
 		condition.loading && comm.initLoading();
-		
 		var ajaxData = $.extend({
 			url: '',
 			type: 'get',
@@ -195,6 +196,8 @@ var comm = {
 			condition.ajax.success && condition.ajax.success(data.Object);
 			return data.Object;
 		};
+		ajaxData.processData = false;
+		ajax.contentType = false;
 		ajaxData.error = function(data) {
 			comm.closeLoading();
 			if(data.status == 401) {
@@ -409,33 +412,13 @@ var comm = {
 			var form = layui.form;
 			form.on('submit(' + filter + ')', function(data) {
 				var $form = $(".layui-form[lay-filter=" + filter + "]");
-				//上传文件
-				if($(".layui-form[lay-filter=" + filter + "] input[type=file]").length) {
-					comm.getDataByCondition({
-						loading: ".layui-form[lay-filter=" + filter + "]",
-						ajax: {
-							url: $form.attr("submit-url"),
-							type: $form.attr("submit-type") || "get",
-							processData: false,
-							contentType: false,
-							data: new FormData($form[0]),
-							success: function(data) {
-								$form.attr("succ-close") && layer.closeAll();
-								$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
-								$form.attr("succ-reset") && $form[0].reset();
-								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
-								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
-							}
-						}
-					});
-					return false;
-				}
+				var formData = new FormData($form[0]);
 				comm.getDataByCondition({
 					loading: ".layui-form[lay-filter=" + filter + "]",
 					ajax: {
 						url: $form.attr("submit-url"),
 						type: $form.attr("submit-type") || "get",
-						data: $form.serialize(),
+						data: formData,
 						success: function(data) {
 							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));

@@ -1,4 +1,4 @@
-<form class="layui-form" action="" id="add_abnormal_form" submit-url="/api/OrderTransportAbnornal/PostMy" submit-type="post" enctype="multipart/form-data">
+<form class="layui-form" id="add_abnormal_form" enctype="multipart/form-data" submit-url="/api/OrderTransportAbnornal/PostMy" submit-type="post" succ-form-reset="1">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">运单号</label>
 		<div class="layui-input-inline">
@@ -9,7 +9,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">异常类型</label>
 		<div class="layui-input-inline">
-			<select url="/api/OrderTransportAbnornal/Type" name="operatetypeid" lay-verify="required"></select>
+			<select name="operatetypeid" lay-verify="required" url="/api/OrderTransportAbnornal/Type"></select>
 		</div>
 	</div>
 
@@ -36,4 +36,5 @@
 			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">保存</button>
 		</div>
 	</div>
+
 </form>
