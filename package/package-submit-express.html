@@ -30,19 +30,17 @@
 			tbodyStr += "<tr>";
 			names.map(function(v) {
 				if(v === "index") {
-					tbodyStr += "<td>" + index + "</td>";
+					tbodyStr += "<td>" + (index + 1) + "</td>";
 				} else if(v === "zhuangtai") {
 					tbodyStr += "<td>已入库</td>";
 				} else {
 					tbodyStr += "<td>" + i[v] + "</td>";
 				}
-
 			});
 			tbodyStr += "</tr>";
 		});
 		console.info(tbodyStr);
-		$("#package_info_table").html(tbodyStr);
-		
+		$("#package_info_table tbody").html(tbodyStr);
 
 	});
 </script>

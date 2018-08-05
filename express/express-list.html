@@ -1,4 +1,4 @@
-<form class="layui-form filter-form" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form">
+<form class="layui-form init-select-group filter-form" group-init-url="/api/OrderTransportOrder/SearchInit" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form">
 	<ul>
 		<li>
 			<span>运单状态</span>
@@ -12,22 +12,17 @@
 		</li>
 		<li>
 			<span>来源</span>
-			<ul class="form-condition" name="">
-				<li class="active" data-value="">全部</li>
-				<li data-value="">转运</li>
-				<li data-value="">快递</li>
-			</ul>
+			<select name="" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
 		</li>
-
 	</ul>
 	<ul>
 		<li>
 			<span>送达仓库</span>
-			<select name="depotid" initial-name="depotlist"></select>
+			<select name="depotid" initial-name="depot_lists" initial-text="Text" initial-value="Value"></select>
 		</li>
 		<li>
 			<span>线路名称</span>
-			<select name="routeid" initial-name=""></select>
+			<select name="routeid" initial-name="route_list" initial-text="routename" initial-value="id"></select>
 		</li>
 
 		<li>
@@ -36,7 +31,7 @@
 		</li>
 		<li>
 			<span>发货批次</span>
-			<select name="routeid" initial-name=""></select>
+			<select name="routeid" initial-name="shippingbatchs" initial-text="Text" initial-value="Value"></select>
 		</li>
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
@@ -55,6 +50,26 @@
 		var form = layui.form;
 		var layer = layui.layer;
 		var table = layui.table;
+		
+		//初始化表格选项数据
+		comm.getDataByCondition({
+			
+			ajax: {
+				url: '/api/OrderTransportOrder/SearchInit',
+				success: function(data) {
+					//初始化表格选项数据
+					comm.groupInitial({
+						data: data,
+						cont: '#express_info_search_form',
+						cb: function(data) {
+							console.info(data);
+						}
+					});
+				}
+			}
+		});
+		//groupInitialBase: function(param, data)
+		
 		comm.bindFilterForm({
 			formId: "express_info_search_form",
 			order: true,
@@ -193,6 +208,10 @@
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
 				//              接口/api/OrderTransportOrder/Handle
+				layer.confirm('是否确认删除该运单信息1？', function(index) {
+					obj.del();
+					layer.alert("尚未开发，敬请期待");
+				});
 				console.info(data);
 			} else if(layEvent === 'track') { //运单追踪
 				var that = this;

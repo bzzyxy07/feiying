@@ -107,11 +107,10 @@
 					content: '<img class="idcard-img" src="' + imgSrc + '" alt="无法正常显示照片，请核对路径：' + imgSrc + '">',
 					title: '',
 					area: ['400px', '300px']
-				})
+				});
 
 			} else if(layEvent === 'choose-receiver') { //选定该收件人
-				comm.fillFormByData(data, $("#express_detail_cont"), "fill-receiver");
-				console.info(data);
+				comm.fillFormByData(data, $("form"), "fill-receiver");
 				comm.closeOpenPage();
 			}
 		});

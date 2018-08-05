@@ -80,7 +80,7 @@
 			} else if(layEvent === 'reject') { //包裹退货
 				layer.alert("尚未开发，敬请期待");
 			} else if(layEvent === 'choose-deliver') { //选定该发件人
-				comm.fillFormByData(data, $("#express_detail_cont"), "fill-deliver");
+				comm.fillFormByData(data, $("form"), "fill-deliver");
 				console.info(data);
 				comm.closeOpenPage();
 			}

@@ -101,14 +101,14 @@
 			var ids = [];
 			var sameFlag = false;
 			checkData.map(function(v) {
-				if (v.depotid != depotid) {
+				if(v.depotid != depotid) {
 					layer.msg("请选择同一仓库的包裹！");
 					sameFlag = true;
 					return false;
 				}
 				ids.push(v.id);
 			});
-			if (sameFlag) return false;
+			if(sameFlag) return false;
 			comm.changeTabContent({
 				url: "./package/package-submit-express.html",
 				data: checkData
@@ -144,7 +144,7 @@
 					url: './package/package-detail.html?id=' + data.id,
 					open: {
 						maxmin: true,
-						area: ['80%', '600px'],
+						area: ['80%', '80%'],
 					}
 				});
 			} else if(layEvent === 'delete') {
@@ -158,7 +158,7 @@
 					url: './package/package-edit.html?id=' + data.id,
 					open: {
 						maxmin: true,
-						area: ['80%', '600px'],
+						area: ['80%', '80%'],
 					}
 				});
 
@@ -170,11 +170,12 @@
 </script>
 <script type="text/html" id="operation">
 	{{# if(d.isenter == true){ }}
-	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
-	{{# } else{ }}
 	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-disabled layui-btn-sm">删除</a>
 	<!--<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>-->
+	{{# } else{ }}
+
+	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
 	{{# } }}
 </script>

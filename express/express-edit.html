@@ -77,15 +77,15 @@
 		<tr>
 			<th class="align-right required-logo">姓名</th>
 			<td class="padd-0">
-				<input name="delivername" class="field-cont layui-input" fill-name="delivername" lay-verify="required">
+				<input name="delivername" class="field-cont layui-input" fill-name="delivername" fill-deliver="delivername" lay-verify="required">
 			</td>
 			<th class="align-right required-logo">电话</th>
 			<td class="padd-0">
-				<input name="delivermobile" class="field-cont layui-input" fill-name="mobilephone" lay-verify="required">
+				<input name="delivermobile" class="field-cont layui-input" fill-name="mobilephone" fill-deliver="mobilephone" lay-verify="required">
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="" class="field-cont layui-input" fill-name="deliveraddress">
+				<input name="" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
 			</td>
 		</tr>
 		<tr>
@@ -102,28 +102,28 @@
 		<tr>
 			<th class="align-right required-logo">收件人姓名</th>
 			<td class="padd-0">
-				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-name="receivername" lay-verify="required">
+				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-name="receivername" fill-receiver="receivername" lay-verify="required">
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
-				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype"></select>
+				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="idcardnumber">
+				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="idcardnumber" fill-receiver="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-name="mobilephone" lay-verify="required|phone">
+				<input name="receivermobile" class="field-cont layui-input" fill-name="mobilephone" lay-verify="required|phone" fill-receiver="mobilephone">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardzheng">
+						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardzheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -133,7 +133,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardfan">
+						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardfan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -143,10 +143,10 @@
 			<th class="align-right required-logo">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
-					<select name="receiverregion_province" id="province" lay-verify="required"></select>
+					<select name="receiverregion_province" id="province" lay-verify="required" fill-receiver="regionprovince"></select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="receiverregion_city" id="city" lay-verify="required"></select>
+					<select name="receiverregion_city" id="city" lay-verify="required" fill-receiver="regioncity"></select>
 				</div>
 			</td>
 		</tr>
@@ -154,13 +154,13 @@
 		<tr>
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
-				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress" lay-verify="required">
+				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress" fill-receiver="receiveraddress" lay-verify="required">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" id="zipcode" class="field-cont layui-input" fill-name="zipcode" lay-verify="required|number">
+				<input name="receiverpostcard" id="zipcode" class="field-cont layui-input" fill-name="zipcode" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
