@@ -1,0 +1,48 @@
+<div class="data-table-container">
+	<table id="package_info_table" class="layui-table">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>包裹追踪号</th>
+				<th>仓库</th>
+				<th>状态</th>
+				<th>重量</th>
+				<th>物品</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+
+<script>
+	var data = $("#main_container").data("data");
+	console.info(data);
+	layui.use(['layer', 'form', 'table'], function() {
+		var form = layui.form;
+		var layer = layui.layer;
+		var table = layui.table;
+
+		console.info(data)
+		var tbodyStr = "";
+		var names = ["index", "trackingnumber", "depotname", "zhuangtai", "goodsweight", "packagedetails"];
+		data.map(function(i, index) {
+			debugger;
+			tbodyStr += "<tr>";
+			names.map(function(v) {
+				if(v === "index") {
+					tbodyStr += "<td>" + index + "</td>";
+				} else if(v === "zhuangtai") {
+					tbodyStr += "<td>已入库</td>";
+				} else {
+					tbodyStr += "<td>" + i[v] + "</td>";
+				}
+
+			});
+			tbodyStr += "</tr>";
+		});
+		console.info(tbodyStr);
+		$("#package_info_table").html(tbodyStr);
+		
+
+	});
+</script>

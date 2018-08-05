@@ -21,11 +21,12 @@ layui.use(['element', 'layer'], function() {
 });
 
 function tabClickCb($clickTab) {
-	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq('+$clickTab.index()+')').load($clickTab.attr("link-url"), function() {
+	var $target = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq(' + $clickTab.index() + ')');
+	$target.load($clickTab.attr("link-url"), function() {
 		comm.fillSelAndCont();
 	});
 }
 
 function fillSelAndCont() {
-	
+
 }

@@ -64,11 +64,11 @@
 				elem: '#express_info_table',
 				cols: [
 					[{
-						field: 'trackingnumber',
+						field: 'source',
 						title: '来源',
 						sort: true,
 					}, {
-						field: 'depotname',
+						field: 'cnum',
 						title: '运单号',
 						sort: true,
 					}, {
@@ -100,7 +100,7 @@
 						title: '身份证信息',
 						sort: true,
 					}, {
-						field: 'expressdetails',
+						field: 'shippingbatch_name',
 						title: '发货批次',
 					}, {
 						field: 'transport_status',
@@ -144,9 +144,7 @@
 				loading: true,
 				ajax: {
 					url: '/api/OrderTransportOrder/BatchDelete',
-					data: {
-						Ids: ids
-					},
+					data: ids,
 					type: 'Delete',
 					success: function(rlt) {
 						layer.msg("删除成功！");
@@ -166,7 +164,7 @@
 					url: './express/express-detail.html?id=' + data.id,
 					open: {
 						maxmin: true,
-						area: ['80%', '600px'],
+						area: ['80%', '90%'],
 					}
 				});
 			} else if(layEvent === 'print-rm' || layEvent === 'print-A4') { //热敏 400 打印A4打印 790
@@ -189,14 +187,9 @@
 					}
 				});
 			} else if(layEvent === 'edit') { //编辑运单信息
-				console.info(1)
-				comm.openPage({
+				comm.changeTabContent({
 					url: './express/express-edit.html',
-					data: data,
-					open: {
-						maxmin: true,
-						area: ['80%', '80%'],
-					}
+					data: data.id
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
 				//              接口/api/OrderTransportOrder/Handle

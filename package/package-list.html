@@ -4,8 +4,8 @@
 			<span>入库状态</span>
 			<ul class="form-condition" name="isenter">
 				<li class="active" data-value="">全部</li>
-				<li data-value="true">已入库<span class="layui-badge">3</span></li>
-				<li data-value="false">未入库<span class="layui-badge">4</span></li>
+				<li data-value="false">已入库<span class="layui-badge">3</span></li>
+				<li data-value="true">未入库<span class="layui-badge">4</span></li>
 			</ul>
 		</li>
 		<li>
@@ -34,9 +34,11 @@
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
 </form>
+<p class="mess-info hide">选中列表多条记录（必须为同一个仓库），点击“提交运单”按钮后填写相关信息提交可达到合箱操作</p>
 <div class="data-table-container">
 	<table id="package_info_table" lay-filter="package-info-table"></table>
 </div>
@@ -50,6 +52,7 @@
 			order: true,
 			checkbox: true,
 			renderTable: {
+				id: 'package_list_data',
 				elem: '#package_info_table',
 				cols: [
 					[{
@@ -78,7 +81,38 @@
 						toolbar: '#operation'
 					}]
 				]
+			},
+			callback: function() {
+				if($(".filter-form ul[name='isenter'] li[data-value=false]").hasClass("active")) {
+					$("#package_submit_btn, .mess-info").removeClass("hide");
+				} else {
+					$("#package_submit_btn, .mess-info").addClass("hide");
+				}
 			}
+		});
+		//为提交运单（合箱）按钮绑定点击事件
+		$("#package_submit_btn").on("click", function() {
+			var checkData = table.checkStatus('package_list_data').data;
+			if(!checkData.length) {
+				layer.msg("请选择待提交的包裹！");
+				return false;
+			}
+			var depotid = checkData[0].depotid;
+			var ids = [];
+			var sameFlag = false;
+			checkData.map(function(v) {
+				if (v.depotid != depotid) {
+					layer.msg("请选择同一仓库的包裹！");
+					sameFlag = true;
+					return false;
+				}
+				ids.push(v.id);
+			});
+			if (sameFlag) return false;
+			comm.changeTabContent({
+				url: "./package/package-submit-express.html",
+				data: checkData
+			});
 		});
 		//初始化表格选项数据
 		comm.getDataByCondition({

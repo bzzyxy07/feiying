@@ -10,33 +10,41 @@ var comm = {
 	 */
 	groupInitial: function(param) {
 		//初始化表格选项数据
-		comm.getDataByCondition({
-			ajax: {
-				url: param.url,
-				success: function(data) {
-					$(param.cont + ' select[initial-name]').each(function() {
-						var m = $(this),
-							key = m.attr("initial-name"),
-							sel = '<option value="">请选择</option>',
-							sepData = data[key],
-							id = m.attr("initial-value"),
-							name = m.attr("initial-text");
-
-						sepData && sepData.map(function(v) {
-							(sepid = v[id] || v.id) &&
-							(sepname = v[name] || v.name) &&
-							(sel += '<option value="' + sepid + '">' + sepname + '</option>');
-						});
-						m.html(sel).data("data") && m.val(m.data("data"));
-					})
-					layui.use('form', function() {
-						var form = layui.form;
-						form.render('select');
-					});
-					param.cb && param.cb(data);
+		if(param.url) {
+			comm.getDataByCondition({
+				ajax: {
+					url: param.url,
+					success: function(data) {
+						comm.groupInitialBase(param, data)
+					}
 				}
-			}
+			});
+		} else {
+			comm.groupInitialBase(param, param.data);
+		}
+
+	},
+	groupInitialBase: function(param, data) {
+		$(param.cont + ' select[initial-name]').each(function() {
+			var m = $(this),
+				key = m.attr("initial-name"),
+				sel = '<option value="">请选择</option>',
+				sepData = data[key],
+				id = m.attr("initial-value"),
+				name = m.attr("initial-text");
+
+			sepData && sepData.map(function(v) {
+				(sepid = v[id] || v.id) &&
+				(sepname = v[name] || v.name) &&
+				(sel += '<option value="' + sepid + '">' + sepname + '</option>');
+			});
+			m.html(sel).data("data") && m.val(m.data("data"));
+		})
+		layui.use('form', function() {
+			var form = layui.form;
+			form.render('select');
 		});
+		param.cb && param.cb(data);
 	},
 	/**
 	 * 临时二次封装layer.open用以打开页面
@@ -67,14 +75,21 @@ var comm = {
 			param.cb && param.cb();
 		});
 	},
+	changeTabContent: function(param) {
+		$("#main_container").data("data", param.data);
+		$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').load(param.url, function() {
+			comm.fillSelAndCont();
+		});
+
+	},
 	initLoading: function() {
 		$(".loading-container").remove();
-		if ($(".loading-container").length) return false;
-	    if ($(".popup-page-store").length) {
-	    	$('.popup-page-store').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
-	    } else {
-	    	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
-	    }
+		if($(".loading-container").length) return false;
+		if($(".popup-page-store").length) {
+			$('.popup-page-store').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+		} else {
+			$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+		}
 	},
 	closeLoading: function() {
 		$(".loading-container").remove();
@@ -88,6 +103,7 @@ var comm = {
 	fillSelAndCont: function() {
 		comm.initLoading();
 		var target = arguments[0] || '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
+
 		layui.use('form', function() {
 			var form = layui.form;
 			var searchUrlArr = [];
@@ -107,14 +123,12 @@ var comm = {
 						url: searchUrl,
 						type: $this.attr("my-type"),
 						success: function(data) {
-							console.info(data)
-							
+
 							var data = data.Data || data;
 							if((!data) || (!data.length)) return false;
 							if($this.prop("tagName") === 'SELECT') {
 								var sel = '<option value="">未选择</option>';
 								for(var i = 0, len = data.length; i < len; i++) {
-									console.info(data[i])
 									sel += '<option value="' + data[i][dataValue] + '">' + data[i][dataText] + '</option>';
 								}
 								$this.html(sel);
@@ -188,13 +202,12 @@ var comm = {
 		ajaxData.url = path + ajaxData.url;
 		ajaxData.success = function(data) {
 			comm.closeLoading();
-			if(!data.Success) {
-				layer.msg(data.Errors[0] || data.Message);
-				return false;
-			}
+			//			if(!data.Success) {
+			//				layer.msg(data.Errors[0] || data.Message);
+			//				return false;
+			//			}
 
 			if(condition.login) {
-				console.info(data)
 				userInfo = data.Object;
 				//sessionStorage.setItem("userInfo", data.Object);
 				sessionStorage.setItem("modelId", data.modelId);
@@ -352,65 +365,81 @@ var comm = {
 			});
 			form.render();
 
+			if(param.renderTable) {
+				var array = param.renderTable.cols[0];
+				param.order && array.unshift({
+					type: 'numbers',
+					title: '序号',
+				});
+				param.checkbox && array.unshift({
+					checkbox: true
+				});
+			}
+
 			$(filterForm).on("click", ".filter-btn", function() {
 				var $this = $(this);
 				if(param.renderTable) {
-					var array = param.renderTable.cols[0];
-					param.order && array.unshift({
-						type: 'numbers',
-						title: '序号',
-					});
-					param.checkbox && array.unshift({
-						checkbox: true
-					});
-
-					var renderData = $.extend({
-						url: path + filterForm.getAttribute("url"),
-						method: filterForm.getAttribute("my-type") || "get",
-						request: {
-							pageName: 'Page',
-							limitName: 'page_size'
-						},
-						page: {
-							count: 'Total'
-						},
-						headers: {
-							"Authorization": sessionStorage.getItem("#page_address")
-						},
-						response: {
-							statusName: 'Success',
-							statusCode: true,
-							msgName: 'msg',
-							dataName: 'Data',
-							countName: 'Total'
-						},
-						where: comm.getFormData($(filterForm)),
-						done: function(data) {
-							param.succ && param.succ(data);
-							comm.closeLoading();
-							if(data.status == 401) {
-								comm.systemTimeout();
-								return false;
-							}
-							if(!data.Success) {
-								layer.msg(data.Errors[0], {
-									icon: 5
-								});
-								return false;
-							}
-						}
-					}, param.renderTable)
-
-					comm.renderTable({
-						loading: true,
-						table: renderData
+					comm.renderTablePre({
+						filterForm: filterForm,
+						param: param
 					});
 				}
 				param.callback && param.callback();
 			});
 			$("#" + param.formId + " .filter-btn").click();
 		});
+	},
+	renderTablePre: function(params) {
+		var filterForm = params.filterForm,
+			param = params.param,
+			baseUrl = "",
+			baseMethod = "";
+		if(filterForm) {
+			baseUrl = filterForm.getAttribute("url");
+			baseMethod = filterForm.getAttribute("my-type") || "get";
+		}
+		param.url && (param.url = path + param.url);
+		param.renderTable.request = $.extend({
+			pageName: 'Page',
+			limitName: 'page_size'
+		}, param.renderTable.request);
+		var renderData = $.extend({
+			url: path + baseUrl,
+			method: baseMethod,
+			page: {
+				count: 'Total'
+			},
+			headers: {
+				"Authorization": sessionStorage.getItem("#page_address")
+			},
+			response: {
+				statusName: 'Success',
+				statusCode: true,
+				msgName: 'msg',
+				dataName: 'Data',
+				countName: 'Total'
+			},
+			where: comm.getFormData($(filterForm)),
+			done: function(data) {
+				param.succ && param.succ(data);
+				comm.closeLoading();
+				if(data.status == 401) {
+					comm.systemTimeout();
+					return false;
+				}
+				if(!data.Success) {
+					layer.msg(data.Errors[0], {
+						icon: 5
+					});
+					return false;
+				}
+			}
+		}, param.renderTable)
 
+		comm.renderTable({
+			loading: true,
+			table: renderData
+		});
 	},
 	/**
 	 * 改写layui.table的render方法
@@ -420,8 +449,10 @@ var comm = {
 		layui.use('table', function() {
 			var table = layui.table;
 			table.render(param.table);
-			
 		});
+	},
+	renderTableSimple: function(param) {
+        
 	},
 
 	/**
