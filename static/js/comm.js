@@ -344,19 +344,19 @@ var comm = {
 				comm.initLoading();
 				var $this = $(this);
 				if(param.renderTable) {
-					if(param.order) {
-						!$("#indexTpl").length &&
-							$("body").append('<script type="text/html" id="indexTpl">{{d.LAY_TABLE_INDEX+1}}</script>');
-                        
-                        
-array.splice(2, 0, "three");
-						param.renderTable.cols[0].push({
-							title: '序号',
-							templet: '#indexTpl',
-							align: 'center',
-							width: 60,
-						});
-					}
+					var array = param.renderTable.cols[0];
+					param.order && array.unshift({
+						title: '序号',
+						templet: '#indexTpl',
+						align: 'center',
+						width: 50,
+					});
+					param.checkbox && array.unshift({
+						checkbox: true
+					});
+					
+					console.info(param)
+
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
 						method: filterForm.getAttribute("my-type") || "get",

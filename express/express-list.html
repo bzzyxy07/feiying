@@ -57,13 +57,13 @@
 		var table = layui.table;
 		comm.bindFilterForm({
 			formId: "express_info_search_form",
+			order: true,
+			checkbox: true,
 			renderTable: {
 				id: 'express_list_data',
 				elem: '#express_info_table',
 				cols: [
 					[{
-						checkbox: true
-					}, {
 						field: 'trackingnumber',
 						title: '来源',
 						sort: true,
