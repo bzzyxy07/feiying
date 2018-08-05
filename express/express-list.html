@@ -113,7 +113,12 @@
 						width: 400,
 						fixed: 'right'
 					}]
-				]
+				],
+			},
+			succ: function() {
+				$(".data-table-container a[lay-event=track]").on("mouseout", function() {
+					layer.closeAll();
+				});
 			},
 			callback: function() {
 				if($(".filter-form li[click-name='isenter']").hasClass("active")) {
@@ -177,8 +182,6 @@
 								type: 2,
 								title: '运单打印',
 								shadeClose: true,
-								//								shade: false,
-								//								maxmin: true,
 								area: [width, '600px'],
 								content: pageUrl
 							});
@@ -211,11 +214,9 @@
 				//				}
 				if($("#express_track_cont").length) {
 					layer.closeAll();
-
 				}
 
 				comm.getDataByCondition({
-					loading: true,
 					ajax: {
 						url: '/api/OrderProcessStatusChange/Changes?elementid=' + data.id,
 						success: function(rlt) {
@@ -223,7 +224,7 @@
 							if(!rlt || !rlt.length) {
 								layer.tips('<div id="express_track_cont">暂无运单信息</div>', that, {
 									time: 0,
-									tips: [2, '#ddd']
+									tips: [1, '#ddd']
 								});
 							} else {
 								var timelineStr = "";
@@ -235,14 +236,12 @@
 										'<p>' + v.processname + '</p>' +
 										'</div>' +
 										'</li>';
-									console.info(timelineStr);
 								});
-								console.info(timelineStr)
 								layer.tips('<div id="express_track_cont"><ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul></div>', that, {
-										time: 0,
-										tips: [2, '#ddd']
-									});
-//								$("#express_track_cont").html('<ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul>');
+									time: 0,
+									tips: [2, '#ddd']
+								});
+								//								$("#express_track_cont").html('<ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul>');
 							}
 
 							//							comm.openPage({
@@ -265,7 +264,7 @@
 </script>
 <script type="text/html" id="operation">
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track">追踪</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track" data-id="{{d.id}}">追踪</a>
 	<a class="layui-btn layui-bg-cyan layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
 	<a class="layui-btn layui-btn-sm" lay-event="print-rm">热敏打印</a>

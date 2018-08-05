@@ -62,16 +62,22 @@ var comm = {
 				layer.open(openParam);
 				layer.close(index);
 				comm.fillSelAndCont('.popup-page-store');
+				comm.closeLoading();
 			});
 			param.cb && param.cb();
 		});
 	},
 	initLoading: function() {
-		if($(".popup-page-store .loading-container").length) return false;
-		$(".popup-page-store").append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+		$(".loading-container").remove();
+		if ($(".loading-container").length) return false;
+	    if ($(".popup-page-store").length) {
+	    	$('.popup-page-store').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+	    } else {
+	    	$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').append('<div class="loading-container"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>');
+	    }
 	},
 	closeLoading: function() {
-		$(".popup-page-store").remove(".loading-container");
+		$(".loading-container").remove();
 	},
 	closeOpenPage: function() {
 		$(".layui-layer-shade").remove();
@@ -80,6 +86,7 @@ var comm = {
 		layer.closeAll();
 	},
 	fillSelAndCont: function() {
+		comm.initLoading();
 		var target = arguments[0] || '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
 		layui.use('form', function() {
 			var form = layui.form;
@@ -101,11 +108,10 @@ var comm = {
 						type: $this.attr("my-type"),
 						success: function(data) {
 							console.info(data)
-							if(index == selLength) comm.closeLoading();
+							
 							var data = data.Data || data;
 							if((!data) || (!data.length)) return false;
 							if($this.prop("tagName") === 'SELECT') {
-
 								var sel = '<option value="">未选择</option>';
 								for(var i = 0, len = data.length; i < len; i++) {
 									console.info(data[i])
@@ -121,6 +127,7 @@ var comm = {
 							} else if($this.prop("tagName") === 'UL') {
 
 							}
+							if(index == selLength) comm.closeLoading();
 						},
 						error: function(data) {
 							if(index == selLength) comm.closeLoading();
@@ -160,7 +167,6 @@ var comm = {
 					});
 				});
 			}
-			comm.closeLoading();
 		});
 	},
 	getDataByFilterform: function() {
@@ -188,10 +194,13 @@ var comm = {
 			}
 
 			if(condition.login) {
+				console.info(data)
 				userInfo = data.Object;
 				//sessionStorage.setItem("userInfo", data.Object);
 				sessionStorage.setItem("modelId", data.modelId);
 				sessionStorage.setItem("authen", data.Token);
+				sessionStorage.setItem("local-depotName", userInfo.DepotName);
+				sessionStorage.setItem("local-depotId", userInfo.DepotId);
 			}
 			condition.ajax.success && condition.ajax.success(data.Object);
 			return data.Object;
@@ -214,6 +223,7 @@ var comm = {
 
 	},
 	fillContainerByUrl: function(param) {
+		comm.initLoading();
 		var $container = param.cont;
 		comm.getDataByCondition({
 			ajax: {
@@ -221,6 +231,7 @@ var comm = {
 				type: $container.attr("fill-type") || "get",
 				data: $container.attr("fill-data") || {},
 				success: function(data) {
+					comm.closeLoading();
 					$container.hasClass("fill-page-container") && comm.fillPageByData(data, $container);
 					$container.hasClass("fill-form-container") && comm.fillFormByData(data, $container);
 					param.cb && param.cb(data);
@@ -316,6 +327,7 @@ var comm = {
 	 * }
 	 */
 	bindFilterForm: function(param) {
+		comm.initLoading();
 		layui.use('form', function() {
 			var form = layui.form;
 			var filterForm = document.getElementById(param.formId);
@@ -341,21 +353,16 @@ var comm = {
 			form.render();
 
 			$(filterForm).on("click", ".filter-btn", function() {
-				comm.initLoading();
 				var $this = $(this);
 				if(param.renderTable) {
 					var array = param.renderTable.cols[0];
 					param.order && array.unshift({
+						type: 'numbers',
 						title: '序号',
-						templet: '#indexTpl',
-						align: 'center',
-						width: 50,
 					});
 					param.checkbox && array.unshift({
 						checkbox: true
 					});
-					
-					console.info(param)
 
 					var renderData = $.extend({
 						url: path + filterForm.getAttribute("url"),
@@ -379,6 +386,7 @@ var comm = {
 						},
 						where: comm.getFormData($(filterForm)),
 						done: function(data) {
+							param.succ && param.succ(data);
 							comm.closeLoading();
 							if(data.status == 401) {
 								comm.systemTimeout();
@@ -411,8 +419,8 @@ var comm = {
 	renderTable: function(param) {
 		layui.use('table', function() {
 			var table = layui.table;
-
 			table.render(param.table);
+			
 		});
 	},
 
@@ -421,18 +429,20 @@ var comm = {
 	 * @param {Object} lay-filter的内容
 	 */
 	submitForm: function(filter) {
+		comm.initLoading();
 		layui.use('form', function() {
 			var form = layui.form;
 			form.on('submit(' + filter + ')', function(data) {
 				var $form = $(".layui-form[lay-filter=" + filter + "]");
 				var formData = new FormData($form[0]);
 				comm.getDataByCondition({
-					loading: ".layui-form[lay-filter=" + filter + "]",
+					loading: true,
 					ajax: {
 						url: $form.attr("submit-url"),
 						type: $form.attr("submit-type") || "get",
 						data: formData,
 						success: function(data) {
+							comm.closeLoading();
 							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
 							$form.attr("succ-reset") && $form[0].reset();
@@ -553,18 +563,45 @@ var comm = {
 			});
 
 			$(container0).attr("lay-filter", "relate-province").html(provinceSel);
+			$(container0).data("data") && $(container0).val($(container0).data("data"));
 			$(container1).attr("lay-filter", "relate-city").html('<option value="">请选择市</option>');
+			$(container1).data("data") && $(container1).val($(container0).data("data"));
 			form.render('select');
 
 			form.on('select(relate-province)', function(data) {
 				var citySel = '<option value="">请选择市</option>';
 				var cityList = relateList[idArr.indexOf(data.value)]['children'];
 				cityList.map(function(v) {
-					citySel += '<option value="' + v.id + '">' + v.regionname + '</option>';
+					citySel += '<option zipcode="' + v.zipcode + '" value="' + v.id + '">' + v.regionname + '</option>';
 				});
 				$(container1).html(citySel);
 				form.render('select');
 			});
+			if(param.zipcode) {
+				form.on('select(relate-city)', function(data) {
+					$(zipcode).val($(data.elem).find("option:selected").attr("zipcode"));
+				});
+			}
+		});
+	},
+	/**
+	 * 带普通搜索条件的省市联动
+	 */
+	searchRelateSelect: function(param) {
+		comm.getDataByCondition({
+			loading: true,
+			ajax: {
+				url: "/api/BasicRegion/GetTreeView?parent=中国",
+				type: "get",
+				success: function(data) {
+					//初始化省市联动
+					comm.initRelateSelect({
+						container: param.container,
+						data: data[0].children,
+						zipcode: param.zipcode
+					});
+				}
+			}
 		});
 	}
 }

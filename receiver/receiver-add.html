@@ -12,11 +12,13 @@
 			<input type="text" name="receivername" lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input">
 		</div>
 	</div>
-	<div class="layui-form-item">
+	<div class="layui-form-item relation-select">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="">请选择省份</select>
-			<select name="">请选择城市</select>
+			<select name="regionprovince" id="province" lay-verify="required"></select>
+		</div>
+		<div class="layui-input-inline">
+			<select name="regioncity" id="city" lay-verify="required"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -26,15 +28,15 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">手机</label>
+		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
+			<input type="text" name="zipcode" id="zipcode" lay-verify="required" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">邮编</label>
+		<label class="layui-form-label">手机</label>
 		<div class="layui-input-inline">
-			<input type="text" name="zipcode" lay-verify="required" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input">
+			<input type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -73,3 +75,10 @@
 		</div>
 	</div>
 </form>
+<script>
+	//初始化省市联动
+	comm.searchRelateSelect({
+		container: ["#province", "#city"],
+		zipcode: "#zipcode"
+	});
+</script>

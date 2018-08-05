@@ -71,8 +71,11 @@
 					comm.getDataByCondition({
 						loading: true,
 						ajax: {
-							url: '/api/OrderTransportAbnornal/PutMy?Id=' + data.id,
+							url: '/api/OrderTransportAbnornal/LogicalDel',
 							type: 'put',
+							data: {
+								id: data.id
+							},
 							success: function(data) {
 								obj.del();
 								layer.closeAll();
@@ -86,7 +89,6 @@
 	});
 </script>
 <script type="text/html" id="operation">
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
 	{{# if(d.property == "0"){ }}
 	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</a>
 	{{# } }}

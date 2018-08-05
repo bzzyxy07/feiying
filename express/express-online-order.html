@@ -4,28 +4,28 @@
 			display: none;
 		}
 		
-		#express_detail_cont th {
+		#express_online_order_cont th {
 			font-weight: 600;
 			background: #f6fcff;
 		}
 		
-		#express_detail_cont th[colspan="6"] {
+		#express_online_order_cont th[colspan="6"] {
 			background: #f2f2f2;
 			border-top: 2px solid #ccc;
 			padding: 8px;
 		}
 		
-		#express_detail_cont .upload-img-container {
+		#express_online_order_cont .upload-img-container {
 			margin: 0 auto;
 		}
 		
-		#express_detail_cont tbody tr:hover {
+		#express_online_order_cont tbody tr:hover {
 			background-color: #fff;
 		}
 	</style>
 </head>
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
-	<table class="layui-table" id="express_detail_cont">
+	<table class="layui-table" id="express_online_order_cont">
 		<colgroup>
 			<col width="130">
 			<col>
@@ -49,7 +49,9 @@
 
 			<th class="align-right required-logo">送达仓库</th>
 			<td class="padd-0">
-				<select name="depotid" initial-name="depot_list" lay-verify="required"></select>
+				<!--<select name="depotid" initial-name="depot_list" lay-verify="required"></select>-->
+				<input name="depotid" type="hidden">
+				<input name="depotname" type="text" class="layui-input" disabled="disabled">
 			</td>
 			<th class="align-right required-logo">线路名称</th>
 			<td class="padd-0">
@@ -134,13 +136,6 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">邮编</th>
-			<td class="padd-0">
-				<input name="receiverpostcard" class="field-cont layui-input" fill-receiver="zipcode" lay-verify="required|number">
-			</td>
-		</tr>
-
-		<tr>
 			<th class="align-right required-logo">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
@@ -155,6 +150,12 @@
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
 				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
+			</td>
+		</tr>
+		<tr>
+			<th class="align-right required-logo">邮编</th>
+			<td class="padd-0">
+				<input name="receiverpostcard" class="field-cont layui-input" id="zipcode" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
@@ -243,6 +244,8 @@
 </form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
+		$("input[name=depotid]").val(sessionStorage.getItem("local-depotId"));
+		$("input[name=depotname]").val(sessionStorage.getItem("local-depotName"));
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
@@ -250,12 +253,14 @@
 		//初始化表格选项数据
 		comm.groupInitial({
 			url: '/api/OrderTransportOrder/PostView',
-			cont: '#express_detail_cont',
+			cont: '#express_online_order_cont',
 			cb: function(data) {
+				console.info(data);
 				//初始化省市联动
 				comm.initRelateSelect({
-					container: ["#province", "#city"],
-					data: data["region_list"]
+					container: ["#express_online_order_cont #province", "#express_online_order_cont #city"],
+					data: data["region_list"],
+					zipcode: "#express_online_order_cont #zipcode"
 				});
 				//添加行
 				$("#add_detail_tr_btn").unbind("click").on("click", function() {
@@ -270,7 +275,7 @@
 			$(this).parent().parent("tr").remove();
 		});
 
-		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
+		$("#express_online_order_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 		//选定收件人
 		$("#choose_receiver").on("click", function() {

@@ -12,13 +12,13 @@
 			<input type="text" name="receivername" lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input field-cont">
 		</div>
 	</div>
-	<div class="layui-form-item">
+	<div class="layui-form-item relation-select">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="regionprovince" class="field-cont"  initial-name="depotlist"></select>
+			<select name="regionprovince" id="province" lay-verify="required"></select>
 		</div>
 		<div class="layui-input-inline">
-			<select name="regioncity" class="field-cont" initial-name="depotlist"></select>
+			<select name="regioncity" id="city" lay-verify="required"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -36,7 +36,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input type="text" name="zipcode" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input field-cont">
+			<input type="text" id="zipcode" name="zipcode" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -77,6 +77,11 @@
 </form>
 
 <script>
+	//初始化省市联动
+	comm.searchRelateSelect({
+		container: ["#province", "#city"],
+		zipcode: "#zipcode"
+	});
 	layui.use(['form', 'table'], function() {
 		var id = comm.getUrlParamX("id");
 		$("#receiver_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);

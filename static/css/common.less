@@ -100,7 +100,7 @@ a {
 }
 
 .layui-input[disabled] {
-    background: #f2f2f2;
+    background: rgba(0, 0, 0, .1);
     box-shadow: 0 0 3px rgba(0, 0, 0, .1) inset;
     cursor: not-allowed;
 }
@@ -108,6 +108,9 @@ a {
 .popup-page-container {
     >.popup-page-store {
         display: none;
+        .loading-container {
+            display: none !important;
+        }
     }
     .popup-page-store {
         padding: 10px;
@@ -122,6 +125,11 @@ a {
         top: 42px;
         height: auto !important;
         overflow-y: scroll !important;
+    }
+    .layui-layer-page {
+        .popup-page-store .loading-container {
+            display: block;
+        }
     }
 }
 
@@ -145,6 +153,10 @@ a {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.layui-layer-page {
+    background: #fff;
 }
 
 .layui-side {
@@ -271,6 +283,9 @@ a {
 
 .layui-table-cell {
     padding: 0 8px;
+    min-width: 48px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .layui-table-view .layui-table td,
@@ -392,15 +407,12 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(0, 0, 0, .1);
+    z-index: 1000000;
 }
 
 .data-table-container {
     min-height: 200px;
-}
-
-.layui-table-cell {
-    height: 30px;
-    line-height: 30px;
 }
 
 .relation-select {
@@ -580,7 +592,8 @@ a {
         height: 16px;
         line-height: 16px;
     }
-    .layui-timeline-item:before, hr {
+    .layui-timeline-item:before,
+    hr {
         background-color: #5fb878;
     }
 }
