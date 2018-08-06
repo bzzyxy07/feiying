@@ -282,6 +282,12 @@ var comm = {
 			}
 		}
 
+//		if(sepCont.attr('lay-filter') == "relate-province") {
+//			comm.relateSelect({
+//				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
+//			});
+//		}
+
 		layui.use('form', function() {
 			var form = layui.form;
 			form.render();
@@ -452,7 +458,7 @@ var comm = {
 		});
 	},
 	renderTableSimple: function(param) {
-        
+
 	},
 
 	/**
@@ -586,14 +592,16 @@ var comm = {
 				container1 = param.container[1],
 				relateList = param.data,
 				provinceSel = '<option value="">请选择省</option>',
-				idArr = [];
+				nameArr = [];
 
 			relateList.map(function(v) {
-				provinceSel += '<option value="' + v.id + '">' + v.regionname + '</option>';
-				idArr.push(v.id);
+				provinceSel += '<option value="' + v.regionname + '">' + v.regionname + '</option>';
+				nameArr.push(v.regionname);
 			});
 
 			$(container0).attr("lay-filter", "relate-province").html(provinceSel);
+			$(container0).data("provinceArr", nameArr);
+			$(container0).data("regionData", relateList);
 			$(container0).data("data") && $(container0).val($(container0).data("data"));
 			$(container1).attr("lay-filter", "relate-city").html('<option value="">请选择市</option>');
 			$(container1).data("data") && $(container1).val($(container0).data("data"));
@@ -601,18 +609,44 @@ var comm = {
 
 			form.on('select(relate-province)', function(data) {
 				var citySel = '<option value="">请选择市</option>';
-				var cityList = relateList[idArr.indexOf(data.value)]['children'];
+				var cityList = relateList[nameArr.indexOf(data.value)]['children'];
 				cityList.map(function(v) {
-					citySel += '<option zipcode="' + v.zipcode + '" value="' + v.id + '">' + v.regionname + '</option>';
+					citySel += '<option zipcode="' + v.zipcode + '" value="' + v.regionname + '">' + v.regionname + '</option>';
 				});
 				$(container1).html(citySel);
 				form.render('select');
 			});
+
 			if(param.zipcode) {
 				form.on('select(relate-city)', function(data) {
 					$(zipcode).val($(data.elem).find("option:selected").attr("zipcode"));
 				});
 			}
+		});
+	},
+	/**
+	 * 对于省市联动回填时默认select
+	 * @param {
+	 * 	container: ["#cont1", "#cont2"]
+	 * } 
+	 */
+	relateSelect: function(param) {
+		layui.use('form', function() {
+			var form = layui.form,
+				container0 = param.container[0],
+				container1 = param.container[1],
+				nameArr = $(container0).data("provinceArr"),
+				relateList = $(container0).data("regionData"),
+				defaultValue = $(container0).data("data");
+
+			var citySel = '<option value="">请选择市</option>';
+			var cityList = relateList[nameArr.indexOf(defaultValue)]['children'];
+			cityList.map(function(v) {
+				citySel += '<option zipcode="' + v.zipcode + '" value="' + v.regionname + '">' + v.regionname + '</option>';
+			});
+			$(container1).html(citySel);
+			$(container1).data("data") && $(container1).val($(container1).data("data"));
+			form.render('select');
 		});
 	},
 	/**
