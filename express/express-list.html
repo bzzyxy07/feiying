@@ -50,10 +50,10 @@
 		var form = layui.form;
 		var layer = layui.layer;
 		var table = layui.table;
-		
+
 		//初始化表格选项数据
 		comm.getDataByCondition({
-			
+
 			ajax: {
 				url: '/api/OrderTransportOrder/SearchInit',
 				success: function(data) {
@@ -69,7 +69,7 @@
 			}
 		});
 		//groupInitialBase: function(param, data)
-		
+
 		comm.bindFilterForm({
 			formId: "express_info_search_form",
 			order: true,
@@ -209,8 +209,17 @@
 			} else if(layEvent === 'delete') { //删除运单信息
 				//              接口/api/OrderTransportOrder/Handle
 				layer.confirm('是否确认删除该运单信息1？', function(index) {
-					obj.del();
-					layer.alert("尚未开发，敬请期待");
+					
+					comm.getDataByCondition({
+						ajax: {
+							url: '/api/OrderTransportOrder/DeleteLogic?id=' + data.id,
+							type: 'put',
+							success: function(rlt) {
+								layer.msg("删除成功！")
+								obj.del();
+							}
+						}
+					});
 				});
 				console.info(data);
 			} else if(layEvent === 'track') { //运单追踪

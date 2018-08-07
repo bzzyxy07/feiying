@@ -282,11 +282,11 @@ var comm = {
 			}
 		}
 
-//		if(sepCont.attr('lay-filter') == "relate-province") {
-//			comm.relateSelect({
-//				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
-//			});
-//		}
+		//		if(sepCont.attr('lay-filter') == "relate-province") {
+		//			comm.relateSelect({
+		//				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
+		//			});
+		//		}
 
 		layui.use('form', function() {
 			var form = layui.form;
@@ -375,7 +375,7 @@ var comm = {
 				var array = param.renderTable.cols[0];
 				param.order && array.unshift({
 					type: 'numbers',
-					title: '序号',
+					title: '',
 				});
 				param.checkbox && array.unshift({
 					checkbox: true
@@ -602,7 +602,18 @@ var comm = {
 			$(container0).attr("lay-filter", "relate-province").html(provinceSel);
 			$(container0).data("provinceArr", nameArr);
 			$(container0).data("regionData", relateList);
-			$(container0).data("data") && $(container0).val($(container0).data("data"));
+			
+			if($(container0).data("data")) {
+				$(container0).val($(container0).data("data"));
+				
+				var citySel = '<option value="">请选择市</option>';
+				var cityList = relateList[nameArr.indexOf($(container0).data("data"))]['children'];
+				cityList.map(function(v) {
+					citySel += '<option zipcode="' + v.zipcode + '" value="' + v.regionname + '">' + v.regionname + '</option>';
+				});
+				$(container1).html(citySel);
+				form.render('select');
+			}
 			$(container1).attr("lay-filter", "relate-city").html('<option value="">请选择市</option>');
 			$(container1).data("data") && $(container1).val($(container0).data("data"));
 			form.render('select');
