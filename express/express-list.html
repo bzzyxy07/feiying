@@ -207,9 +207,7 @@
 					data: data.id
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
-				//              接口/api/OrderTransportOrder/Handle
 				layer.confirm('是否确认删除该运单信息1？', function(index) {
-					
 					comm.getDataByCondition({
 						ajax: {
 							url: '/api/OrderTransportOrder/DeleteLogic?id=' + data.id,

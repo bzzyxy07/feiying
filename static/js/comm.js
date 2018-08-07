@@ -280,13 +280,12 @@ var comm = {
 			} else {
 				sepCont.val(data[key]).data("data", data[key]);
 			}
+			if(sepCont.attr('lay-filter') == "relate-province") {
+				comm.relateSelect({
+					container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
+				});
+			}
 		}
-
-		//		if(sepCont.attr('lay-filter') == "relate-province") {
-		//			comm.relateSelect({
-		//				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
-		//			});
-		//		}
 
 		layui.use('form', function() {
 			var form = layui.form;
@@ -602,10 +601,10 @@ var comm = {
 			$(container0).attr("lay-filter", "relate-province").html(provinceSel);
 			$(container0).data("provinceArr", nameArr);
 			$(container0).data("regionData", relateList);
-			
+
 			if($(container0).data("data")) {
 				$(container0).val($(container0).data("data"));
-				
+
 				var citySel = '<option value="">请选择市</option>';
 				var cityList = relateList[nameArr.indexOf($(container0).data("data"))]['children'];
 				cityList.map(function(v) {

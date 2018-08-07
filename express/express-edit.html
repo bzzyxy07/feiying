@@ -27,10 +27,7 @@
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
 	<input type="hidden" name="caozuo" value="1">
 	<input type="hidden" name="kkfs" value="1">
-	<input type="hidden" name="isenter" value="">
-	<!--//1.caozuo=1；
-			//2.kkfs随意填入不影响结果 ；
-			//3.isenter传入页面原来的值-->
+	<input type="hidden" name="isenter" value="0">
 	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
@@ -48,9 +45,15 @@
 			</th>
 		</tr>
 		<tr>
+freeother
+freecoupon
+freeservicenote
+restmoney
+ismoney
+Xinghao
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" disabled="disabled"></span>
+				<input name="Id" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 
 			<th class="align-right required-logo">送达仓库</th>
@@ -85,7 +88,7 @@
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
+				<input name="deliveraddress" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
 			</td>
 		</tr>
 		<tr>
@@ -106,7 +109,7 @@
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
-				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
+				<select name="receiveridcardtype" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
@@ -123,7 +126,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardzheng" fill-receiver="idcardzheng">
+						<input type="file" name="idcardzheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardzheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -133,7 +136,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardfan" fill-receiver="idcardfan">
+						<input type="file" name="idcardfan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-name="idcardfan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -160,7 +163,7 @@
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" id="zipcode" class="field-cont layui-input" fill-name="zipcode" fill-receiver="zipcode" lay-verify="required|number">
+				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="zipcode" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
@@ -206,11 +209,11 @@
 		<tr>
 			<th class="align-right required-logo">重量</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="weight" class="field-cont layui-input" lay-verify="required|number">
 			</td>
 			<th class="align-right required-logo">保额</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="safefreeover" class="field-cont layui-input" lay-verify="required|number">
 			</td>
 			<th class="align-right">备注</th>
 			<td class="padd-0">
@@ -220,6 +223,9 @@
 		<tr>
 			<th class="align-right">增值服务</th>
 			<td>
+				<!-- 需特殊处理 
+					freeservicenote	string	否	0000-0000*3;1111-1111*4;2222-2222*6	增值服务拼接结果以id*count；进行字符串拼接
+				-->
 				<input type="checkbox" name="" title="箱子（1$/个）" lay-skin="primary">
 			</td>
 			<td>修改发货方式</td>
@@ -343,7 +349,7 @@
 
 		//提交编辑运单
 		form.on('submit(express-edit-form)', function(data) {
-			var expressOnlineOrderData = comm.getFormData(
+			var expressEditData = comm.getFormData(
 				$("#express_edit_form"), [
 					'Cnum', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'deliverpostcard', 'delivermobile', 'deliveremail', 'receivercompany', 'Receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'receiverpostcard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'volumeweight', 'cnum', 'note', 'freeservice', 'freeservicenote', 'idcard_fan', 'receiveridcardnum', 'idcard_zheng'
 				]
@@ -356,15 +362,15 @@
 				});
 				details.push(sepDetail);
 			});
-			expressOnlineOrderData.details = details;
-
+			expressEditData.details = details;
+             
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
-					url: "/api/OrderTransportOrder/PostMy",
+					url: "/api/OrderTransportOrder/Handle",
 					type: "post",
 					//					data: new FormData($form[0]),
-					data: expressOnlineOrderData,
+					data: expressEditData,
 					success: function(data) {
 						layer.msg("编辑成功！");
 						comm.closeOpenPage();
