@@ -202,10 +202,10 @@ var comm = {
 		ajaxData.url = path + ajaxData.url;
 		ajaxData.success = function(data) {
 			comm.closeLoading();
-			//			if(!data.Success) {
-			//				layer.msg(data.Errors[0] || data.Message);
-			//				return false;
-			//			}
+			if(!data.Success) {
+				layer.msg(data.Errors[0] || data.Message);
+				return false;
+			}
 
 			if(condition.login) {
 				userInfo = data.Object;

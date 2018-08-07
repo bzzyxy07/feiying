@@ -181,12 +181,10 @@
 			cont: $("#express_detail_cont"),
 			cb: function(data) {
 				var detaillist = data.detaillist;
-				var len = detaillist.length - $("#detail_body .detail-tr").length;
-
+				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
+					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
+				}
 				detaillist.map(function(v, index, arr) {
-					for(var i = 0; i < len; i++) {
-						$("#detail_body").append(cloneLine);
-					}
 					for(var key in v) {
 						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
 						$cont.text(v[key]).data("data", v[key]);

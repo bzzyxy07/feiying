@@ -4,8 +4,8 @@
 			<span>入库状态</span>
 			<ul class="form-condition" name="isenter">
 				<li class="active" data-value="">全部</li>
-				<li data-value="false">已入库<span class="layui-badge">3</span></li>
-				<li data-value="true">未入库<span class="layui-badge">4</span></li>
+				<li data-value="true">已入库<span class="layui-badge">3</span></li>
+				<li data-value="false">未入库<span class="layui-badge">4</span></li>
 			</ul>
 		</li>
 		<li>
@@ -140,26 +140,31 @@
 			var tr = obj.tr;
 
 			if(layEvent === 'detail') {
-				comm.openPage({
-					url: './package/package-detail.html?id=' + data.id,
-					open: {
-						maxmin: true,
-						area: ['80%', '80%'],
-					}
+				comm.changeTabContent({
+					url: './package/package-detail.html',
+					data: data.id
 				});
 			} else if(layEvent === 'delete') {
 				layer.confirm('是否确认删除该包裹信息1？', function(index) {
-					obj.del();
-					layer.alert("尚未开发，敬请期待");
+					comm.getDataByCondition({
+						ajax: {
+							url: '/api/OrderPackage/LogicDelete',
+							data: {
+								id: data.id
+							},
+							type: 'put',
+							success: function(rlt) {
+								layer.msg("删除成功！")
+								obj.del();
+							}
+						}
+					});
+
 				});
 			} else if(layEvent === 'edit') {
-
-				comm.openPage({
-					url: './package/package-edit.html?id=' + data.id,
-					open: {
-						maxmin: true,
-						area: ['80%', '80%'],
-					}
+				comm.changeTabContent({
+					url: './package/package-edit.html',
+					data: data.id
 				});
 
 			} else if(layEvent === 'reject') {
@@ -170,12 +175,10 @@
 </script>
 <script type="text/html" id="operation">
 	{{# if(d.isenter == true){ }}
-	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-disabled layui-btn-sm">删除</a>
-	<!--<a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="delete">删除</a>-->
-	{{# } else{ }}
-
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
 	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
+	{{# } else{ }}
+	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
 	{{# } }}
 </script>

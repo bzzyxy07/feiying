@@ -53,7 +53,7 @@
 						<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 						<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 						<td class="padd-0">
-							<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+							<select name="danwei" initial-name="unitlist" initial-value="name" lay-verify="required"></select>
 						</td>
 						<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
 					</tr>
@@ -82,7 +82,6 @@
 			url: '/api/OrderPackage/PackageViewMy',
 			cont: '#package_edit_form',
 			cb: function(data) {
-				console.info(data)
 				//添加行
 				$("#add_detail_tr_btn").on("click", function() {
 					$("#detail_body").append($(".detail-tr").first().clone());
@@ -92,18 +91,16 @@
 			}
 		});
 
-		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + comm.getUrlParamX("id"));
+		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + $("#main_container").data("data"));
 		comm.fillContainerByUrl({
 			cont: $("#package_edit_form"),
 			cb: function(data) {
+				form.render('select');
 				var detaillist = data.detaillist;
-				var len = detaillist.length - $("#detail_body .detail-tr").length;
-				var cloneLine = $(".detail-tr").first().clone();
+				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
+					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
+				}
 				detaillist.map(function(v, index, arr) {
-					for(var i = 0; i < len; i++) {
-						$("#detail_body").append(cloneLine);
-					}
-
 					for(var key in v) {
 						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
 						$cont.val("").val(v[key]).data("data", v[key]);
@@ -143,6 +140,7 @@
 					data: packageData,
 					success: function(data) {
 						layer.closeAll();
+						$(".layui-tab-card li[link-url='./package/package-list.html']").click();
 						layer.msg('修改成功！');
 					}
 				}

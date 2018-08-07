@@ -258,7 +258,7 @@
 				});
 				//添加行
 				$("#add_detail_tr_btn").unbind("click").on("click", function() {
-					$("#detail_body").append($(".detail-tr").first().clone());
+					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
 					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
 				});
