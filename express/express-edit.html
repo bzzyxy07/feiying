@@ -45,24 +45,29 @@
 			</th>
 		</tr>
 		<tr>
-freeother
-freecoupon
 freeservicenote
 restmoney
 ismoney
 Xinghao
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="Id" class="field-cont layui-input" disabled="disabled"></span>
+				<input name="Id" fill-name="id" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
-
+			
 			<th class="align-right required-logo">送达仓库</th>
 			<td class="padd-0">
-				<select name="depotid" initial-name="depot_list" lay-verify="required" fill-name="depotid"></select>
+				<select name="depotid" initial-name="depot_list" lay-verify="required"  class="field-cont" fill-name="depotid"></select>
 			</td>
 			<th class="align-right required-logo">线路名称</th>
 			<td class="padd-0">
-				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" fill-name="routeid"></select>
+				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required"  class="field-cont" fill-name="routeid"></select>
+			</td>
+			
+		</tr>
+		<tr>
+			<th class="align-right">创建时间</th>
+			<td class="padd-0">
+				<input name=""   class="field-cont"   fill-name="" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 		</tr>
 
@@ -109,17 +114,17 @@ Xinghao
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
-				<select name="receiveridcardtype" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
+				<select name="receiveridcardtype" class="field-cont layui-input" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="idcardnumber" fill-receiver="idcardnumber">
+				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="receiveridcardnum" fill-receiver="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-name="mobilephone" lay-verify="required|phone" fill-receiver="mobilephone">
+				<input name="receivermobile" class="field-cont layui-input" fill-name="receivermobile" lay-verify="required|phone" fill-receiver="receivermobile">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
@@ -146,10 +151,10 @@ Xinghao
 			<th class="align-right required-logo">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
-					<select name="receiverregion_province" id="province" lay-verify="required" fill-receiver="regionprovince"></select>
+					<select name="receiverregion_province" id="province" class="field-cont" lay-verify="required" fill-receiver="receiverregion_province"></select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="receiverregion_city" id="city" lay-verify="required" fill-receiver="regioncity"></select>
+					<select name="receiverregion_city" id="city" class="field-cont" lay-verify="required" fill-receiver="receiverregion_city"></select>
 				</div>
 			</td>
 		</tr>
@@ -163,7 +168,7 @@ Xinghao
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="zipcode" fill-receiver="zipcode" lay-verify="required|number">
+				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="receiverpostcard" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
@@ -190,15 +195,15 @@ Xinghao
 					<tbody id="detail_body">
 						<tr class="detail-tr">
 							<td class="padd-0">
-								<select name="taxcategoryid" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
+								<select name="taxcategoryid"  fill-name="taxcategoryid" class="field-cont" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
 							</td>
-							<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="Mingcheng" fill-name="Mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Guige"  fill-name="Guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Pinpai"   fill-name="Pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Count"  fill-name="Count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Danjia"  fill-name="Danjia"  placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
 							<td class="padd-0">
-								<select name="danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname"></select>
+								<select name="Danwei" fill-name="Danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname" class="field-cont layui-input"></select>
 							</td>
 							<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
 						</tr>
@@ -207,17 +212,22 @@ Xinghao
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">重量</th>
+			<th class="align-right required-logo">其他费用</th>
 			<td class="padd-0">
-				<input name="weight" class="field-cont layui-input" lay-verify="required|number">
+				<input name="freeother" class="field-cont layui-input" fill-name="freeother">
 			</td>
 			<th class="align-right required-logo">保额</th>
 			<td class="padd-0">
-				<input name="safefreeover" class="field-cont layui-input" lay-verify="required|number">
+				<input name="safefreeover" fill-name="safefreeover" class="field-cont layui-input" lay-verify="required|number">
 			</td>
+			<th class="align-right required-logo">税金</th>
+			<td class="padd-0">
+				<input name="freecoupon" fill-name="freecoupon" class="field-cont layui-input" lay-verify="required|number">
+			</td>
+			
 			<th class="align-right">备注</th>
 			<td class="padd-0">
-				<input name="note" class="field-cont layui-input">
+				<input name="note" fill-name="note" class="field-cont layui-input">
 			</td>
 		</tr>
 		<tr>
@@ -231,7 +241,7 @@ Xinghao
 			<td>修改发货方式</td>
 			<td colspan="3">
 				<div class="layui-input-inline">
-					<select name="" initial-name="servicelist"></select>
+					<select name="" initial-name="servicelist" fill-name="" class="field-cont"></select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">请在发货之前修改发货方式</div>
 			</td>
