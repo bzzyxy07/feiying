@@ -51,19 +51,13 @@
 
 	<body>
 		<button type="button" class="layui-btn" id="confirm_print_btn">确认打印</button>
-		<div>
-			<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEzNjcwNjE1MzIPZBYCAgMPZBYCAgMPFgIeC18hSXRlbUNvdW50AgEWAmYPZBYGZg8VDgsxMDAwMDEwMzkwNgsxMDAwMDEwMzkwNgsxMDAwMDEwMzkwNgnml7blhYjnlJ8LMTg1NjE2MDIyMjIAPOaJgOWcqOWcsOWdgOaJgOWcqOWcsOWdgOaJgOWcqOWcsOWdgOaJgOWcqOWcsOWdgOaJgOWcqOWcsOWdgAMxNTMLMTIzNDU2Nzg5MTIGMzUwMDAxCeemj+W7uuecgQnnpo/lt57luIIABTE2ODE4ZAIBDxUBBjEyMy4wMGQCAg8VEQYxMjMuMDAMNDU0NDYy55O277ybCzEwMDAwMTAzOTA2CzEwMDAwMTAzOTA2CzEwMDAwMTAzOTA2CeaXtuWFiOeUnwsxODU2MTYwMjIyMgA85omA5Zyo5Zyw5Z2A5omA5Zyo5Zyw5Z2A5omA5Zyo5Zyw5Z2A5omA5Zyo5Zyw5Z2A5omA5Zyo5Zyw5Z2AAzE1MwsxMjM0NTY3ODkxMgYzNTAwMDEJ56aP5bu655yBCeemj+W3nuW4ggAFMTY4MTgBMWRkYjMOhkDOZlu4eI6GHqe2O61EocxRQZ/4QOlIb7jsHBY=">
-		</div>
-
-		<input type="hidden" name="HidAdmin" id="HidAdmin" value="1">
-
 		<table class="print-table-rm">
 			<tbody>
 				<tr style="height: 65px;">
 					<th colspan="2" style="width: 40%; font-size: 30px; font-weight: normal;">飞鹰快递</th>
 					<th colspan="4" style="position: relative;">
-						<img class="print" src="./code128.aspx?num=10000103906" style="width: 234px; left: 3px; position: absolute; top: 0px;" alt="10000103906">
-						<span style="width: 100%; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum">10000103906</span>
+						<img class="print express-print-img" src="" style="width: 234px; left: 3px; position: absolute; top: 0px;">
+						<span style="width: 100%; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum"></span>
 					</th>
 				</tr>
 				<tr style="height: 50px;">
@@ -71,7 +65,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">寄件：</span>
 							<div style="float: left;">
-								<span name="delivername">时先生</span> <span name="delivermobile">18561602222</span> <br> <span name="deliveraddress">所在地址所在地址所在地址所在地址所在地址</span>
+								<span name="delivername"></span> <span name="delivermobile"></span> <br> <span name="deliveraddress"></span>
 							</div>
 						</div>
 					</td>
@@ -81,7 +75,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">收件：</span>
 							<div style="float: left; font-size: 15px;">
-								<span name="receivername">ff先生</span> <span name="receivemobile">18561602222</span> <span name="receivemobile">350001</span><br> <span name="receiveaddress">福建省福州市16818</span>
+								<span name="receivername"></span> <span name="receivemobile"></span> <span name="receivemobile"></span><br> <span name="receiveaddress"></span>
 							</div>
 						</div>
 					</td>
@@ -89,13 +83,13 @@
 				<tr style="height: 70px;">
 					<td style="position: relative;" colspan="2">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							付款方式：<span name="">XXXX</span> <br> 计费重量(磅)：<span name="volumeweight">123.00</span>
-							<br> 保价金额($)：<span name="">XXXX</span>
+							付款方式：<span name=""></span> <br> 计费重量(磅)：<span name="volumeweight"></span>
+							<br> 保价金额($)：<span name=""></span>
 						</div>
 					</td>
 					<td style="position: relative;" colspan="4">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							收件人\代收人：XXXX<br> 签收时间：XXXX
+							收件人\代收人：<span name=""></span><br> 签收时间：<span name=""></span>
 							<br>
 							<span style="font-size: 11px;">快件送达收货人地址，经收件人允许的代收人签字，视为送达</span>
 						</div>
@@ -104,15 +98,15 @@
 				<tr>
 					<td style="position: relative;" colspan="6">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							<span style="width: 100px; float: left;">件数：XXXX</span><span style="width: 100px; float: left;">重量(磅)：</span><span name="volumeweight">123.00</span><br> 配货信息：<span name="freeservicenote">111瓶</span> ；
+							<span style="width: 100px; float: left;">件数：</span><span name=""></span><span style="width: 100px; float: left;">重量(磅)：</span><span name="volumeweight"></span><br> 配货信息：<span name="freeservicenote"></span> ；
 						</div>
 
 					</td>
 				</tr>
 				<tr style="height: 70px;">
 					<th style="position: relative;" colspan="6">
-						<img class="print" src="./code128.aspx?num=10000103906" style="width: 234px; left: 3px; position: absolute; top: 0px;" alt="10000103906">
-						<span style="width: 234px; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum">10000103906</span>
+						<img class="print express-print-img" style="width: 234px; left: 3px; position: absolute; top: 0px;">
+						<span style="width: 234px; float: left; text-align: center; letter-spacing: 2px; left: 0px; position: absolute; top: 45px; font-weight: bold; font-size: 14px; position: absolute;" name="cnum"></span>
 
 					</th>
 				</tr>
@@ -121,7 +115,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">寄件：</span>
 							<div style="float: left;">
-								<span name="delivername">时先生</span> <span name="delivermobile">18561602222</span> <br> <span name="deliveraddress">所在地址所在地址所在地址所在地址所在地址</span>
+								<span name="delivername"></span> <span name="delivermobile"></span> <br> <span name="deliveraddress"></span>
 							</div>
 						</div>
 					</td>
@@ -129,7 +123,7 @@
 						<div style="position: absolute; top: 2px; left: 2px;">
 							<span style="float: left;">收件：</span>
 							<div style="float: left;">
-								<span name="receivername">ff先生</span> <span name="receivemobile">18561602222</span> <span name="receivemobile">350001</span><br> <span name="receiveaddress">福建省福州市16818</span>
+								<span name="receivername"></span> <span name="receivemobile"></span> <span name="receivemobile"></span><br> <span name="receiveaddress"></span>
 							</div>
 						</div>
 					</td>
@@ -137,7 +131,7 @@
 				<tr style="height: 70px;">
 					<td colspan="7" style="position: relative;">
 						<div style="position: absolute; top: 2px; left: 2px;">
-							备注：<span name="note">11</span>
+							备注：<span name="note"></span>
 						</div>
 					</td>
 
@@ -151,6 +145,7 @@
 
 		<script src="../static/js/jquery.min.js"></script>
 		<script src="../static/js/plugin/layui/layui.js"></script>
+		<script src="../static/js/comm.js"></script>
 		<script src="../static/js/print.js"></script>
 		<script src="./express-print.js"></script>
 	</body>

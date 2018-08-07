@@ -226,8 +226,12 @@ var comm = {
 				comm.systemTimeout();
 				return false;
 			}
-			layer.msg("服务器异常：请联系管理员！");
-			condition.ajax.error && condition.ajax.error(data);
+			layui.use('layer', function() {
+				var layer = layui.layer;
+				layer.msg("服务器异常：请联系管理员！");
+				condition.ajax.error && condition.ajax.error(data);
+			});
+
 			return false;
 		};
 		$.ajax(ajaxData);

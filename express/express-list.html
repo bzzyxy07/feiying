@@ -36,7 +36,7 @@
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
-			<button type="button" class="layui-btn layui-btn-sm"><i class="fa fa-print"></i>批量打印运单</button>
+			<button type="button" class="layui-btn layui-btn-sm" id="express_batch_print_btn"><i class="fa fa-print"></i>批量打印运单</button>
 			<button type="button" class="layui-btn layui-btn-sm"><i class="fa fa-download"></i>导出excel表格</button>
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="express_batch_delete_btn"><i class="fa fa-trash-o"></i>批量删除</button>
 		</li>
@@ -169,6 +169,31 @@
 			});
 		});
 
+		//批量打印运单
+		$("#express_batch_print_btn").on("click", function(e) {
+			var checkData = table.checkStatus('express_list_data').data;
+			if(!checkData.length) {
+				layer.msg("请选择需打印的运单！");
+				return false;
+			}
+			var ids = [];
+			checkData.map(function(v) {
+				ids.push(v.id);
+			});
+
+			//			comm.getDataByCondition({
+			//				loading: true,
+			//				ajax: {
+			//					url: '/api/OrderTransportOrder/PrintTransportOrder',
+			//					data: ids,
+			//					type: 'Delete',
+			//					success: function(rlt) {
+			//						$(".filter-btn").click();
+			//					}
+			//				}
+			//			});
+		});
+
 		table.on('tool(express-info-table)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
@@ -183,23 +208,16 @@
 					}
 				});
 			} else if(layEvent === 'print-rm' || layEvent === 'print-A4') { //热敏 400 打印A4打印 790
-				comm.getDataByCondition({
-					loading: true,
-					ajax: {
-						url: '/api/OrderTransportOrder/Details?modelId=' + data.id,
-						success: function(data) {
-							sessionStorage.setItem("printData", data);
-							var pageUrl = (layEvent === 'print-A4') ? './print/print-A4-page.html' : './print/print-rm-page.html';
-							var width = (layEvent === 'print-A4') ? '820px' : '440px';
-							layer.open({
-								type: 2,
-								title: '运单打印',
-								shadeClose: true,
-								area: [width, '600px'],
-								content: pageUrl
-							});
-						}
-					}
+				var ids = [data.id];
+				sessionStorage.setItem("printIds", ids);
+				var pageUrl = (layEvent === 'print-A4') ? './print/print-A4-page.html' : './print/print-rm-page.html';
+				var width = (layEvent === 'print-A4') ? '820px' : '440px';
+				layer.open({
+					type: 2,
+					title: '运单打印',
+					shadeClose: true,
+					area: [width, '600px'],
+					content: pageUrl
 				});
 			} else if(layEvent === 'edit') { //编辑运单信息
 				comm.changeTabContent({

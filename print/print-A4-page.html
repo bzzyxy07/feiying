@@ -47,6 +47,7 @@
 			.print-table-A4 td b {
 				float: left;
 			}
+			
 			#confirm_print_btn {
 				height: 38px;
 				line-height: 38px;
@@ -65,8 +66,11 @@
 				bottom: 0;
 				z-index: 100;
 			}
-		
 			
+			img.express-print-img {
+				width: 340px;
+				height: 75px;
+			}
 		</style>
 	</head>
 
@@ -76,38 +80,38 @@
 			<tbody>
 				<tr>
 					<td colspan="4" style="position: relative; height: 104px;">
-						<span style="position: absolute; left: 5px; font-size: 40px; top: 7px;"><font><font>飞鹰快递</font></font></span>
-						<span style="position: absolute; left: 5px; font-size: 20px; bottom: 7px;"><font><font>www.fychinago.com </font></font></span>
-						<img style="position: absolute; right: 10px; top: 5px;" class="btnPrint" src="./code128.aspx" alt="10000103906">
-						<span style="position: absolute; letter-spacing: 10px; right: 10px; right: 60px; font-weight: bold; bottom: 10px;"><font><font>* 10000103906 *</font></font></span>
+						<span style="position: absolute; left: 5px; font-size: 40px; top: 7px;"><font>飞鹰快递</font></span>
+						<span style="position: absolute; left: 5px; font-size: 20px; bottom: 7px;"><font>www.fychinago.com </font></span>
+						<img style="position: absolute; right: 10px; top: 5px;" class="print express-print-img">
+						<span style="position: absolute; letter-spacing: 10px; right: 10px; right: 60px; font-weight: bold; bottom: 10px;">* <font></font> *</span>
 					</td>
 				</tr>
 				<tr>
 					<td style="width: 25%;">
-						<b><font><font>发件人/ FROM：</font></font></b>
+						<b><font>发件人/ FROM：</font></b>
 						<font>
-							<font><span name="delivername" >时先生</span> 
+							<font><span name="delivername"></span>
 							</font>
 						</font>
 					</td>
 					<td style="width: 25%;">
-						<b><font><font>电话/电话：</font></font></b>
+						<b><font>电话/电话：</font></b>
 						<font>
-							<font><span name="delivermobile" >18561602222</span>
+							<font><span name="delivermobile"></span>
 							</font>
 						</font>
 					</td>
 					<td style="width: 25%;">
-						<b><font><font>收件人/ TO：</font></font></b>
+						<b><font>收件人/ TO：</font></b>
 						<font>
-							<font> <span name="receivername" >ff先生</span>
+							<font> <span name="receivername"></span>
 							</font>
 						</font>
 					</td>
 					<td style="width: 25%;">
-						<b><font><font>电话/电话：</font></font></b>
+						<b><font>电话/电话：</font></b>
 						<font>
-							<font> <span name="receivemobile" >18561602222</span> 
+							<font> <span name="receivemobile"></span>
 							</font>
 						</font>
 					</td>
@@ -115,18 +119,18 @@
 				<tr>
 					<td colspan="2" rowspan="4" style="position: relative; min-height: 120px;">
 						<div style="position: absolute; left: 0px; top: 5px;">
-							<b><font><font>物品详细/目录：</font></font></b>
+							<b><font>物品详细/目录：</font></b>
 							<font>
-								<font> <span name="freeservicenote" >111瓶</span> 
+								<font> <span name="freeservicenote"></span>
 								</font>
 							</font>
 						</div>
 					</td>
 					<td colspan="2" style="width: 50%;">
 						<div style="float: left;">
-							<b><font><font>地址/地址：</font></font></b>
+							<b><font>地址/地址：</font></b>
 							<font>
-								<font><span name="receiveaddress" >福建省福州市16818</span>
+								<font><span name="receiveaddress"></span>
 								</font>
 							</font>
 						</div>
@@ -134,32 +138,32 @@
 				</tr>
 				<tr>
 					<td style="width: 25%;">
-						<b><font><font>金额/总计：</font></font></b>
+						<b><font>金额/总计：</font></b>
 						<font>
-							<font>XXXX
+							<font>
 							</font>
 						</font>
 					</td>
 					<td style="width: 25%;">
-						<b><font><font>保险/保证：</font></font></b>
+						<b><font>保险/保证：</font></b>
 						<font>
-							<font>XXXX
+							<font>
 							</font>
 						</font>
 					</td>
 				</tr>
 				<tr>
 					<td style="width: 25%;">
-						<b><font><font>重量（磅）/重量：</font></font></b>
+						<b><font>重量（磅）/重量：</font></b>
 						<font>
-							<font><span name="volumeweight" >123.00</span>
+							<font><span name="volumeweight"></span>
 							</font>
 						</font>
 					</td>
 					<td style="width: 25%;">
-						<b><font><font>邮编/ POSTCODE：</font></font></b>
+						<b><font>邮编/ POSTCODE：</font></b>
 						<font>
-							<font> <span name="receivemobile" >350001</span>
+							<font> <span name="receivemobile"></span>
 							</font>
 						</font>
 					</td>
@@ -168,36 +172,36 @@
 					<td style="width: 50%;" colspan="2">
 						<font>
 							<font>
-								运费：XXXX，税金：XXXX，保险：XXXX，增值：<span name="freeservice" >3</span>，其他：
+								运费：<span name=""></span>，税金：<span name=""></span>，保险：<span name=""></span>，增值：<span name="freeservice"></span>，其他：<span name=""></span>
 							</font>
 						</font>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4" style="line-height: 15px;">
-						<b><font><font><span name="RegisterProtocol" >3</span></font></font></b>
+						<b><font><span name="RegisterProtocol" >3</span></font></b>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="width: 50%;">
-						<b><font><font>寄件人签名/ deliver'S SIGNATURE：</font></font></b>
+						<b><font>寄件人签名/ deliver'S SIGNATURE：</font></b>
 					</td>
 					<td colspan="2" style="width: 50%;">
-						<b><font><font>日期/日期：</font></font></b>
+						<b><font>日期/日期：</font></b>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center; position: relative; height: 80px;">
 						<div style="position: absolute; top: 0px; left: 0px; width: 100%; text-align: center; float: left;">
-							<img class="btnPrint" style="height: 74px;" src="./code128.aspx" alt="10000103906">
+							<img class="print express-print-img" style="height: 74px;">
 						</div>
-						<span style="width: 100%; letter-spacing: 10px; position: absolute; top: 65px; left: 0px; font-weight: bold; float: left;"><font><font>* 10000103906 *</font></font></span>
+						<span style="width: 100%; letter-spacing: 10px; position: absolute; top: 65px; left: 0px; font-weight: bold; float: left;"><font></font></span>
 					</td>
 					<td colspan="2" style="text-align: center; position: relative; height: 80px;">
 						<div style="position: absolute; top: 0px; left: 0px; width: 100%; text-align: center; float: left;">
-							<img class="btnPrint" style="height: 74px;" src="./code128.aspx" alt="10000103906">
+							<img class="print express-print-img" style="height: 74px;">
 						</div>
-						<span style="width: 100%; letter-spacing: 10px; position: absolute; top: 65px; left: 0px; font-weight: bold; float: left;"><font><font>* 10000103906 *</font></font></span>
+						<span style="width: 100%; letter-spacing: 10px; position: absolute; top: 65px; left: 0px; font-weight: bold; float: left;"><font></font></span>
 					</td>
 				</tr>
 			</tbody>
@@ -207,7 +211,8 @@
 		<script src="../static/js/plugin/layui/layui.js"></script>
 		<script src="../static/js/comm.js"></script>
 		<script src="../static/js/print.js"></script>
-		
+		<script src="./express-print.js"></script>
+
 	</body>
 
 </html>

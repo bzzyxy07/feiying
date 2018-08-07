@@ -1,10 +1,4 @@
-var printData = sessionStorage.getItem("printData");
-var data = $.extend(printData["data"], printData['system_config']);
-for(var key in data) {
-	$('table *[name="' + key + '"]').html(data[key]);
-}
 
-$("table").after($("table").clone());
 
 $("#confirm_print_btn").on('click', function() {
 	$(this).hide();
