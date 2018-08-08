@@ -152,7 +152,49 @@ var comm = {
 				});
 			});
 			$(target + " .upload-img-file").on("change", function(e) {
+				var $this = $(this);
 				comm.showImgFile(e, $(this));
+				var fileObj = $(this)[0].files[0]; // js 获取文件对象
+				if(typeof(fileObj) == "undefined" || fileObj.size <= 0) {
+					alert("请选择图片");
+					return;
+				}
+				var formFile = new FormData();
+				formFile.append("action", "UploadVMKImagePath");
+				formFile.append("file", fileObj); //加入文件对象
+
+				var data = formFile;
+				$.ajax({
+					url: path + "/api/OrderTransportOrder/upload_image",
+					beforeSend: function(request) {
+						request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+					},
+					data: data,
+					type: "post",
+					dataType: "json",
+					cache: false,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						if(!data.Success) {
+							layer.msg(data.Errors[0] || data.Message);
+							return false;
+						}
+						$this.next("input.upload-img-url").val(data.Object);
+					},
+					error: function(data) {
+						if(data.status == 401) {
+							comm.systemTimeout();
+							return false;
+						}
+						layui.use('layer', function() {
+							var layer = layui.layer;
+							layer.msg("服务器异常：请联系管理员！");
+						});
+						return false;
+					}
+				});
+
 			}).parent("a").next("img").attr("src", "./static/img/no-img.png");
 
 			$(target + " .layui-form:not(.ignore-comm-submit)").each(function() {
@@ -263,32 +305,73 @@ var comm = {
 	 * @param {string} container 容器 例：".container", "#container"
 	 * @param {string} fleldName 填充字段名称 "id" 默认为"name"
 	 */
+	//	fillPageByData: function(data, $container, fieldName) {
+	//		fieldName = fieldName || "name";
+	//		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
+	//		for(var key in data) {
+	//			var sepCont = $container.find('.field-cont[' + fieldName + '="' + key + '"]');
+	//			if (sepCont.hasClass("field-img")) {
+	//				sepCont.attr("src", data[key]);
+	//			} else {
+	//				sepCont.html(data[key]);
+	//			}
+	//		}
+	//	},
 	fillPageByData: function(data, $container, fieldName) {
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
-		for(var key in data) {
-			$container.find('.field-cont[' + fieldName + '="' + key + '"]').html(data[key]);
-		}
+		var containers = $container.find('.field-cont');
+		containers.each(function(sepCont) {
+			var key = sepCont.attr(fieldName);
+			if(sepCont.hasClass("field-img")) {
+				if(data[key]) {
+					sepCont.attr("src", data[key]);
+				} else {
+					sepCont.attr("src", "./static/img/no-img.png");
+				}
+
+			} else {
+				if(data[key]) {
+					sepCont.html(data[key]);
+				} else {
+					sepCont.html("");
+				}
+			}
+		});
 	},
 	fillFormByData: function(data, $container, fieldName) {
+
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.field-cont[' + fieldName + '="' + key + '"]');
-			if(!data[key] || !sepCont.length) continue;
+			sepCont.val("");
+			sepCont.hasClass("upload-img-url") &&
+				sepCont.parent("a").next("img").attr("src", "./static/img/no-img.png");
 
-			if(sepCont.hasClass("upload-img-file")) {
+			if(!data[key] || !sepCont.length) continue;
+			if(sepCont.hasClass("upload-img-url")) {
 				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
-
 			} else {
-				sepCont.val(data[key]).data("data", data[key]);
+				if(sepCont.prop("tagName") === 'SELECT') {
+					sepCont.find('option[value=' + data[key] + ']').attr("selected", "selected");
+				} else if(sepCont.prop("tagName") === 'INPUT') {
+					sepCont.val(data[key]);
+				}
+				sepCont.data("data", data[key])
 			}
+			console.info(sepCont.attr("name"));
+
 			if(sepCont.attr('lay-filter') == "relate-province") {
 				comm.relateSelect({
 					container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
 				});
 			}
+			layui.use('form', function() {
+				var form = layui.form;
+				form.render('select');
+			});
 		}
 
 		layui.use('form', function() {
@@ -652,15 +735,32 @@ var comm = {
 				nameArr = $(container0).data("provinceArr"),
 				relateList = $(container0).data("regionData"),
 				defaultValue = $(container0).data("data");
+         
+			if(!nameArr || !nameArr.length) {
+				var interval = setInterval(function() {
+//					   debugger;
+					if($(container0).data("provinceArr") && $(container0).data("provinceArr").length) {
+						clearInterval(interval);
+						setSel();
+					}
+				}, 500);
+			} else {
+				setSel();
+			}
 
-			var citySel = '<option value="">请选择市</option>';
-			var cityList = relateList[nameArr.indexOf(defaultValue)]['children'];
-			cityList.map(function(v) {
-				citySel += '<option zipcode="' + v.zipcode + '" value="' + v.regionname + '">' + v.regionname + '</option>';
-			});
-			$(container1).html(citySel);
-			$(container1).data("data") && $(container1).val($(container1).data("data"));
-			form.render('select');
+			function setSel() {
+				$(container0).val(defaultValue);
+				var citySel = '<option value="">请选择市</option>';
+				if(!relateList[nameArr.indexOf(defaultValue)]) return false;
+				var cityList = relateList[nameArr.indexOf(defaultValue)]['children'];
+				cityList.map(function(v) {
+					citySel += '<option zipcode="' + v.zipcode + '" value="' + v.regionname + '">' + v.regionname + '</option>';
+				});
+				$(container1).html(citySel);
+				$(container1).data("data") && $(container1).val($(container1).data("data"));
+				form.render('select');
+			}
+
 		});
 	},
 	/**

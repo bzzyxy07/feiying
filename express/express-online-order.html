@@ -4,36 +4,37 @@
 			display: none;
 		}
 		
-		#express_online_order_cont th {
+		#express_detail_cont th {
 			font-weight: 600;
 			background: #f6fcff;
 		}
 		
-		#express_online_order_cont th[colspan="6"] {
+		#express_detail_cont th[colspan="6"] {
 			background: #f2f2f2;
 			border-top: 2px solid #ccc;
 			padding: 8px;
 		}
 		
-		#express_online_order_cont .upload-img-container {
+		#express_detail_cont .upload-img-container {
 			margin: 0 auto;
 		}
 		
-		#express_online_order_cont tbody tr:hover {
+		#express_detail_cont tbody tr:hover {
 			background-color: #fff;
 		}
 	</style>
 </head>
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
-	<table class="layui-table" id="express_online_order_cont">
+	<input type="hidden" name="caozuo" value="1">
+	<input type="hidden" name="kkfs" value="1">
+	<input type="hidden" name="isenter" value="0">
+	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
-			<col>
+			<col width="500">
 			<col width="120">
 			<col>
 			<col width="140">
-			<col>
-			<col width="110">
 			<col>
 		</colgroup>
 		<tr>
@@ -44,18 +45,16 @@
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" disabled="disabled"></span>
+				<input name="Id" fill-name="id" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 
 			<th class="align-right required-logo">送达仓库</th>
 			<td class="padd-0">
-				<!--<select name="depotid" initial-name="depot_list" lay-verify="required"></select>-->
-				<input name="depotid" type="hidden">
-				<input name="depotname" type="text" class="layui-input" disabled="disabled">
+				<select name="depotid" initial-name="depot_list" lay-verify="required" class="field-cont" fill-name="depotid"></select>
 			</td>
 			<th class="align-right required-logo">线路名称</th>
 			<td class="padd-0">
-				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required"></select>
+				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" class="field-cont" fill-name="routeid"></select>
 			</td>
 		</tr>
 
@@ -73,15 +72,15 @@
 		<tr>
 			<th class="align-right required-logo">姓名</th>
 			<td class="padd-0">
-				<input name="delivername" class="field-cont layui-input" fill-deliver="delivername" lay-verify="required">
+				<input name="delivername" class="field-cont layui-input" fill-name="delivername" fill-deliver="delivername" lay-verify="required">
 			</td>
 			<th class="align-right required-logo">电话</th>
 			<td class="padd-0">
-				<input name="delivermobile" class="field-cont layui-input" fill-deliver="mobilephone" lay-verify="required">
+				<input name="delivermobile" class="field-cont layui-input" fill-name="delivermobile" fill-deliver="mobilephone" lay-verify="required">
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="" class="field-cont layui-input" fill-deliver="deliveraddress">
+				<input name="deliveraddress" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
 			</td>
 		</tr>
 		<tr>
@@ -98,30 +97,32 @@
 		<tr>
 			<th class="align-right required-logo">收件人姓名</th>
 			<td class="padd-0">
-				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-receiver="receivername" lay-verify="required">
+				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-name="receivername" fill-receiver="receivername" lay-verify="required">
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
-				<select name="" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-receiver="receiveridcardtype"></select>
+				<select name="receiveridcardtype" class="field-cont layui-input" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-name="receiveridcardtype" fill-receiver="receiveridcardtype"></select>
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-receiver="idcardnumber">
+				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="receiveridcardnum" fill-receiver="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-receiver="mobilephone" lay-verify="required|phone">
+				<input name="receivermobile" class="field-cont layui-input" fill-name="receivermobile" lay-verify="required|phone" fill-receiver="receivermobile">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_zheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-receiver="idcardzheng">
+						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="idcardzheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
+
 				</div>
 			</td>
 			<th class="align-right" rowspan="4">证件反面照片</th>
@@ -129,7 +130,8 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="idcard_fan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg" fill-receiver="idcardfan">
+						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="idcardfan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -139,23 +141,24 @@
 			<th class="align-right required-logo">省市地址</th>
 			<td class="padd-0 relation-select">
 				<div class="layui-input-inline">
-					<select name="receiverregion_province" class="field-cont" id="province" fill-receiver="regionprovince" lay-verify="required"></select>
+					<select name="receiverregion_province" lay-filter="relate-province" id="province" class="field-cont" fill-name="receiverregion_province" lay-verify="required" fill-receiver="regionprovince"></select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="receiverregion_city" class="field-cont" id="city" fill-receiver="regioncity" lay-verify="required"></select>
+					<select name="receiverregion_city" lay-filter="relate-city" id="city" class="field-cont" fill-name="receiverregion_city" lay-verify="required" fill-receiver="regioncity"></select>
 				</div>
 			</td>
 		</tr>
+
 		<tr>
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
-				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
+				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress" fill-receiver="receiveraddress" lay-verify="required">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="receiverpostcard" class="field-cont layui-input" id="zipcode" fill-receiver="zipcode" lay-verify="required|number">
+				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="receiverpostcard" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
@@ -176,21 +179,21 @@
 							<th class="required-logo">数量</th>
 							<th class="required-logo">单价($)</th>
 							<th class="required-logo">单位</th>
-							<th class="required-logo"><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
+							<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
 						</tr>
 					</thead>
 					<tbody id="detail_body">
 						<tr class="detail-tr">
 							<td class="padd-0">
-								<select name="taxcategoryid" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
+								<select name="taxcategoryid" fill-name="taxcategoryid" class="field-cont" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
 							</td>
-							<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
-							<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+							<td class="padd-0"><input type="text" name="Mingcheng" fill-name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Guige" fill-name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Pinpai" fill-name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Count" fill-name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input type="text" name="Danjia" fill-name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
 							<td class="padd-0">
-								<select name="danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname"></select>
+								<select name="Danwei" fill-name="danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont layui-input"></select>
 							</td>
 							<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
 						</tr>
@@ -199,38 +202,40 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right required-logo">重量</th>
+			<th class="align-right">重量</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="" class="field-cont layui-input">
 			</td>
 			<th class="align-right required-logo">保额</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input" lay-verify="required|number">
+				<input name="safefreeover" fill-name="safefreeover" class="field-cont layui-input" lay-verify="required">
 			</td>
-			<th class="align-right">备注</th>
+			<th class="align-right">可用积分</th>
 			<td class="padd-0">
-				<input name="note" class="field-cont layui-input">
+				<select></select>
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right">增值服务</th>
 			<td>
+				<!-- 需特殊处理 
+					freeservicenote	string	否	0000-0000*3;1111-1111*4;2222-2222*6	增值服务拼接结果以id*count；进行字符串拼接
+				-->
 				<input type="checkbox" name="" title="箱子（1$/个）" lay-skin="primary">
 			</td>
 			<td>修改发货方式</td>
 			<td colspan="3">
 				<div class="layui-input-inline">
-					<select name="" initial-name="servicelist"></select>
+					<select name="" initial-name="servicelist" fill-name="" class="field-cont"></select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">请在发货之前修改发货方式</div>
 			</td>
 		</tr>
 		<tr>
-			<th class="align-right">可用积分</th>
-			<td colspan="5">
-				<div class="layui-input-inline">
-					<select></select>
-				</div>
+
+			<th class="align-right">备注</th>
+			<td class="padd-0" colspan="5">
+				<input name="note" fill-name="note" class="field-cont layui-input">
 			</td>
 		</tr>
 	</table>
@@ -238,8 +243,6 @@
 </form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
-		$("input[name=depotid]").val(sessionStorage.getItem("local-depotId"));
-		$("input[name=depotname]").val(sessionStorage.getItem("local-depotName"));
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
@@ -247,14 +250,14 @@
 		//初始化表格选项数据
 		comm.groupInitial({
 			url: '/api/OrderTransportOrder/PostView',
-			cont: '#express_online_order_cont',
+			cont: '#express_online_order_form',
 			cb: function(data) {
 				console.info(data);
 				//初始化省市联动
 				comm.initRelateSelect({
-					container: ["#express_online_order_cont #province", "#express_online_order_cont #city"],
+					container: ["#express_online_order_form #province", "#express_online_order_form #city"],
 					data: data["region_list"],
-					zipcode: "#express_online_order_cont #zipcode"
+					zipcode: "#express_online_order_form #zipcode"
 				});
 				//添加行
 				$("#add_detail_tr_btn").unbind("click").on("click", function() {
@@ -264,12 +267,11 @@
 				});
 			}
 		});
+
 		//删除行
-		$("#detail_body").on("click", ".del-detail-tr", function() {
+		$("#detail_body").unbind("click").on("click", ".del-detail-tr", function() {
 			$(this).parent().parent("tr").remove();
 		});
-
-		$("#express_online_order_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
 
 		//选定收件人
 		$("#choose_receiver").on("click", function() {
@@ -277,7 +279,7 @@
 				url: './receiver/receiver-list.html?target=express-online-order',
 				open: {
 					maxmin: true,
-					area: ['80%', '80%'],
+					area: ['800px', '700px'],
 					title: '选择收件人'
 				},
 				cb: function() {
@@ -291,7 +293,7 @@
 				url: './deliver/deliver-list.html?target=express-online-order',
 				open: {
 					maxmin: true,
-					area: ['80%', '80%'],
+					area: ['800px', '700px'],
 					title: '选择发件人'
 				},
 				cb: function() {
@@ -300,22 +302,22 @@
 			});
 		});
 
-		//在线提交运单
+		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
-			var expressOnlineOrderData = comm.getFormData(
+			var expressEditData = comm.getFormData(
 				$("#express_online_order_form"), [
-					'Cnum', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'deliverpostcard', 'delivermobile', 'deliveremail', 'receivercompany', 'Receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'receiverpostcard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'volumeweight', 'cnum', 'note', 'freeservice', 'freeservicenote', 'idcard_fan', 'receiveridcardnum', 'idcard_zheng'
+					'caozuo', 'kkfs', 'isenter', 'id', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'delivermobile', 'deliveremail', 'receivercompany', 'receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'idcardzheng', 'idcardfan', 'ReceiverPostCard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'safefreeover', 'freeother', 'freecoupon', 'volumeweight', 'note', 'freeservicenote', 'idcard_fan', 'idcard_zheng'
 				]
 			);
 			var details = [];
-			$(".detail-tr").each(function() {
+			$("#express_online_order_form .detail-tr").each(function() {
 				var sepDetail = {}
 				$(this).find('input:not(.layui-unselect), select').each(function() {
 					sepDetail[$(this).attr("name")] = $(this).val();
 				});
 				details.push(sepDetail);
 			});
-			expressOnlineOrderData.details = details;
+			expressEditData.details = details;
 
 			comm.getDataByCondition({
 				loading: true,

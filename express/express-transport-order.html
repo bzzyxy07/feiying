@@ -252,7 +252,7 @@
 			$(this).parent().parent("tr").remove();
 		});
 
-		$("#express_transport_order_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParam("id"));
+		$("#express_transport_order_cont").attr("fill-url", "/api/OrderTransportOrder/DealPendingOrderInitMy?modelId=" + comm.getUrlParam("id"));
 
 		//选定收件人
 		$("#choose_receiver").on("click", function() {
@@ -277,7 +277,7 @@
 				]
 			);
 			var details = [];
-			$(".detail-tr").each(function() {
+			$("#express_transport_order_cont .detail-tr").each(function() {
 				var sepDetail = {}
 				$(this).find('input:not(.layui-unselect), select').each(function() {
 					sepDetail[$(this).attr("name")] = $(this).val();

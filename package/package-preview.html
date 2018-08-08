@@ -9,8 +9,7 @@
 		<li class="inline-nowrap">
 			<label class="layui-form-label required-logo">送达方式</label>
 			<div class="layui-input-inline">
-				<select name="trackingname" lay-verify="required" initial-name="waylist"></select>
-
+				<select name="trackingname" lay-verify="required" initial-name="waylist" initial-value="name"></select>
 			</div>
 		</li>
 		<li class="inline-nowrap">
@@ -47,7 +46,7 @@
 						<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 						<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 						<td class="padd-0">
-							<select name="danwei" initial-name="unitlist" lay-verify="required"></select>
+							<select name="danwei" initial-name="unitlist" initial-value="name" lay-verify="required"></select>
 						</td>
 						<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
 					</tr>
@@ -80,11 +79,13 @@
 				success: function(data) {
 					for(var key in data) {
 						var sel = '<option value="">请选择</option>',
-							sepData = data[key];
+							sepData = data[key],
+							sepCont = $('#package_preview_form select[initial-name="' + key + '"]');
 						sepData.map(function(v) {
-							sel += '<option value="' + v.id + '">' + v.name + '</option>';
+							var id = sepCont.attr("initial-value") || "id";
+							sel += '<option value="' + v[id] + '">' + v.name + '</option>';
 						});
-						$('#package_preview_form select[initial-name="' + key + '"]').html(sel);
+						sepCont.html(sel);
 					}
 
 					form.render('select');
@@ -110,7 +111,7 @@
 				"details": []
 			}
 
-			$(".detail-tr").each(function() {
+			$("#package_preview_form .detail-tr").each(function() {
 				var sepDetail = {}
 				$(this).find('input:not(.layui-unselect), select').each(function() {
 					sepDetail[$(this).attr("name")] = $(this).val();

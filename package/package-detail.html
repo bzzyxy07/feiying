@@ -65,7 +65,7 @@
 				}
 				detaillist.map(function(v, index, arr) {
 					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+						var $cont = $("#package_detail_cont #detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
 						$cont.text(v[key]).data("data", v[key]);
 					}
 				});

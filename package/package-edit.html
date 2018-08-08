@@ -123,8 +123,7 @@
 				"trackingnumber": $('#package_edit_form [name="trackingnumber"]').val(),
 				"details": []
 			}
-
-			$(".detail-tr").each(function() {
+			$("#package_edit_form .detail-tr").each(function() {
 				var sepDetail = {}
 				$(this).find('input:not(.layui-unselect), select').each(function() {
 					sepDetail[$(this).attr("name")] = $(this).val();

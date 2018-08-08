@@ -110,7 +110,15 @@
 				});
 
 			} else if(layEvent === 'choose-receiver') { //选定该收件人
-				comm.fillFormByData(data, $("form"), "fill-receiver");
+				var contId = "";
+				if ($("#express_edit_form").length) {
+					contId = "#express_edit_form";
+				} else if  ($("#express_online_order_form").length) {
+					contId = "#express_online_order_form";
+				} else if ($("#express_transport_order_form").length) {
+					contId = "#express_transport_order_form";
+				}
+				comm.fillFormByData(data, $(contId), "fill-receiver");
 				comm.closeOpenPage();
 			}
 		});

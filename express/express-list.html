@@ -180,18 +180,14 @@
 			checkData.map(function(v) {
 				ids.push(v.id);
 			});
-
-			//			comm.getDataByCondition({
-			//				loading: true,
-			//				ajax: {
-			//					url: '/api/OrderTransportOrder/PrintTransportOrder',
-			//					data: ids,
-			//					type: 'Delete',
-			//					success: function(rlt) {
-			//						$(".filter-btn").click();
-			//					}
-			//				}
-			//			});
+			sessionStorage.setItem("printIds", ids);
+			layer.open({
+				type: 2,
+				title: '运单打印',
+				shadeClose: true,
+				area: ['820px', '600px'],
+				content: './print/print-A4-page.html'
+			});
 		});
 
 		table.on('tool(express-info-table)', function(obj) {
@@ -200,24 +196,9 @@
 			var tr = obj.tr;
 
 			if(layEvent === 'detail') { //查看运单详情
-				comm.openPage({
-					url: './express/express-detail.html?id=' + data.id,
-					open: {
-						maxmin: true,
-						area: ['80%', '90%'],
-					}
-				});
-			} else if(layEvent === 'print-rm' || layEvent === 'print-A4') { //热敏 400 打印A4打印 790
-				var ids = [data.id];
-				sessionStorage.setItem("printIds", ids);
-				var pageUrl = (layEvent === 'print-A4') ? './print/print-A4-page.html' : './print/print-rm-page.html';
-				var width = (layEvent === 'print-A4') ? '820px' : '440px';
-				layer.open({
-					type: 2,
-					title: '运单打印',
-					shadeClose: true,
-					area: [width, '600px'],
-					content: pageUrl
+				comm.changeTabContent({
+					url: './express/express-detail.html',
+					data: data.id
 				});
 			} else if(layEvent === 'edit') { //编辑运单信息
 				comm.changeTabContent({
@@ -238,6 +219,18 @@
 					});
 				});
 				console.info(data);
+			} else if(layEvent === 'print-rm' || layEvent === 'print-A4') { //热敏 400 打印A4打印 790
+				var ids = [data.id];
+				sessionStorage.setItem("printIds", ids);
+				var pageUrl = (layEvent === 'print-A4') ? './print/print-A4-page.html' : './print/print-rm-page.html';
+				var width = (layEvent === 'print-A4') ? '820px' : '440px';
+				layer.open({
+					type: 2,
+					title: '运单打印',
+					shadeClose: true,
+					area: [width, '600px'],
+					content: pageUrl
+				});
 			} else if(layEvent === 'track') { //运单追踪
 				var that = this;
 				//				if($("#express_track_cont").length) {

@@ -1,4 +1,4 @@
-<table class="fill-page-container layui-table" id="express_detail_cont" lay-filter="express-detail-cont" fill-type="get">
+<table class="fill-container fill-page-container layui-table" id="express_detail_cont" lay-filter="express-detail-cont" fill-type="get">
 	<colgroup>
 		<col width="130">
 		<col>
@@ -17,19 +17,19 @@
 	<tr>
 		<th class="align-right">运单编号</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="id" class="field-cont"></span>
 		</td>
 		<th class="align-right">创建时间</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="createtime" class="field-cont"></span>
 		</td>
 		<th class="align-right">送达仓库</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="depotname" class="field-cont"></span>
 		</td>
 		<th class="align-right">线路名称</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="routename" class="field-cont"></span>
 		</td>
 	</tr>
 
@@ -41,15 +41,15 @@
 	<tr>
 		<th class="align-right">姓名</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="delivername" class="field-cont"></span>
 		</td>
 		<th class="align-right">电话</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="delivermobile" class="field-cont"></span>
 		</td>
 		<th class="align-right">地址</th>
 		<td colspan="3">
-			<span name="" class="field-cont"></span>
+			<span name="deliveraddress" class="field-cont"></span>
 		</td>
 	</tr>
 
@@ -61,35 +61,34 @@
 	<tr>
 		<th class="align-right">姓名</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="receivername" class="field-cont"></span>
 		</td>
 		<th class="align-right">电话</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="receivermobile" class="field-cont"></span>
 		</td>
-		<th class="align-right">邮编</th>
-		<td>
-			<span name="" class="field-cont"></span>
+		<th class="align-right">地址</th>
+		<td colspan="3">
+			<span name="" class="field-cont" id="receiver_address"></span>
 		</td>
-		<th class="align-right">身份证号</th>
-		<td>
-			<span name="" class="field-cont"></span>
-		</td>
+
 	</tr>
 	<tr>
 		<th class="align-right">身份证正面照片</th>
-		<td colspan="3">
-			<span name="" class="field-cont"></span>
+		<td>
+			<img name="idcardzheng" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
 		</td>
 		<th class="align-right">身份证反面照片</th>
-		<td colspan="3">
-			<span name="" class="field-cont"></span>
+		<td>
+			<img name="idcardfan" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
 		</td>
-	</tr>
-	<tr>
-		<th class="align-right">地址</th>
-		<td colspan="7">
-			<span name="" class="field-cont"></span>
+		<th class="align-right">邮编</th>
+		<td>
+			<span name="receiverpostcard" class="field-cont"></span>
+		</td>
+		<th class="align-right">身份证号</th>
+		<td>
+			<span name="receiveridcardnum" class="field-cont"></span>
 		</td>
 	</tr>
 
@@ -115,7 +114,7 @@
 				</thead>
 				<tbody id="detail_body">
 					<tr class="detail-tr">
-						<td><span name="taxcategoryid"></span></td>
+						<td><span name="taxcategoryname"></span></td>
 						<td><span name="mingcheng"></span></td>
 						<td><span name="guige"></span></td>
 						<td><span name="pinpai"></span></td>
@@ -130,25 +129,25 @@
 	<tr>
 		<th class="align-right">重量</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="weight" class="field-cont"></span>
 		</td>
 		<th class="align-right">保险</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="safefreeover" class="field-cont"></span>
 		</td>
 		<th class="align-right">其他费用</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="freeother" class="field-cont"></span>
 		</td>
 		<th class="align-right">税金</th>
 		<td>
-			<span name="" class="field-cont"></span>
+			<span name="freecoupon" class="field-cont"></span>
 		</td>
 	</tr>
 	<tr>
 		<th class="align-right">增值服务</th>
 		<td colspan="7">
-			<span name="" class="field-cont"></span>
+			<span name="freeservicenote" class="field-cont"></span>
 		</td>
 	</tr>
 	<tr>
@@ -165,7 +164,7 @@
 	</tr>
 	<tr>
 		<th class="align-right">备注</th>
-		<td colspan="7"><span name="remark"></span></td>
+		<td colspan="7"><span name="note" class="field-cont"></span></td>
 	</tr>
 </table>
 
@@ -175,22 +174,49 @@
 		var form = layui.form;
 		var table = layui.table;
 
-		$("#express_detail_cont").attr("fill-url", "/api/Orderexpress/UnInDetails?modelId=" + comm.getUrlParamX("id"));
-
-		comm.fillContainerByUrl({
-			cont: $("#express_detail_cont"),
-			cb: function(data) {
-				var detaillist = data.detaillist;
-				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
-					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
-				}
-				detaillist.map(function(v, index, arr) {
-					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.text(v[key]).data("data", v[key]);
+		comm.getDataByCondition({
+			loading: true,
+			ajax: {
+				url: "/api/OrderTransportOrder/DealPendingOrderInitMy",
+				//				url: "/api/OrderTransportOrder/DealPendingOrderInitMy?id=12f3b3bc-9f40-4be7-bd7d-791146dab822",
+				data: {
+					id: $("#main_container").data("data")
+				},
+				type: "get",
+				success: function(data) {
+					console.info(data['orderdetails']);
+					var orderInfo = data['orderdetails'];
+					comm.fillPageByData(orderInfo, $("#express_detail_cont"), "name");
+					$("#receiver_address").text(orderInfo['receiverregion_province'] + orderInfo['receiverregion_city'] + orderInfo['receiveraddress']);
+					var details = orderInfo['details'];
+					for(var i = 0, len = details.length - 1; i < len; i++) {
+						$("#express_detail_cont #detail_body").append("<tr class='detail-tr'>" + $("#express_detail_cont #detail_body .detail-tr").first() + "</tr>");
 					}
-				});
+					details.map(function(v, index, arr) {
+						for(var key in v) {
+							var $cont = $("#express_detail_cont #detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+							$cont.text(v[key]).data("data", v[key]);
+						}
+					});
+				}
 			}
 		});
+
+		//		$("#express_detail_cont").attr("fill-url", "/api/OrderTransportOrder/DealPendingOrderInitMy?id=" + $("#main_container").data("data"));
+		//		comm.fillContainerByUrl({
+		//			cont: $("#express_detail_cont"),
+		//			cb: function(data) {
+		//				var detaillist = data.detaillist;
+		//				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
+		//					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
+		//				}
+		//				detaillist.map(function(v, index, arr) {
+		//					for(var key in v) {
+		//						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+		//						$cont.text(v[key]).data("data", v[key]);
+		//					}
+		//				});
+		//			}
+		//		});
 	});
 </script>
