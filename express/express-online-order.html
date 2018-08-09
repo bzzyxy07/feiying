@@ -281,9 +281,6 @@
 					maxmin: true,
 					area: ['800px', '700px'],
 					title: '选择收件人'
-				},
-				cb: function() {
-
 				}
 			});
 		});
@@ -295,13 +292,10 @@
 					maxmin: true,
 					area: ['800px', '700px'],
 					title: '选择发件人'
-				},
-				cb: function() {
-
 				}
 			});
 		});
-
+		
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
 			var expressEditData = comm.getFormData(

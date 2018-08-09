@@ -81,6 +81,7 @@
 				layer.alert("尚未开发，敬请期待");
 			} else if(layEvent === 'choose-deliver') { //选定该发件人
 				comm.fillFormByData(data, $("form"), "fill-deliver");
+			    $('input[name="save-deliver"]').addClass("choosed");
 				console.info(data);
 				comm.closeOpenPage();
 			}
