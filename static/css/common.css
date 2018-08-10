@@ -70,12 +70,15 @@ a {
   font-size: 14px !important;
 }
 .layui-input[disabled] {
-  background: #f2f2f2;
+  background: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1) inset;
   cursor: not-allowed;
 }
 .popup-page-container > .popup-page-store {
   display: none;
+}
+.popup-page-container > .popup-page-store .loading-container {
+  display: none !important;
 }
 .popup-page-container .popup-page-store {
   padding: 10px;
@@ -90,6 +93,9 @@ a {
   top: 42px;
   height: auto !important;
   overflow-y: scroll !important;
+}
+.popup-page-container .layui-layer-page .popup-page-store .loading-container {
+  display: block;
 }
 .comm-title-dot {
   color: #1e9fff;
@@ -109,6 +115,9 @@ a {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+}
+.layui-layer-page {
+  background: #fff;
 }
 .layui-side {
   width: 100px;
@@ -159,6 +168,10 @@ a {
 }
 .layui-laypage a:hover {
   color: #1e9fff;
+}
+.return-prev {
+  margin: 0 0 10px 9px;
+  display: inline-block;
 }
 .layui-body {
   left: 100px;
@@ -226,6 +239,9 @@ a {
 }
 .layui-table-cell {
   padding: 0 8px;
+  min-width: 48px;
+  height: 30px;
+  line-height: 30px;
 }
 .layui-table-view .layui-table td,
 .layui-table-view .layui-table th {
@@ -333,13 +349,11 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 10000000000;
 }
 .data-table-container {
   min-height: 200px;
-}
-.layui-table-cell {
-  height: 30px;
-  line-height: 30px;
 }
 .relation-select .layui-input.layui-unselect {
   border: 1px solid #e6e6e6;

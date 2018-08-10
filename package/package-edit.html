@@ -22,7 +22,7 @@
 		<li class="inline-nowrap">
 			<label class="layui-form-label">包裹追踪号</label>
 			<div class="layui-input-inline">
-				<input type="text" name="trackingnumber" class="field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
+				<input autocomplete="off" type="text" name="trackingnumber" class="field-cont layui-input" placeholder="请输入包裹追踪号" autocomplete="off" lay-verify="required" disabled>
 			</div>
 		</li>
 	</div>
@@ -47,11 +47,11 @@
 						<td class="padd-0">
 							<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
 						</td>
-						<td class="padd-0"><input type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
 						<td class="padd-0">
 							<select name="danwei" initial-name="unitlist" initial-value="name" lay-verify="required"></select>
 						</td>
@@ -64,7 +64,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">备注</label>
 		<div class="layui-input-block">
-			<input type="text" name="remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
+			<input autocomplete="off" type="text" name="remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -103,7 +103,14 @@
 				detaillist.map(function(v, index, arr) {
 					for(var key in v) {
 						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.val("").val(v[key]).data("data", v[key]);
+						$cont.val("");
+						if($cont.prop('tagName') == 'SELECT') {
+							$cont.find("option[value=" + v[key] + "]").attr("selected", "selected");
+						} else {
+							$cont.val(v[key]);
+						}
+						$cont.data("data", v[key])
+						form.render('select');
 					}
 					form.render('select');
 
@@ -139,7 +146,7 @@
 					data: packageData,
 					success: function(data) {
 						layer.closeAll();
-						$(".layui-tab-card li[link-url='./package/package-list.html']").click();
+						comm.returnPrev();
 						layer.msg('修改成功！');
 					}
 				}

@@ -34,11 +34,17 @@ var comm = {
 				name = m.attr("initial-text");
 
 			sepData && sepData.map(function(v) {
-				(sepid = v[id] || v.id) &&
-				(sepname = v[name] || v.name) &&
-				(sel += '<option value="' + sepid + '">' + sepname + '</option>');
+				sepid = v[id] || v.id;
+				sepname = v[name] || v.name;
+
+				if(m.data("data") && (sepid == m.data("data"))) {
+					sel += '<option value="' + sepid + '" selected="selected">' + sepname + '</option>';
+				} else {
+					sel += '<option value="' + sepid + '">' + sepname + '</option>';
+				}
 			});
-			m.html(sel).data("data") && m.val(m.data("data"));
+			m.html(sel);
+			//m.html(sel).data("data") && m.val(m.data("data"));
 		})
 		layui.use('form', function() {
 			var form = layui.form;
@@ -77,10 +83,19 @@ var comm = {
 	},
 	changeTabContent: function(param) {
 		$("#main_container").data("data", param.data);
-		$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').load(param.url, function() {
+		var $showTab = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show')
+		$showTab.load(param.url, function() {
+			if(!$(".return-prev").length) {
+				$showTab.prepend('<div class="layui-text"><a class="return-prev">返回上页&gt;&gt;</a></div>');
+				$(".return-prev").unbind("click").on("click", function() {
+					$showTab.load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
+				});
+			}
 			comm.fillSelAndCont();
 		});
-
+	},
+	returnPrev: function() {
+		$(".return-prev").click();
 	},
 	initLoading: function() {
 		$(".loading-container").remove();
@@ -236,6 +251,7 @@ var comm = {
 			data: {},
 		}, condition.ajax);
 		if(!condition.login) {
+			comm.initLoading();
 			ajaxData.beforeSend = function(request) {
 				request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
 			};
@@ -321,8 +337,9 @@ var comm = {
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		var containers = $container.find('.field-cont');
-		containers.each(function(sepCont) {
-			var key = sepCont.attr(fieldName);
+		containers.each(function() {
+			var sepCont = $(this),
+				key = sepCont.attr(fieldName);
 			if(sepCont.hasClass("field-img")) {
 				if(data[key]) {
 					sepCont.attr("src", data[key]);
@@ -340,7 +357,6 @@ var comm = {
 		});
 	},
 	fillFormByData: function(data, $container, fieldName) {
-
 		fieldName = fieldName || "name";
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
@@ -353,15 +369,15 @@ var comm = {
 			if(sepCont.hasClass("upload-img-url")) {
 				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
+				$img.prev("a").children(".upload-img-url").val(data[key]);
 			} else {
-				if(sepCont.prop("tagName") === 'SELECT') {
+				if(sepCont.prop("tagName") == 'SELECT') {
 					sepCont.find('option[value=' + data[key] + ']').attr("selected", "selected");
 				} else if(sepCont.prop("tagName") === 'INPUT') {
 					sepCont.val(data[key]);
 				}
-				sepCont.data("data", data[key])
+				sepCont.data("data", data[key]);
 			}
-			console.info(sepCont.attr("name"));
 
 			if(sepCont.attr('lay-filter') == "relate-province") {
 				comm.relateSelect({
@@ -735,10 +751,10 @@ var comm = {
 				nameArr = $(container0).data("provinceArr"),
 				relateList = $(container0).data("regionData"),
 				defaultValue = $(container0).data("data");
-         
+
 			if(!nameArr || !nameArr.length) {
 				var interval = setInterval(function() {
-//					   debugger;
+					//					   debugger;
 					if($(container0).data("provinceArr") && $(container0).data("provinceArr").length) {
 						clearInterval(interval);
 						setSel();

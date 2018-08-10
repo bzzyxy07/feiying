@@ -25,9 +25,9 @@
 	</style>
 </head>
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
-	<input type="hidden" name="caozuo" value="1">
-	<input type="hidden" name="kkfs" value="1">
-	<input type="hidden" name="isenter" value="0">
+	<input autocomplete="off" type="hidden" name="caozuo" value="1">
+	<input autocomplete="off" type="hidden" name="kkfs" value="1">
+	<input autocomplete="off" type="hidden" name="isenter" value="0">
 	<table class="layui-table" id="express_detail_cont">
 		<colgroup>
 			<col width="130">
@@ -45,7 +45,7 @@
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="padd-0">
-				<input name="Id" fill-name="id" class="field-cont layui-input" disabled="disabled"></span>
+				<input autocomplete="off" name="Id" fill-name="id" class="field-cont layui-input" disabled="disabled"></span>
 			</td>
 
 			<th class="align-right required-logo">送达仓库</th>
@@ -63,7 +63,7 @@
 				<p class="comm-title-dot">
 					<span class="layui-badge-dot layui-bg-blue"></span>发件人信息
 					<span class="float-right">
-						<input type="checkbox" name="" title="保存发件人" lay-skin="primary" checked>
+						<input autocomplete="off" type="checkbox" name="" title="保存发件人" lay-skin="primary" checked>
 						<button type="button" class="layui-btn layui-btn-sm float-right" id="choose_deliver">选择发件人</button>
 					</span>
 				</p>
@@ -72,15 +72,15 @@
 		<tr>
 			<th class="align-right required-logo">姓名</th>
 			<td class="padd-0">
-				<input name="delivername" class="field-cont layui-input" fill-name="delivername" fill-deliver="delivername" lay-verify="required">
+				<input autocomplete="off" name="delivername" class="field-cont layui-input" fill-name="delivername" fill-deliver="delivername" lay-verify="required">
 			</td>
 			<th class="align-right required-logo">电话</th>
 			<td class="padd-0">
-				<input name="delivermobile" class="field-cont layui-input" fill-name="delivermobile" fill-deliver="mobilephone" lay-verify="required">
+				<input autocomplete="off" name="delivermobile" class="field-cont layui-input" fill-name="delivermobile" fill-deliver="mobilephone" lay-verify="required">
 			</td>
 			<th class="align-right">地址</th>
 			<td class="padd-0" colspan="3">
-				<input name="deliveraddress" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
+				<input autocomplete="off" name="deliveraddress" class="field-cont layui-input" fill-name="deliveraddress" fill-deliver="deliveraddress">
 			</td>
 		</tr>
 		<tr>
@@ -88,7 +88,7 @@
 				<p class="comm-title-dot">
 					<span class="layui-badge-dot layui-bg-blue"></span>收件人信息
 					<span class="float-right">
-						<input type="checkbox" name="" title="保存收件人" lay-skin="primary" checked>
+						<input autocomplete="off" type="checkbox" name="" title="保存收件人" lay-skin="primary" checked>
 						<button type="button" class="layui-btn layui-btn-sm" id="choose_receiver">选择收件人</button>
 					</span>
 				</p>
@@ -97,7 +97,7 @@
 		<tr>
 			<th class="align-right required-logo">收件人姓名</th>
 			<td class="padd-0">
-				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-name="receivername" fill-receiver="receivername" lay-verify="required">
+				<input autocomplete="off" name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-name="receivername" fill-receiver="receivername" lay-verify="required">
 			</td>
 			<th class="align-right">证件类型</th>
 			<td class="padd-0">
@@ -105,21 +105,21 @@
 			</td>
 			<th class="align-right">证件号码</th>
 			<td class="padd-0">
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="receiveridcardnum" fill-receiver="idcardnumber">
+				<input autocomplete="off" type="text" name="receiveridcardnum" class="field-cont layui-input" fill-name="receiveridcardnum" fill-receiver="idcardnumber">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">手机号码</th>
 			<td class="padd-0">
-				<input name="receivermobile" class="field-cont layui-input" fill-name="receivermobile" lay-verify="required|phone" fill-receiver="receivermobile">
+				<input autocomplete="off" name="receivermobile" class="field-cont layui-input" fill-name="receivermobile" lay-verify="required|phone" fill-receiver="receivermobile">
 			</td>
 			<th class="align-right" rowspan="4">证件正面照片</th>
 			<td class="padd-0" rowspan="4">
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
-						<input type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="idcardzheng" fill-receiver="idcardzheng">
+						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="idcardzheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 
@@ -130,8 +130,8 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
-						<input type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="idcardfan" fill-receiver="idcardfan">
+						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="idcardfan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -152,13 +152,13 @@
 		<tr>
 			<th class="align-right required-logo">详细地址</th>
 			<td class="padd-0 ">
-				<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress" fill-receiver="receiveraddress" lay-verify="required">
+				<input autocomplete="off" name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-name="receiveraddress" fill-receiver="receiveraddress" lay-verify="required">
 			</td>
 		</tr>
 		<tr>
 			<th class="align-right required-logo">邮编</th>
 			<td class="padd-0">
-				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="receiverpostcard" fill-receiver="zipcode" lay-verify="required|number">
+				<input autocomplete="off" name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-name="receiverpostcard" fill-receiver="zipcode" lay-verify="required|number">
 			</td>
 		</tr>
 		<tr>
@@ -187,11 +187,11 @@
 							<td class="padd-0">
 								<select name="taxcategoryid" fill-name="taxcategoryid" class="field-cont" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
 							</td>
-							<td class="padd-0"><input type="text" name="Mingcheng" fill-name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td class="padd-0"><input type="text" name="Guige" fill-name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td class="padd-0"><input type="text" name="Pinpai" fill-name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td class="padd-0"><input type="text" name="Count" fill-name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
-							<td class="padd-0"><input type="text" name="Danjia" fill-name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input autocomplete="off" type="text" name="Mingcheng" fill-name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input autocomplete="off" type="text" name="Guige" fill-name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input autocomplete="off" type="text" name="Pinpai" fill-name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input autocomplete="off" type="text" name="Count" fill-name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+							<td class="padd-0"><input autocomplete="off" type="text" name="Danjia" fill-name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
 							<td class="padd-0">
 								<select name="Danwei" fill-name="danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont layui-input"></select>
 							</td>
@@ -204,11 +204,11 @@
 		<tr>
 			<th class="align-right">重量</th>
 			<td class="padd-0">
-				<input name="" class="field-cont layui-input">
+				<input autocomplete="off" name="" class="field-cont layui-input">
 			</td>
 			<th class="align-right required-logo">保额</th>
 			<td class="padd-0">
-				<input name="safefreeover" fill-name="safefreeover" class="field-cont layui-input" lay-verify="required">
+				<input autocomplete="off" name="safefreeover" fill-name="safefreeover" class="field-cont layui-input" lay-verify="required">
 			</td>
 			<th class="align-right">可用积分</th>
 			<td class="padd-0">
@@ -221,7 +221,7 @@
 				<!-- 需特殊处理 
 					freeservicenote	string	否	0000-0000*3;1111-1111*4;2222-2222*6	增值服务拼接结果以id*count；进行字符串拼接
 				-->
-				<input type="checkbox" name="" title="箱子（1$/个）" lay-skin="primary">
+				<input autocomplete="off" type="checkbox" name="" title="箱子（1$/个）" lay-skin="primary">
 			</td>
 			<td>修改发货方式</td>
 			<td colspan="3">
@@ -235,7 +235,7 @@
 
 			<th class="align-right">备注</th>
 			<td class="padd-0" colspan="5">
-				<input name="note" fill-name="note" class="field-cont layui-input">
+				<input autocomplete="off" name="note" fill-name="note" class="field-cont layui-input">
 			</td>
 		</tr>
 	</table>
