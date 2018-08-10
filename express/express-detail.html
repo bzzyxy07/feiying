@@ -2,7 +2,7 @@
 	<colgroup>
 		<col width="130">
 		<col>
-		<col width="110">
+		<col width="130">
 		<col>
 		<col width="130">
 		<col>
@@ -76,11 +76,11 @@
 	<tr>
 		<th class="align-right">身份证正面照片</th>
 		<td>
-			<img name="idcardzheng" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
+			<img name="receiveridcard_zheng" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
 		</td>
 		<th class="align-right">身份证反面照片</th>
 		<td>
-			<img name="idcardfan" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
+			<img name="receiveridcard_fan" class="field-cont field-img" src="./static/img/no-img.png" style="width: 250px;height: 160px;display: block;margin: 0 auto;"></span>
 		</td>
 		<th class="align-right">邮编</th>
 		<td>
@@ -153,7 +153,7 @@
 	<tr>
 		<th class="align-right">费用</th>
 		<td colspan="7">
-			<span name="" class="field-cont"></span>
+			<span name="moneynote" class="field-cont"></span>
 		</td>
 	</tr>
 	<tr>
@@ -183,13 +183,15 @@
 				},
 				type: "get",
 				success: function(data) {
-					console.info(data['orderdetails']);
 					var orderInfo = data['orderdetails'];
 					comm.fillPageByData(orderInfo, $("#express_detail_cont"), "name");
+					
 					$("#receiver_address").text(orderInfo['receiverregion_province'] + orderInfo['receiverregion_city'] + orderInfo['receiveraddress']);
 					var details = orderInfo['details'];
+					console.info(details);
 					for(var i = 0, len = details.length - 1; i < len; i++) {
-						$("#express_detail_cont #detail_body").append("<tr class='detail-tr'>" + $("#express_detail_cont #detail_body .detail-tr").first() + "</tr>");
+						console.info(i)
+						$("#express_detail_cont #detail_body").append("<tr class='detail-tr'>" + $("#express_detail_cont #detail_body .detail-tr").first().html() + "</tr>");
 					}
 					details.map(function(v, index, arr) {
 						for(var key in v) {

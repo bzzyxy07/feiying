@@ -69,7 +69,6 @@
 				var layer = layui.layer;
 				form.on('submit(loginSystem)', function(data) {
 					comm.getDataByCondition({
-						loading: true,
 						login: true,
 						ajax: {
 							url: '/api/auth/login',

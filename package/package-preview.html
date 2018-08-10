@@ -125,14 +125,8 @@
 					type: "post",
 					data: packageData,
 					success: function(data) {
-						layer.confirm('包裹预告添加成功！是否跳转到包裹列表页？', {
-							icon: 1,
-							title: '提示',
-							btn: ['确认', '取消']
-						}, function(index) {
-							layer.close(index);
-							$(".layui-tab-title li[link-url='./package/package-list.html']").click();
-						});
+						$(".layui-tab-title li[link-url='./package/package-list.html']").click();
+						layer.msg('添加成功！');
 					}
 				}
 			});

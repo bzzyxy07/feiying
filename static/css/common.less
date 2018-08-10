@@ -312,9 +312,9 @@ a {
 }
 
 .layui-table {
-    .padd-0 .layui-input {
-        border-color: #fff;
-    }
+    //  .padd-0 .layui-input {
+    //      border-color: #fff;
+    //  }
     th {
         background: #f2f2f2;
     }
@@ -543,8 +543,9 @@ a {
 
 //上传图片
 .upload-img-container {
-    height: 160px;
-    width: 250px;
+    margin: 0 auto;
+    height: 130px;
+    width: 200px;
     max-width: 100%;
     border: 1px solid #f2f2f2;
     position: relative;
@@ -601,4 +602,18 @@ a {
     hr {
         background-color: #5fb878;
     }
+}
+
+.none-back-border {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.gray-back {
+    background: #f2f2f2;
+}
+
+#detail_body tr:first-child .del-detail-tr {
+    display: none;
 }

@@ -251,16 +251,22 @@ var comm = {
 			data: {},
 		}, condition.ajax);
 		if(!condition.login) {
-			comm.initLoading();
 			ajaxData.beforeSend = function(request) {
 				request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
 			};
+		} else {
+			layui.use('layer', function() {
+				var layer = layui.layer;
+				layer.load(1);
+			});
 		}
 
 		ajaxData.url = path + ajaxData.url;
 		ajaxData.success = function(data) {
+			layer.closeAll();
 			comm.closeLoading();
 			if(!data.Success) {
+				
 				layer.msg(data.Errors[0] || data.Message);
 				return false;
 			}
@@ -279,6 +285,7 @@ var comm = {
 		//		ajaxData.processData = false;
 		//		ajaxData.contentType = false;
 		ajaxData.error = function(data) {
+			layer.closeAll();
 			comm.closeLoading();
 			if(data.status == 401) {
 				comm.systemTimeout();
