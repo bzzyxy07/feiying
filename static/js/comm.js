@@ -379,15 +379,14 @@ var comm = {
 				sepCont.data("data", data[key]);
 			}
 
-			if(sepCont.attr('lay-filter') == "relate-province") {
-				comm.relateSelect({
-					container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
-				});
-			}
-			layui.use('form', function() {
-				var form = layui.form;
-				form.render('select');
+			(sepCont.attr('lay-filter') == "relate-province") &&
+			comm.relateSelect({
+				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
 			});
+//			layui.use('form', function() {
+//				var form = layui.form;
+//				form.render('select');
+//			});
 		}
 
 		layui.use('form', function() {
