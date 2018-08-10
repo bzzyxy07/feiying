@@ -308,6 +308,7 @@
 
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
+			debugger;
 			var a = $("#express_online_order_form *[name=receiveridcardtype]").val(),
 				b = $("#express_online_order_form *[name=receiveridcardnum]").val(),
 				c = $("#express_online_order_form *[name=idcardzheng]").val(),
@@ -370,7 +371,7 @@
 				});
 			}
 
-			var expressEditData = comm.getFormData(
+			var expressOnlineOrderData = comm.getFormData(
 				$("#express_online_order_form"), [
 					'caozuo', 'kkfs', 'isenter', 'id', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'delivermobile', 'deliveremail', 'receivercompany', 'receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'idcardzheng', 'idcardfan', 'ReceiverPostCard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'safefreeover', 'freeother', 'freecoupon', 'volumeweight', 'note', 'freeservicenote', 'idcard_fan', 'idcard_zheng'
 				]
@@ -383,7 +384,7 @@
 				});
 				details.push(sepDetail);
 			});
-			expressEditData.details = details;
+			expressOnlineOrderData.details = details;
 
 			comm.getDataByCondition({
 				loading: true,
