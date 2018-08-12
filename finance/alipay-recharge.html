@@ -1,19 +1,49 @@
-<div class="layui-form-item">
-	<label class="layui-form-label required-logo">充值方式</label>
-	<div class="layui-input-inline">
-		<img src="static/img/IconAlipay-logo.webp" />
-	</div>
-</div>
-
-<div class="layui-form-item">
-	<label class="layui-form-label required-logo">当前汇率</label>
-	<div class="layui-input-inline">
-		<span>1$等于6.7000元</span>
-	</div>
-</div>
-<div class="layui-form-item">
-	<label class="layui-form-label">金额</label>
-	<div class="layui-input-inline">
-		<input autocomplete="off" class="layui-input form-input" placeholder="请输入金额" name="">
-	</div>
-</div>
+<table id="alipay_table">
+	<tr>
+		<th>充值方式</th>
+		<td><img src="static/img/IconAlipay-logo.png" width="192" height="50" /></td>
+	</tr>
+	<tr>
+		<th>当前汇率</th>
+		<td>1$等于6.7000元</td>
+	</tr>
+	<tr>
+		<th>金额</th>
+		<td>
+			<input autocomplete="off" class="layui-input form-input" placeholder="请输入金额" id="alipay_money">
+		</td>
+	</tr>
+	<tr>
+		<th></th>
+		<td><button class="layui-btn layui-btn-normal layui-btn-sm" id="alipay_btn" type="button">充值</button></td>
+	</tr>
+</table>
+<script>
+	layui.use('layer', function() {
+		layer = layui.layer;
+		$("#alipay_btn").on('click', function() {
+			var money = $("#alipay_money").val();
+			if(!money) {
+				layer.msg("请输入充值金额！")
+			} else if(isNaN(money) || (money - 0 <= 0)) {
+				layer.msg("请输入合法的充值金额！")
+			} else {
+				comm.getDataByCondition({
+					loading: true,
+					ajax: {
+						url: '/api/FreeFinancialRecord/RechargeAlipay',
+						type: 'post',
+						dataType: "json",
+						data: {
+                            money: money,
+                            returnurl: window.location.href,
+						},
+						success: function(data) {
+							$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').html(data);
+						}
+					}
+				});
+			}
+		});
+	})
+</script>

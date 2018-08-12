@@ -25,6 +25,11 @@
 	</ul>
 </form>
 <div class="data-table-container">
+	<p style="line-height: 40px;">
+		<span style="padding-left: 10px;">余额：</span>
+		<span style="padding-left: 5px;color: red;font-weight: 900;" name="restmoney"></span>
+	</p>
+
 	<table id="finance_info_table" lay-filter="finance-info-table"></table>
 </div>
 <script>
@@ -69,6 +74,16 @@
 				]
 			}
 		});
+		comm.getDataByCondition({
+			ajax: {
+				url: '/api/BasicUser/MyDetails',
+				type: 'get',
+				success: function(data) {
+					$("span[name=restmoney]").text(data.restmoney);
+					console.info(data.restmoney);
+				}
+			}
+		});
 	});
 </script>
 <script type="text/html" id="status">
@@ -79,6 +94,6 @@
 </script>
 <script type="text/html" id="amount">
 	{{# if(d.amount >= 0){ }}
-	<span style="color:#5FB878">{{d.amount}}</span> {{# }  else{ }}
+	<span style="color:#5FB878">{{d.amount}}</span> {{# } else{ }}
 	<span style="color:red">{{d.amount}}</span> {{# } }}
 </script>

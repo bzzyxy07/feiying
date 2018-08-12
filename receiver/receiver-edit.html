@@ -15,10 +15,10 @@
 	<div class="layui-form-item relation-select">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="regionprovince" id="province" lay-verify="required"></select>
+			<select name="regionprovince" id="province" lay-verify="required" lay-filter="relate-province" class="field-cont"></select>
 		</div>
 		<div class="layui-input-inline">
-			<select name="regioncity" id="city" lay-verify="required"></select>
+			<select name="regioncity" id="city" lay-verify="required" lay-filter="relate-city" class="field-cont"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -64,7 +64,7 @@
 			<div class="upload-img-container">
 				<a href="javascript:;">
 					<span>点此上传</span>
-					<input autocomplete="off" type="file" name="idcardfan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="file" name="" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
 					<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont">
 				</a>
 				<img class="upload-img" alt="暂无图片">
@@ -85,7 +85,7 @@
 		zipcode: "#zipcode"
 	});
 	layui.use(['form', 'table'], function() {
-		var id = comm.getUrlParamX("id");
+		var id = $("#main_container").data("data");
 		$("#receiver_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
 		$("#receiver_edit_form input[name='id']").val(id);
 	});

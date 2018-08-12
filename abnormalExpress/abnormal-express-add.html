@@ -1,4 +1,4 @@
-<form class="layui-form" id="add_abnormal_form" enctype="multipart/form-data" submit-url="/api/OrderTransportAbnornal/PostMy" submit-type="post" succ-form-reset="1">
+<form class="layui-form ignore-comm-submit" id="add_abnormal_form" lay-filter="add-abnormal-form">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">运单号</label>
 		<div class="layui-input-inline">
@@ -19,7 +19,8 @@
 			<div class="upload-img-container">
 				<a href="javascript:;">
 					<span>点此上传</span>
-					<input autocomplete="off" type="file" name="AbnormalPic" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="file" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="hidden" name="AbnormalPic" class="upload-img-url field-cont">
 				</a>
 				<img class="upload-img" alt="暂无图片">
 			</div>
@@ -36,5 +37,27 @@
 			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">保存</button>
 		</div>
 	</div>
-
 </form>
+<script>
+	$(document).ready(function() {
+		layui.use(['layer','form'], function() {
+			var layer = layui.layer;
+			var form = layui.form;
+			form.on('submit(add-abnormal-form)', function(data) {
+				comm.getDataByCondition({
+					loaing: true,
+					ajax: {
+						url: "/api/OrderTransportAbnornal/PostMy",
+						type: "post",
+						data: $("#add_abnormal_form").serialize(),
+						success: function() {
+							$('#main_container>.layui-tab-card>.layui-tab-title>li').first().click();
+							layer.msg("添加成功！")
+						}
+					}
+				});
+				return false;
+			});
+		});
+	});
+</script>

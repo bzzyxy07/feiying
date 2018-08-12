@@ -62,27 +62,33 @@
 			var layEvent = obj.event;
 			var tr = obj.tr;
 
-			if(layEvent === 'detail') { //查看详情
-
-			} else if(layEvent === 'delete') { //删除包裹信息
-				layer.confirm('是否确认删除该包裹信息1？', function(index) {
-					obj.del();
-					layer.alert("尚未开发，敬请期待");
+			 if(layEvent === 'delete') { //删除发件人
+				layer.confirm('是否确认删除发件人？', function(index) {
+					comm.getDataByCondition({
+						loading: true,
+						ajax: {
+							url: '/api/BasicDeliver/Delete',
+							type: 'delete',
+							data: {
+								id: data.id
+							},
+							success: function(data) {
+								layer.msg("删除成功！")
+								obj.del();
+							}
+						}
+					});
 				});
 			} else if(layEvent === 'edit') { //编辑发件人信息
-				comm.openPage({
-					url: './deliver/deliver-edit.html?id=' + data.id,
-					open: {
-						maxmin: true,
-    					area: ['400px', '280px'],
-					}
+				comm.changeTabContent({
+					url: './deliver/deliver-edit.html',
+				    data: {
+				    	id: data.id
+				    }
 				});
-			} else if(layEvent === 'reject') { //包裹退货
-				layer.alert("尚未开发，敬请期待");
 			} else if(layEvent === 'choose-deliver') { //选定该发件人
 				comm.fillFormByData(data, $("form"), "fill-deliver");
 			    $('input[name="save-deliver"]').addClass("choosed");
-				console.info(data);
 				comm.closeOpenPage();
 			}
 		});

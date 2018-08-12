@@ -1,20 +1,4 @@
-<head>
-	<style>
-		#express_edit_cont th {
-			font-weight: 600;
-			background: #f6fcff;
-		}
-		
-		#express_edit_cont th[colspan="8"] {
-			border-top: 2px solid #ccc;
-			padding: 8px;
-		}
-		
-		#express_edit_cont tbody tr:hover {
-			background-color: #fff;
-		}
-	</style>
-</head>
+
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
 	<input autocomplete="off" type="hidden" name="caozuo" value="1">
 	<input autocomplete="off" type="hidden" name="kkfs" value="1">
@@ -304,7 +288,7 @@
 				url: './receiver/receiver-list.html?target=express-online-order',
 				open: {
 					maxmin: true,
-					area: ['800px', '700px'],
+					area: ['80%', '700px'],
 					title: '选择收件人'
 				},
 				cb: function() {
@@ -350,7 +334,8 @@
 				f = $("#express_edit_form *[name=delivername]").val(),
 				g = $("#express_edit_form *[name=delivermobile]").val(),
 				h = $("#express_edit_form *[name=deliveraddress]").val();
-			if($('.choosed[name="save-deliver"]:checked').length && deliverChangeFlag) { //保存发件人 
+			//保存发件人 
+			if($('.choosed[name="save-deliver"]:checked').length && deliverChangeFlag) {
 				comm.getDataByCondition({
 					ajax: {
 						url: "/api/BasicDeliver/Post",
@@ -366,7 +351,8 @@
 					}
 				});
 			}
-			if($('#express_edit_form .choosed[name="save-receiver"]:checked').length && receiverChangeFlag) { //保存收件人 
+			//保存收件人 
+			if($('#express_edit_form .choosed[name="save-receiver"]:checked').length && receiverChangeFlag) {
 				comm.getDataByCondition({
 					ajax: {
 						url: "/api/BasicReceiver/Post",
@@ -388,7 +374,8 @@
 					}
 				});
 			}
-			if(!$('#express_edit_form input[name="save-receiver"]').hasClass("choosed") || receiverChangeFlag) { //保存身份证
+			//保存身份证信息
+			if(!$('#express_edit_form input[name="save-receiver"]').hasClass("choosed") || receiverChangeFlag) {
 				a && b && c && d && comm.getDataByCondition({
 					ajax: {
 						url: "/api/BasicIDCard/PostMy",
@@ -409,6 +396,16 @@
 					'caozuo', 'kkfs', 'isenter', 'Id', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'delivermobile', 'deliveremail', 'receivercompany', 'receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'idcardzheng', 'idcardfan', 'ReceiverPostCard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'safefreeover', 'freeother', 'freecoupon', 'volumeweight', 'note', 'freeservicenote', 'idcard_fan', 'idcard_zheng'
 				]
 			);
+			
+			//整理增值服务信息
+			var servDoms = $("#service_container input[type=checkbox]:checked"),
+				servStr = "";
+			servDoms.each(function(v) {
+				var refNum = $("#service_container input[data-ref=" + $(this).attr("data-id") + "]").val() || 1;
+				servStr += $(this).attr("data-id") + "*" + refNum + ";";
+			});
+			expressEditData.freeservicenote = servStr;
+			
 			var details = [];
 			$("#express_edit_form .detail-tr").each(function() {
 				var sepDetail = {}

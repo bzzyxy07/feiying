@@ -6,13 +6,13 @@
 				<li class="active" data-value="" click-name="">全部</li>
 				<li data-value="false" click-name="isenter">待处理</li>
 				<li data-value="false" click-name="ispay">待付款</li>
-				<li data-value="false" click-name="isdeliver">待发货</li>
+				<li data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</li>
 				<li data-value="true" click-name="isdeliver">已发货</li>
 			</ul>
 		</li>
 		<li>
 			<span>来源</span>
-			<select name="" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
+			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
 		</li>
 	</ul>
 	<ul>
@@ -62,13 +62,12 @@
 						data: data,
 						cont: '#express_info_search_form',
 						cb: function(data) {
-							console.info(data);
+							//console.info(data);
 						}
 					});
 				}
 			}
 		});
-		//groupInitialBase: function(param, data)
 
 		comm.bindFilterForm({
 			formId: "express_info_search_form",
@@ -206,10 +205,13 @@
 					data: data.id
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
-				layer.confirm('是否确认删除该运单信息1？', function(index) {
+				layer.confirm('是否确认删除该运单信息？', function(index) {
 					comm.getDataByCondition({
 						ajax: {
-							url: '/api/OrderTransportOrder/DeleteLogic?id=' + data.id,
+							url: '/api/OrderTransportOrder/DeleteLogic',
+							data: {
+								id: data.id
+							},
 							type: 'put',
 							success: function(rlt) {
 								layer.msg("删除成功！")

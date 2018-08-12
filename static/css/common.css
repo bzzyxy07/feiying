@@ -153,7 +153,7 @@ a {
 }
 
 .layui-side {
-	width: 100px;
+	width: 90px;
 	background: #0f8fb9;
 }
 
@@ -222,6 +222,7 @@ a {
 
 .layui-body {
 	left: 100px;
+	/*right: 10px;*/
 }
 
 .layui-body header,
@@ -269,17 +270,18 @@ a {
 
 .layui-body .comm-body {
 	position: absolute;
-	top: 80px;
+	top: 90px;
 	bottom: 30px;
-	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1) inset;
+/*	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1) inset;*/
 	background-color: #fafafa;
 	background-image: url("../img/water-mark.png");
-	padding: 15px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	overflow-x: hidden;
-	overflow-y: scroll;
+/*	overflow-y: scroll;*/
+	padding: 0;
+	
 }
 
 .layui-form .required-logo::before {
@@ -438,7 +440,7 @@ a {
 }
 
 .data-table-container {
-	min-height: 200px;
+	min-height: 100px;
 }
 
 .relation-select .layui-input.layui-unselect {
@@ -622,4 +624,24 @@ a {
 
 #detail_body tr:first-child .del-detail-tr {
 	display: none;
+}
+
+#alipay_table td {
+	padding: 10px;
+}
+
+#alipay_table th {
+	padding: 10px 10px 10px 20px;
+	text-align: right;
+	font-weight: 400;
+}
+#alipay_table img {
+	height: 40px;
+}
+.layui-tab-content {
+    box-sizing: border-box;
+    padding: 10px 0 0 0;
+}
+ .layui-table-view {
+    margin: 10px 0 0 0;
 }

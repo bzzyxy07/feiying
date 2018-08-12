@@ -1,6 +1,8 @@
 layui.use(['element', 'layer'], function() {
 	var layer = layui.layer;
 	$("#left_menu .layui-nav-item").on("click", function(e) {
+		var $this = $(this);
+		sessionStorage.setItem("menuUrl", $(this).attr("url"));
 		layer.closeAll();
 		//加载模块页面
 		$("#main_container").load($(this).attr("url"), function() {
@@ -11,10 +13,18 @@ layui.use(['element', 'layer'], function() {
 		$(this).addClass("layui-this").siblings(".layui-this").removeClass("layui-this");
 		$("#page_address").html($(this).html());
 	});
-	document.querySelector("#left_menu .layui-nav-item").click();
+
+	var menuUrl = sessionStorage.getItem("menuUrl");
+	var tabUrl = sessionStorage.getItem("tabUrl");
+	if(menuUrl) {
+		$("#left_menu .layui-nav-item[url='" + menuUrl + "']").click();
+	} else {
+		$("#left_menu .layui-nav-item").first().click();
+	}
 
 	//加载内部tab页面
 	$('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]', function() {
+		sessionStorage.setItem("tabUrl", $(this).attr("link-url"));
 		layer.closeAll();
 		tabClickCb($(this));
 	});

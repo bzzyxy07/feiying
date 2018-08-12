@@ -83,7 +83,7 @@
 				]
 			},
 			callback: function() {
-				if($(".filter-form ul[name='isenter'] li[data-value=false]").hasClass("active")) {
+				if($(".filter-form ul[name='isenter'] li[data-value=true]").hasClass("active")) {
 					$("#package_submit_btn, .mess-info").removeClass("hide");
 				} else {
 					$("#package_submit_btn, .mess-info").addClass("hide");
@@ -145,7 +145,7 @@
 					data: data.id
 				});
 			} else if(layEvent === 'delete') {
-				layer.confirm('是否确认删除该包裹信息1？', function(index) {
+				layer.confirm('是否确认删除该包裹信息？', function(index) {
 					comm.getDataByCondition({
 						ajax: {
 							url: '/api/OrderPackage/LogicDelete',

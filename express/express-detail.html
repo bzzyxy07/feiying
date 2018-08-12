@@ -10,7 +10,7 @@
 		<col>
 	</colgroup>
 	<tr>
-		<th colspan="8">
+		<th colspan="8" class="none-back-border">
 			<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>运单信息</p>
 		</th>
 	</tr>
@@ -34,7 +34,7 @@
 	</tr>
 
 	<tr>
-		<th colspan="8">
+		<th colspan="8" class="none-back-border">
 			<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>发件人信息</p>
 		</th>
 	</tr>
@@ -54,7 +54,7 @@
 	</tr>
 
 	<tr>
-		<th colspan="8">
+		<th colspan="8" class="none-back-border">
 			<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>收件人信息</p>
 		</th>
 	</tr>
@@ -93,7 +93,7 @@
 	</tr>
 
 	<tr>
-		<th colspan="8">
+		<th colspan="8" class="none-back-border">
 			<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
 		</th>
 	</tr>
@@ -185,12 +185,10 @@
 				success: function(data) {
 					var orderInfo = data['orderdetails'];
 					comm.fillPageByData(orderInfo, $("#express_detail_cont"), "name");
-					
+
 					$("#receiver_address").text(orderInfo['receiverregion_province'] + orderInfo['receiverregion_city'] + orderInfo['receiveraddress']);
 					var details = orderInfo['details'];
-					console.info(details);
 					for(var i = 0, len = details.length - 1; i < len; i++) {
-						console.info(i)
 						$("#express_detail_cont #detail_body").append("<tr class='detail-tr'>" + $("#express_detail_cont #detail_body .detail-tr").first().html() + "</tr>");
 					}
 					details.map(function(v, index, arr) {
@@ -199,6 +197,25 @@
 							$cont.text(v[key]).data("data", v[key]);
 						}
 					});
+					var servStr = orderInfo["freeservicenote"];
+					var servArr = servStr.split(";");
+					var m = [];
+					servArr.map(function(v, index) {
+						m.push(v.split("*"));
+					});
+
+					var servicelist = data["servicelist"];
+					var servStr1 = "";
+					m.map(function(v, index) {
+						var servid = m[index][0];
+						var servnum = m[index][1];
+						servicelist.map(function(v1, index1) {
+							if(servid === v1.id) {
+								servStr1 += v1.servicename + "*" + servnum + ";";
+							}
+						});
+					});
+					$('span[name="freeservicenote"]').text(servStr1);
 				}
 			}
 		});

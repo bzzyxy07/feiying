@@ -29,41 +29,33 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
-		$("#deliver_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + comm.getUrlParamX("id"));
-		//特殊赋值
-		/*	comm.fillContainerByUrl({
-				cont: $("#deliver_edit_form"),
-				cb: function(data) {
-					console.info(data);
-					
-				}
-			});*/
-
-		//删除行
-		//提交编辑的包裹信息
-		form.on('submit(deliver_edit_form)', function(data) {
-	
-			var packageData = {
-				"id": $('#package_edit_form [name="id"]').val(),
-				"delivername": $('#deliver_edit_form [name="delivername"]').val(),
-				"mobilephone": $('#deliver_edit_form [name="mobilephone"]').val(),
-				"deliveraddress": $('#deliver_edit_form [name="deliveraddress"]').val(),
-				"id":comm.getUrlParamX("id")
-			}
-			comm.getDataByCondition({
-				loading: true,
-				ajax: {
-					url: "/api/BasicDeliver/Put",
-					type: "put",
-					data: packageData,
-					success: function(data) {
-						layer.closeAll();
-						layer.msg("修改成功！");
-						$(".filter-form .filter-btn").click();
-					}
-				}
-			});
-			return false;
-		});
+		var deliverid = $("#main_container").data("data");
+		$("#deliver_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + deliverid);
+//
+//		//提交编辑的包裹信息
+//		form.on('submit(deliver_edit_form)', function(data) {
+//	
+//			var packageData = {
+//				"id": $('#package_edit_form [name="id"]').val(),
+//				"delivername": $('#deliver_edit_form [name="delivername"]').val(),
+//				"mobilephone": $('#deliver_edit_form [name="mobilephone"]').val(),
+//				"deliveraddress": $('#deliver_edit_form [name="deliveraddress"]').val(),
+//				"id":deliverid
+//			}
+//			comm.getDataByCondition({
+//				loading: true,
+//				ajax: {
+//					url: "/api/BasicDeliver/Put",
+//					type: "put",
+//					data: packageData,
+//					success: function(data) {
+//						layer.closeAll();
+//						layer.msg("修改成功！");
+//						$(".filter-form .filter-btn").click();
+//					}
+//				}
+//			});
+//			return false;
+//		});
 	});
 </script>

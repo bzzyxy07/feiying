@@ -11,14 +11,27 @@ var comm = {
 	groupInitial: function(param) {
 		//初始化表格选项数据
 		if(param.url) {
-			comm.getDataByCondition({
-				ajax: {
-					url: param.url,
-					success: function(data) {
-						comm.groupInitialBase(param, data)
+			if(!param.data) {
+				comm.getDataByCondition({
+					ajax: {
+						url: param.url,
+						success: function(data) {
+							comm.groupInitialBase(param, data)
+						}
 					}
-				}
-			});
+				});
+			} else {
+				comm.getDataByCondition({
+					ajax: {
+						url: param.url,
+						data: param.data,
+						success: function(data) {
+							comm.groupInitialBase(param, data)
+						}
+					}
+				});
+			}
+
 		} else {
 			comm.groupInitialBase(param, param.data);
 		}
@@ -94,6 +107,9 @@ var comm = {
 			comm.fillSelAndCont();
 		});
 	},
+	refreshInnerPage: function() {
+		$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show').load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
+	},
 	returnPrev: function() {
 		$(".return-prev").click();
 	},
@@ -116,9 +132,8 @@ var comm = {
 		layer.closeAll();
 	},
 	fillSelAndCont: function() {
-		comm.initLoading();
 		var target = arguments[0] || '#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show';
-
+		if($(target + " select[url]").length) comm.initLoading();
 		layui.use('form', function() {
 			var form = layui.form;
 			var searchUrlArr = [];
@@ -244,62 +259,62 @@ var comm = {
 
 	},
 	getDataByCondition: function(condition) {
-		condition.loading && comm.initLoading();
-		var ajaxData = $.extend({
-			url: '',
-			type: 'get',
-			data: {},
-		}, condition.ajax);
-		if(!condition.login) {
-			ajaxData.beforeSend = function(request) {
-				request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
-			};
-		} else {
-			layui.use('layer', function() {
-				var layer = layui.layer;
+		layui.use('layer', function() {
+			var layer = layui.layer;
+			condition.loading && comm.initLoading();
+			var ajaxData = $.extend({
+				url: '',
+				type: 'get',
+				data: {},
+			}, condition.ajax);
+			if(!condition.login) {
+				ajaxData.beforeSend = function(request) {
+					request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+				};
+			} else {
 				layer.load(1);
-			});
-		}
+			}
 
-		ajaxData.url = path + ajaxData.url;
-		ajaxData.success = function(data) {
-			layer.closeAll();
-			comm.closeLoading();
-			if(!data.Success) {
-				
-				layer.msg(data.Errors[0] || data.Message);
+			ajaxData.url = path + ajaxData.url;
+			ajaxData.success = function(data) {
+				layer.closeAll();
+				comm.closeLoading();
+				if(!data.Success) {
+
+					layer.msg(data.Errors[0] || data.Message);
+					return false;
+				}
+
+				if(condition.login) {
+					userInfo = data.Object;
+					//sessionStorage.setItem("userInfo", data.Object);
+					sessionStorage.setItem("modelId", data.modelId);
+					sessionStorage.setItem("authen", data.Token);
+					sessionStorage.setItem("local-depotName", userInfo.DepotName);
+					sessionStorage.setItem("local-depotId", userInfo.DepotId);
+				}
+				condition.ajax.success && condition.ajax.success(data.Object, data);
+				return data.Object;
+			};
+			//		ajaxData.processData = false;
+			//		ajaxData.contentType = false;
+			ajaxData.error = function(data) {
+				layer.closeAll();
+				comm.closeLoading();
+				if(data.status == 401) {
+					comm.systemTimeout();
+					return false;
+				}
+				layui.use('layer', function() {
+					var layer = layui.layer;
+					layer.msg("服务器异常：请联系管理员！");
+					condition.ajax.error && condition.ajax.error(data);
+				});
+
 				return false;
-			}
-
-			if(condition.login) {
-				userInfo = data.Object;
-				//sessionStorage.setItem("userInfo", data.Object);
-				sessionStorage.setItem("modelId", data.modelId);
-				sessionStorage.setItem("authen", data.Token);
-				sessionStorage.setItem("local-depotName", userInfo.DepotName);
-				sessionStorage.setItem("local-depotId", userInfo.DepotId);
-			}
-			condition.ajax.success && condition.ajax.success(data.Object);
-			return data.Object;
-		};
-		//		ajaxData.processData = false;
-		//		ajaxData.contentType = false;
-		ajaxData.error = function(data) {
-			layer.closeAll();
-			comm.closeLoading();
-			if(data.status == 401) {
-				comm.systemTimeout();
-				return false;
-			}
-			layui.use('layer', function() {
-				var layer = layui.layer;
-				layer.msg("服务器异常：请联系管理员！");
-				condition.ajax.error && condition.ajax.error(data);
-			});
-
-			return false;
-		};
-		$.ajax(ajaxData);
+			};
+			$.ajax(ajaxData);
+		});
 	},
 	initTableByData: function() {
 
@@ -368,11 +383,11 @@ var comm = {
 		(typeof data === 'object') && data['Data'] && (data = data['Data'][0]);
 		for(var key in data) {
 			var sepCont = $container.find('.field-cont[' + fieldName + '="' + key + '"]');
+			if(!data[key] || !sepCont.length) continue;
 			sepCont.val("");
 			sepCont.hasClass("upload-img-url") &&
 				sepCont.parent("a").next("img").attr("src", "./static/img/no-img.png");
 
-			if(!data[key] || !sepCont.length) continue;
 			if(sepCont.hasClass("upload-img-url")) {
 				var $img = sepCont.parent("a").next("img");
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
@@ -390,10 +405,10 @@ var comm = {
 			comm.relateSelect({
 				container: [sepCont, $container.find('.field-cont[lay-filter="relate-city"]')]
 			});
-//			layui.use('form', function() {
-//				var form = layui.form;
-//				form.render('select');
-//			});
+			//			layui.use('form', function() {
+			//				var form = layui.form;
+			//				form.render('select');
+			//			});
 		}
 
 		layui.use('form', function() {
@@ -461,19 +476,36 @@ var comm = {
 			$("#" + param.formId + " .form-condition:not(.auto-click-condition)").each(function() {
 				$(filterForm).append('<input type="hidden" name="' + $(this).attr("name") + '">');
 			});
-			$("#" + param.formId + " .form-condition.auto-click-condition").each(function() {
-				$(this).append('<input type="hidden" name="" class="auto-click-input">');
-			});
+
 			$("#" + param.formId + " .form-condition:not(.auto-click-condition) li").on("click", function() {
 				$(this).addClass("active").siblings("li").removeClass("active");
 				$("#" + param.formId + ' input[name="' + $(this).parent(".form-condition").attr("name") + '"]').val($(this).attr("data-value"));
 				$("#" + param.formId + " .filter-btn").click();
 			});
+
 			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
-				$(this).addClass("active").siblings("li").removeClass("active");
-				$(this).siblings(".auto-click-input").val($(this).attr("data-value")).attr("name", $(this).attr("click-name"));
+				var $this = $(this);
+				var clickArr = $(this).attr("click-name").split(",");
+				var dataArr = $(this).attr("data-value").split(",");
+				var $sibs = $this.siblings('input.auto-click-input');
+				$sibs.each(function() {
+					$(this).val("");
+				});
+				$this.addClass("active").siblings("li").removeClass("active");
+				clickArr.map(function(v, index) {
+					if(!$("#" + param.formId + " input[name=" + v + "]").length) {
+						$this.after('<input type="hidden" name="' + v + '" class="auto-click-input">');
+					}
+					$('input.auto-click-input[name="' + v + '"]').val(dataArr[index]);
+				});
 				$("#" + param.formId + " .filter-btn").click();
 			});
+
+			//			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
+			//				$(this).addClass("active").siblings("li").removeClass("active");
+			//				$(this).siblings(".auto-click-input[name=" + $(this).attr("click-name") + "]").val($(this).attr("data-value")).attr("name", $(this).attr("click-name"));
+			//				$("#" + param.formId + " .filter-btn").click();
+			//			});
 			form.on('select()', function(data) {
 				$("#" + param.formId + " .filter-btn").click();
 			});
@@ -501,6 +533,13 @@ var comm = {
 				param.callback && param.callback();
 			});
 			$("#" + param.formId + " .filter-btn").click();
+
+			$("#" + param.formId + " .layui-btn[type=reset]").on("click", function(e) {
+				e.preventDefault();
+				$("#" + param.formId + " ul li:first-child").addClass("active");
+				$("#" + param.formId)[0].reset();
+				$("#" + param.formId + " .filter-btn").click();
+			});
 		});
 	},
 	renderTablePre: function(params) {
@@ -574,7 +613,6 @@ var comm = {
 	 * @param {Object} lay-filter的内容
 	 */
 	submitForm: function(filter) {
-		comm.initLoading();
 		layui.use('form', function() {
 			var form = layui.form;
 			form.on('submit(' + filter + ')', function(data) {
@@ -694,6 +732,7 @@ var comm = {
 	 * } 
 	 */
 	initRelateSelect: function(param) {
+
 		layui.use('form', function() {
 			var form = layui.form,
 				container0 = param.container[0],
@@ -760,17 +799,16 @@ var comm = {
 
 			if(!nameArr || !nameArr.length) {
 				var interval = setInterval(function() {
-					//					   debugger;
 					if($(container0).data("provinceArr") && $(container0).data("provinceArr").length) {
 						clearInterval(interval);
-						setSel();
+						setSel($(container0).data("provinceArr"), $(container0).data("regionData"), defaultValue);
 					}
 				}, 500);
 			} else {
-				setSel();
+				setSel(nameArr, relateList, defaultValue);
 			}
 
-			function setSel() {
+			function setSel(nameArr, relateList, defaultValue) {
 				$(container0).val(defaultValue);
 				var citySel = '<option value="">请选择市</option>';
 				if(!relateList[nameArr.indexOf(defaultValue)]) return false;
@@ -790,7 +828,6 @@ var comm = {
 	 */
 	searchRelateSelect: function(param) {
 		comm.getDataByCondition({
-			loading: true,
 			ajax: {
 				url: "/api/BasicRegion/GetTreeView?parent=中国",
 				type: "get",
