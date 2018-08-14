@@ -281,7 +281,7 @@ var comm = {
 				comm.closeLoading();
 				if(!data.Success) {
 
-					layer.msg(data.Errors[0] || data.Message);
+					layer.msg(data.Errors && data.Errors[0] || data.Message);
 					return false;
 				}
 
