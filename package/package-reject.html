@@ -1,0 +1,144 @@
+<form class="layui-form" id="package_reject_form" lay-filter="package-reject-form">
+	<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>退货包裹详情</p>
+	<table class="fill-page-container layui-table" id="package_detail_cont" fill-type="get">
+		<tr>
+			<th>送达仓库</th>
+			<td>
+				<span name="depotname" class="field-cont"></span>
+			</td>
+			<th>送达方式</th>
+			<td>
+				<span name="trackingname" class="field-cont"></span>
+			</td>
+			<th>包裹追踪号</th>
+			<td>
+				<span name="trackingnumber" class="field-cont"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>物品明细</th>
+			<td colspan="5" class="padd-0">
+				<table class="layui-table margin-0 table-inner-table" lay-size="sm">
+					<thead>
+						<tr>
+							<th>类别</th>
+							<th>物品名称</th>
+							<th>规格</th>
+							<th>品牌</th>
+							<th>数量</th>
+							<th>单价($)</th>
+							<th>单位</th>
+						</tr>
+					</thead>
+					<tbody id="detail_body">
+						<tr class="detail-tr">
+							<td><span name="taxcategoryname"></span></td>
+							<td><span name="mingcheng"></span></td>
+							<td><span name="guige"></span></td>
+							<td><span name="pinpai"></span></td>
+							<td><span name="count"></span></td>
+							<td><span name="danjia"></span></td>
+							<td><span name="danwei"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th>备注</th>
+			<td colspan="5"><span name="remark"></span></td>
+		</tr>
+		<tr>
+			<th>退货金额（$）</th>
+			<td colspan="5">
+				<span name="freereturn" style="color: red;">0.00</span>
+			</td>
+		</tr>
+	</table>
+
+	<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>请填写退货信息</p>
+	<div class="layui-form-item">
+		<label class="layui-form-label">退货备注</label>
+		<div class="layui-input-block"><input class="layui-input" type="text" name="note"></div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">退货地址</label>
+		<div class="layui-input-block"><input class="layui-input" type="text" name="returnaddress" lay-verify="required"></div>
+	</div>
+
+	<button class="layui-btn" style="display: block; margin: 10px auto;">提交退货信息</button>
+</form>
+<script>
+	layui.use(['form', 'table', 'layer'], function() {
+		var cloneLine = $(".detail-tr").first().clone();
+		var form = layui.form;
+		var table = layui.table;
+		var layer = layui.layer;
+
+		$("#package_detail_cont").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + $("#main_container").data("data"));
+
+		comm.fillContainerByUrl({
+			cont: $("#package_detail_cont"),
+			cb: function(data) {
+				console.info(data);
+				var detaillist = data.detaillist;
+				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
+					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
+				}
+				detaillist.map(function(v, index, arr) {
+					for(var key in v) {
+						var $cont = $("#package_detail_cont #detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+						$cont.text(v[key]).data("data", v[key]);
+					}
+				});
+
+				comm.getDataByCondition({
+					ajax: {
+						url: '/api/FreeFreightCalcu/FreeReturn',
+						data: {
+							depotid: data.depotid
+						},
+						success: function(data) {
+							console.info(data);
+
+						}
+					}
+				});
+
+			}
+		});
+
+		form.on('submit(package-reject-form)', function(data) {
+			comm.getDataByCondition({
+				loading: true,
+				ajax: {
+					url: '/api/OrderPackageReturn/PostMy',
+					data: {
+						packageid: $("#main_container").data("data"),
+						note: $("#package_reject_form input[name=note]").val(),
+						returnaddress: $("#package_reject_form input[name=returnaddress]").val(),
+						freereturn: "",
+					},
+					type: 'post',
+					success: function(data) {
+						console.info(data);
+						comm.returnPrev();
+						layer.msg("退货成功！")
+					}
+				}
+			});
+			return false;
+		});
+
+		//		post    api/OrderPackageReturn/PostMy
+		//输入参数：
+		//是否必须	字段	类型	意义
+		//是	packageid	guid	包裹的id
+		//否	note	string	退货备注（用户填写的）
+		//是	returnaddress	string	退货地址
+		//是	freereturn	decimal	退货费用（页面获取的）
+		//1.3 退货列表
+		//get    api/OrderPackageReturn/GetMy 查询时不需输入
+
+	});
+</script>

@@ -1,0 +1,43 @@
+<table id="package_reject_table" lay-filter="package-reject-table"></table>
+<script>
+	comm.getTableByUrl({
+		elem: '#package_reject_table',
+		url: '/api/OrderPackageReturn/GetMy',
+		cols: [
+			[{
+				type: 'numbers',
+				title: '',
+			}, {
+				field: 'cnum',
+				title: '包裹追踪号',
+				sort: true,
+			}, {
+				field: 'note',
+				title: '备注',
+				sort: true,
+			}, {
+				field: 'freereturn',
+				title: '退货价格',
+				sort: true,
+			}, {
+				field: 'returnaddress',
+				title: '退货地址',
+				sort: true,
+			}, {
+				field: 'isusing',
+				title: '是否处理',
+				sort: true,
+			}, {
+				field: 'usingdate',
+				title: '处理时间',
+				sort: true,
+			}, {
+				field: 'usingnote',
+				title: '处理备注',
+			}, {
+				field: 'createtime',
+				title: '创建时间',
+			}]
+		]
+	})
+</script>

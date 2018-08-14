@@ -168,7 +168,10 @@
 				});
 
 			} else if(layEvent === 'reject') {
-				layer.alert("尚未开发，敬请期待");
+				comm.changeTabContent({
+					url: './package/package-reject.html',
+					data: data.id
+				});
 			}
 		});
 	});

@@ -501,26 +501,10 @@ var comm = {
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
-			//			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
-			//				$(this).addClass("active").siblings("li").removeClass("active");
-			//				$(this).siblings(".auto-click-input[name=" + $(this).attr("click-name") + "]").val($(this).attr("data-value")).attr("name", $(this).attr("click-name"));
-			//				$("#" + param.formId + " .filter-btn").click();
-			//			});
 			form.on('select()', function(data) {
 				$("#" + param.formId + " .filter-btn").click();
 			});
 			form.render();
-
-			if(param.renderTable) {
-				var array = param.renderTable.cols[0];
-				param.order && array.unshift({
-					type: 'numbers',
-					title: '',
-				});
-				param.checkbox && array.unshift({
-					checkbox: true
-				});
-			}
 
 			$(filterForm).on("click", ".filter-btn", function() {
 				var $this = $(this);
@@ -540,8 +524,61 @@ var comm = {
 				$("#" + param.formId)[0].reset();
 				$("#" + param.formId + " .filter-btn").click();
 			});
+
+			if(param.renderTable) {
+				var array = param.renderTable.cols[0];
+				param.order && array.unshift({
+					type: 'numbers',
+					title: '',
+				});
+				param.checkbox && array.unshift({
+					checkbox: true
+				});
+			}
+
 		});
 	},
+	getTableByUrl: function(param) {
+		comm.renderTable({
+			loading: true,
+
+			table: {
+				elem: param.elem,
+				cols: param.cols,
+				url: path + param.url,
+				method: param.type || "get",
+				page: {
+					count: 'Total'
+				},
+				headers: {
+					"Authorization": sessionStorage.getItem("#page_address")
+				},
+				response: {
+					statusName: 'Success',
+					statusCode: true,
+					msgName: 'msg',
+					dataName: 'Data',
+					countName: 'Total'
+				},
+				//where: "",
+				done: function(data) {
+					param.succ && param.succ(data);
+					comm.closeLoading();
+					if(data.status == 401) {
+						comm.systemTimeout();
+						return false;
+					}
+					if(!data.Success) {
+						layer.msg(data.Errors[0], {
+							icon: 5
+						});
+						return false;
+					}
+				}
+			}
+		});
+	},
+
 	renderTablePre: function(params) {
 		var filterForm = params.filterForm,
 			param = params.param,
