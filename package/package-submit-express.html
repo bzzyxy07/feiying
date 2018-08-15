@@ -307,7 +307,6 @@
 
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
-			debugger;
 			var a = $("#express_transport_order_form *[name=receiveridcardtype]").val(),
 				b = $("#express_transport_order_form *[name=receiveridcardnum]").val(),
 				c = $("#express_transport_order_form *[name=idcardzheng]").val(),
@@ -378,7 +377,7 @@
 				servStr += $(this).attr("data-id") + "*" + refNum + ";";
 			});
 			expressTransportOrderData.freeservicenote = servStr;
-
+			expressTransportOrderData.ids = ids;
 			var details = [];
 			$("#express_transport_order_form .detail-tr").each(function() {
 				var sepDetail = {}
@@ -393,8 +392,8 @@
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
-					url: "/api/OrderTransportOrder/PostMy",
-					type: "post",
+					url: "/api/OrderPackage/AddOrder",
+					type: "put",
 					data: expressTransportOrderData,
 					success: function(data0, data) {
 						orderid = data.ModelId;
@@ -410,8 +409,11 @@
 								},
 								success: function(data) {
 									layer.closeAll();
-									comm.refreshInnerPage();
-									layer.msg("运单提交成功！");
+									layer.confirm("运单提交成功！", {
+										icon: 1
+									}, function() {
+										comm.returnPrev();
+									});
 								}
 							}
 						});

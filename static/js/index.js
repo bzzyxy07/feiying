@@ -25,7 +25,7 @@ layui.use(['element', 'layer'], function() {
 	//加载内部tab页面
 	$('#main_container').on('click', '>.layui-tab-card>.layui-tab-title>li[link-url]', function() {
 		sessionStorage.setItem("tabUrl", $(this).attr("link-url"));
-		layer.closeAll();
+//		layer.closeAll();
 		tabClickCb($(this));
 	});
 });

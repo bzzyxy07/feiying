@@ -349,9 +349,11 @@
 								type: "post",
 								data: packageData,
 								success: function(data) {
-									layer.closeAll();
-									comm.refreshInnerPage();
-									layer.msg("转运下单成功！");
+									layer.confirm("转运下单成功！", {
+										icon: 1
+									}, function() {
+										comm.refreshInnerPage();
+									});
 								}
 							}
 						});

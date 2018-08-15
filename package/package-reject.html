@@ -115,9 +115,11 @@
 										},
 										type: 'post',
 										success: function(data) {
-											console.info(data);
-											comm.returnPrev();
-											layer.msg("退货成功！")
+											layer.confirm("退货成功！", {
+												icon: 1
+											}, function() {
+												comm.returnPrev();
+											});
 										}
 									}
 								});

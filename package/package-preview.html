@@ -125,8 +125,11 @@
 					type: "post",
 					data: packageData,
 					success: function(data) {
-						$(".layui-tab-title li[link-url='./package/package-list.html']").click();
-						layer.msg('添加成功！');
+						layer.confirm("添加成功！", {
+							icon: 1
+						}, function() {
+							$(".layui-tab-title li[link-url='./package/package-list.html']").click();
+						});
 					}
 				}
 			});

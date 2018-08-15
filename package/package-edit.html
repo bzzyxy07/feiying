@@ -145,9 +145,11 @@
 					type: "put",
 					data: packageData,
 					success: function(data) {
-						layer.closeAll();
-						comm.returnPrev();
-						layer.msg('修改成功！');
+						layer.confirm("修改成功！", {
+							icon: 1
+						}, function() {
+							comm.returnPrev();
+						});
 					}
 				}
 			});

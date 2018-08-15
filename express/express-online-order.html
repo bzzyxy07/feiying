@@ -1,4 +1,3 @@
-
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
 	<table class="layui-table" id="express_online_order_cont">
 		<colgroup>
@@ -388,9 +387,11 @@
 					type: "post",
 					data: expressOnlineOrderData,
 					success: function(data) {
-						layer.closeAll();
-						comm.refreshInnerPage();
-						layer.msg("在线下单成功！");
+						layer.confirm("在线下单成功！", {
+							icon: 1
+						}, function() {
+							comm.refreshInnerPage();
+						});
 
 					}
 				}

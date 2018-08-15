@@ -1,4 +1,3 @@
-
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
 	<input autocomplete="off" type="hidden" name="caozuo" value="1">
 	<input autocomplete="off" type="hidden" name="kkfs" value="1">
@@ -396,7 +395,7 @@
 					'caozuo', 'kkfs', 'isenter', 'Id', 'depotid', 'routeid', 'delivername', 'deliveraddress', 'delivermobile', 'deliveremail', 'receivercompany', 'receivername', 'receiveraddress', 'receiverregion_qu', 'receiverregion_city', 'receiverregion_province', 'receiverregion_national', 'idcardzheng', 'idcardfan', 'ReceiverPostCard', 'receivermobile', 'receivertele', 'receiveremail', 'receiveridcardtype', 'receiveridcardnum', 'weight', 'width', 'height', 'safefreeover', 'freeother', 'freecoupon', 'volumeweight', 'note', 'freeservicenote', 'idcard_fan', 'idcard_zheng'
 				]
 			);
-			
+
 			//整理增值服务信息
 			var servDoms = $("#service_container input[type=checkbox]:checked"),
 				servStr = "";
@@ -405,7 +404,7 @@
 				servStr += $(this).attr("data-id") + "*" + refNum + ";";
 			});
 			expressEditData.freeservicenote = servStr;
-			
+
 			var details = [];
 			$("#express_edit_form .detail-tr").each(function() {
 				var sepDetail = {}
@@ -424,9 +423,14 @@
 					//data: new FormData($form[0]),
 					data: expressEditData,
 					success: function(data) {
-						layer.msg("编辑成功！");
-						comm.returnPrev();
-						comm.closeOpenPage();
+						layer.confirm("编辑成功！", {
+							icon: 1
+						}, function() {
+							comm.returnPrev();
+						});
+						//						layer.msg("编辑成功！");
+						//						comm.returnPrev();
+						//						comm.closeOpenPage();
 					}
 				}
 			});
