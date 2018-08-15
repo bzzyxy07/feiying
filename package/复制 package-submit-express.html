@@ -298,6 +298,13 @@
 			});
 		});
 
+		var receiverChangeFlag = 0;
+		$('#express_transport_order_form *[fill-receiver]').on('change', function() {
+			if($('input[name="save-receiver"]').hasClass("choosed")) {
+				receiverChangeFlag = 1;
+			}
+		});
+
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
 			var a = $("#express_transport_order_form *[name=receiveridcardtype]").val(),
@@ -308,6 +315,47 @@
 				f = $("#express_transport_order_form *[name=delivername]").val(),
 				g = $("#express_transport_order_form *[name=delivermobile]").val(),
 				h = $("#express_transport_order_form *[name=deliveraddress]").val();
+
+			//保存收件人 
+			if($('#express_transport_order_form .choosed[name="save-receiver"]:checked').length && receiverChangeFlag) {
+				comm.getDataByCondition({
+					ajax: {
+						url: "/api/BasicReceiver/Post",
+						type: "post",
+						data: {
+							receivername: e,
+							receiveraddress: $("#express_transport_order_form *[name=receiveraddress]").val(),
+							mobilephone: $("#express_transport_order_form *[name=receivermobile]").val(),
+							zipcode: $("#express_transport_order_form *[name=ReceiverPostCard]").val(),
+							regionprovince: $("#express_transport_order_form *[name=receiverregion_province]").val(),
+							regioncity: $("#express_transport_order_form *[name=receiverregion_city]").val(),
+							receiveridcardtype: a,
+							idcardnumber: b,
+							idcardzheng: $("#express_transport_order_form *[name=idcardzheng]").val(),
+							idcardfan: $("#express_transport_order_form *[name=idcardfan]").val(),
+							idcardall: "",
+						},
+						success: function(data) {}
+					}
+				});
+			}
+			//保存身份证
+			if(!$('#express_transport_order_form input[name="save-receiver"]').hasClass("choosed") || receiverChangeFlag) {
+				a && b && c && d && comm.getDataByCondition({
+					nomsg: true,
+					ajax: {
+						url: "/api/BasicIDCard/PostMy",
+						type: "post",
+						data: {
+							username: e,
+							idcardnumber: b,
+							idcardzheng: c,
+							idcardfan: d,
+						},
+						success: function(data) {}
+					}
+				});
+			}
 
 			var expressTransportOrderData = comm.getFormData(
 				$("#express_transport_order_form"), [
@@ -344,17 +392,32 @@
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
-					url: "/api/OrderTransportOrder/PackageOrder",
-					type: "post",
+					url: "/api/OrderPackage/AddOrder",
+					type: "put",
 					data: expressTransportOrderData,
 					success: function(data0, data) {
+						orderid = data.ModelId;
 
-						layer.closeAll();
-						layer.confirm("运单提交成功！", {
-							icon: 1
-						}, function() {
-							comm.returnPrev();
+						comm.getDataByCondition({
+							loading: true,
+							ajax: {
+								url: "/api/OrderPackage/ListOrder",
+								type: "get",
+								data: {
+									ids: ids,
+									orderid: orderid
+								},
+								success: function(data) {
+									layer.closeAll();
+									layer.confirm("运单提交成功！", {
+										icon: 1
+									}, function() {
+										comm.returnPrev();
+									});
+								}
+							}
 						});
+
 					}
 				}
 			});

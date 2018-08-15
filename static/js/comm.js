@@ -501,6 +501,16 @@ var comm = {
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
+			if(param.renderTable) {
+				var array = param.renderTable.cols[0];
+				param.order && array.unshift({
+					type: 'numbers',
+					title: '',
+				});
+				param.checkbox && array.unshift({
+					checkbox: true
+				});
+			}
 			form.on('select()', function(data) {
 				$("#" + param.formId + " .filter-btn").click();
 			});
@@ -524,17 +534,6 @@ var comm = {
 				$("#" + param.formId)[0].reset();
 				$("#" + param.formId + " .filter-btn").click();
 			});
-
-			if(param.renderTable) {
-				var array = param.renderTable.cols[0];
-				param.order && array.unshift({
-					type: 'numbers',
-					title: '',
-				});
-				param.checkbox && array.unshift({
-					checkbox: true
-				});
-			}
 
 		});
 	},
