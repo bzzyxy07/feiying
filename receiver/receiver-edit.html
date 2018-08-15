@@ -15,16 +15,16 @@
 	<div class="layui-form-item relation-select">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="regionprovince" id="province" lay-verify="required" lay-filter="relate-province" class="field-cont"></select>
+			<select name="regionprovince" id="province" lay-filter="relate-province" class="field-cont"></select>
 		</div>
 		<div class="layui-input-inline">
-			<select name="regioncity" id="city" lay-verify="required" lay-filter="relate-city" class="field-cont"></select>
+			<select name="regioncity" id="city" lay-filter="relate-city" class="field-cont"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">地址</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="receiveraddress" lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="receiveraddress" lay-verify="required"  placeholder="请输入收件人地址" autocomplete="off" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -40,9 +40,9 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label required-logo">身份证号码</label>
+		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="idcardnumber" lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="idcardnumber" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -51,7 +51,7 @@
 			<div class="upload-img-container">
 				<a href="javascript:;">
 					<span>点此上传</span>
-					<input autocomplete="off" type="file" name="" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
 					<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url field-cont">
 				</a>
 				<img class="upload-img" alt="暂无图片">
@@ -64,7 +64,7 @@
 			<div class="upload-img-container">
 				<a href="javascript:;">
 					<span>点此上传</span>
-					<input autocomplete="off" type="file" name="" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
 					<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont">
 				</a>
 				<img class="upload-img" alt="暂无图片">

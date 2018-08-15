@@ -207,7 +207,7 @@ var comm = {
 					contentType: false,
 					success: function(data) {
 						if(!data.Success) {
-							layer.msg(data.Errors[0] || data.Message);
+							layer.msg(data.Errors[0] || data.Message || "服务器异常：上传文件失败！");
 							return false;
 						}
 						$this.next("input.upload-img-url").val(data.Object);
@@ -280,14 +280,12 @@ var comm = {
 				layer.closeAll();
 				comm.closeLoading();
 				if(!data.Success) {
-
-					layer.msg(data.Errors && data.Errors[0] || data.Message);
+					layer.msg(data.Errors && data.Errors[0] || data.Message || "服务器异常：操作失败！");
 					return false;
 				}
 
 				if(condition.login) {
 					userInfo = data.Object;
-					//sessionStorage.setItem("userInfo", data.Object);
 					sessionStorage.setItem("modelId", data.modelId);
 					sessionStorage.setItem("authen", data.Token);
 					sessionStorage.setItem("local-depotName", userInfo.DepotName);
@@ -296,8 +294,6 @@ var comm = {
 				condition.ajax.success && condition.ajax.success(data.Object, data);
 				return data.Object;
 			};
-			//		ajaxData.processData = false;
-			//		ajaxData.contentType = false;
 			ajaxData.error = function(data) {
 				layer.closeAll();
 				comm.closeLoading();
@@ -617,7 +613,7 @@ var comm = {
 					return false;
 				}
 				if(!data.Success) {
-					layer.msg(data.Errors[0], {
+					layer.msg(data.Errors && data.Errors[0] || data.Message || "服务器异常：操作失败！", {
 						icon: 5
 					});
 					return false;
@@ -654,7 +650,7 @@ var comm = {
 			form.on('submit(' + filter + ')', function(data) {
 				var $form = $(".layui-form[lay-filter=" + filter + "]");
 				var formData = new FormData($form[0]);
-				comm.getDataByCondition({
+				var a = comm.getDataByCondition({
 					loading: true,
 					ajax: {
 						url: $form.attr("submit-url"),
@@ -663,10 +659,13 @@ var comm = {
 						success: function(data) {
 							comm.closeLoading();
 							$form.attr("succ-close") && layer.closeAll();
-							$form.attr("succ-msg") && layer.msg($form.attr("succ-msg"));
-							$form.attr("succ-reset") && $form[0].reset();
-							$form.attr("succ-cb") && eval($form.attr("succ-cb"));
-							$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
+							$form.attr("succ-msg") && layer.confirm($form.attr("succ-msg"), {
+								icon: 5
+							}, function() {
+								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
+								$form.attr("succ-reset") && $form[0].reset();
+							});
 						}
 					}
 				});

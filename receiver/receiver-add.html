@@ -15,14 +15,14 @@
 	<div class="layui-form-item relation-select">
 		<label class="layui-form-label">收件地区</label>
 		<div class="layui-input-inline">
-			<select name="regionprovince" id="province" lay-verify="required"></select>
+			<select name="regionprovince" id="province"></select>
 		</div>
 		<div class="layui-input-inline">
-			<select name="regioncity" id="city" lay-verify="required"></select>
+			<select name="regioncity" id="city"></select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">地址</label>
+		<label class="layui-form-label required-logo">地址</label>
 		<div class="layui-input-inline">
 			<input autocomplete="off" type="text" name="receiveraddress" lay-verify="required" placeholder="请输入收件人地址" autocomplete="off" class="layui-input">
 		</div>
@@ -30,11 +30,11 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="zipcode" id="zipcode" lay-verify="required" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input">
+			<input autocomplete="off" type="text" name="zipcode" id="zipcode" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">手机</label>
+		<label class="layui-form-label required-logo">手机</label>
 		<div class="layui-input-inline">
 			<input autocomplete="off" type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input">
 		</div>
@@ -42,7 +42,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="idcardnumber" lay-verify="identity" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input">
+			<input autocomplete="off" type="text" name="idcardnumber" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -52,6 +52,7 @@
 				<a href="javascript:;">
 					<span>点此上传</span>
 					<input autocomplete="off" type="file" name="idcardzheng" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url">
 				</a>
 				<img class="upload-img" alt="暂无图片">
 			</div>
@@ -64,6 +65,7 @@
 				<a href="javascript:;">
 					<span>点此上传</span>
 					<input autocomplete="off" type="file" name="idcardfan" class="layui-input field-cont upload-img-file" accept="image/png, image/jpg, image/jpeg">
+					<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url">
 				</a>
 				<img class="upload-img" alt="暂无图片">
 			</div>
