@@ -81,10 +81,12 @@
 						var sel = '<option value="">请选择</option>',
 							sepData = data[key],
 							sepCont = $('#package_preview_form select[initial-name="' + key + '"]');
-						sepData.map(function(v) {
-							var id = sepCont.attr("initial-value") || "id";
-							sel += '<option value="' + v[id] + '">' + v.name + '</option>';
-						});
+						if(typeof sepData == 'object') {
+							sepData.map(function(v) {
+								var id = sepCont.attr("initial-value") || "id";
+								sel += '<option value="' + v[id] + '">' + v.name + '</option>';
+							});
+						}
 						sepCont.html(sel);
 					}
 
