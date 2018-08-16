@@ -1,21 +1,10 @@
-<form class="layui-form init-select-group filter-form" group-init-url="/api/OrderTransportOrder/SearchInit" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form">
+<form class="layui-form init-select-group filter-form" group-init-url="/api/OrderTransportOrder/SearchInit" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form_yfh">
+	<input type="hidden" name="isdeliver" value="true">
 	<ul>
-		<li>
-			<span>运单状态</span>
-			<ul class="form-condition auto-click-condition">
-				<li class="active" data-value="" click-name="clearAll">全部</li>
-				<li data-value="false" click-name="isenter">待处理</li>
-				<li data-value="false" click-name="ispay">待付款</li>
-				<li data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</li>
-				<li data-value="true" click-name="isdeliver">已发货</li>
-			</ul>
-		</li>
 		<li>
 			<span>来源</span>
 			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
 		</li>
-	</ul>
-	<ul>
 		<li>
 			<span>送达仓库</span>
 			<select name="depotid" initial-name="depot_lists" initial-text="Text" initial-value="Value"></select>
@@ -43,7 +32,7 @@
 	</ul>
 </form>
 <div class="data-table-container">
-	<table id="express_info_table" lay-filter="express-info-table"></table>
+	<table id="express_info_table_yfh" lay-filter="express-info-table-yfh"></table>
 </div>
 <script>
 	layui.use(['layer', 'form', 'table'], function() {
@@ -60,7 +49,7 @@
 					//初始化表格选项数据
 					comm.groupInitial({
 						data: data,
-						cont: '#express_info_search_form',
+						cont: '#express_info_search_form_yfh',
 						cb: function(data) {
 							//console.info(data);
 						}
@@ -70,12 +59,12 @@
 		});
 
 		comm.bindFilterForm({
-			formId: "express_info_search_form",
+			formId: "express_info_search_form_yfh",
 			order: true,
 			checkbox: true,
 			renderTable: {
-				id: 'express_list_data',
-				elem: '#express_info_table',
+				id: 'express_list_data_yfh',
+				elem: '#express_info_table_yfh',
 				cols: [
 					[{
 						field: 'source',
@@ -144,7 +133,7 @@
 		});
 		//绑定批量删除按钮
 		$("#express_batch_delete_btn").on("click", function() {
-			var checkData = table.checkStatus('express_list_data').data;
+			var checkData = table.checkStatus('express_list_data_yfh').data;
 			if(!checkData.length) {
 				layer.msg("请勾选待删除的运单！");
 				return false;
@@ -170,7 +159,7 @@
 
 		//批量打印运单
 		$("#express_batch_print_btn").on("click", function(e) {
-			var checkData = table.checkStatus('express_list_data').data;
+			var checkData = table.checkStatus('express_list_data_yfh').data;
 			if(!checkData.length) {
 				layer.msg("请选择需打印的运单！");
 				return false;
@@ -189,7 +178,7 @@
 			});
 		});
 
-		table.on('tool(express-info-table)', function(obj) {
+		table.on('tool(express-info-table-yfh)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
 			var tr = obj.tr;
@@ -305,12 +294,8 @@
 		<a class="layui-btn layui-btn-sm" lay-event="print-A4">A4打印</a>
 	</div>
 <div class="layui-btn-group">
-	{{#if(d.isenter) { }}
-	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
-	{{# } else { }}
 	<a class="layui-btn layui-bg-cyan layui-btn-sm" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a> {{# } }}
+	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
 	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track" data-id="{{d.id}}">追踪</a>
 </div>
-	
 </script>

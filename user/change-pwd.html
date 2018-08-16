@@ -1,4 +1,4 @@
-<form class="layui-form" id="cge_pwd_form" submit-url="/api/BasicUser/ModifyPassword" submit-type="post" succ-cb='comm.systemTimeout("修改成功！", 1)'>
+<form class="layui-form ignore-comm-submit" id="cge_pwd_form" submit-url="/api/BasicUser/ModifyPassword" submit-type="post" succ-cb='comm.systemTimeout("修改成功！", 1)' lay-filter="cge_pwd_form">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">原密码</label>
 		<div class="layui-input-inline">
@@ -14,7 +14,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">确认密码</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="password" name="newpassword_confirm"  lay-verify="required|same" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+			<input autocomplete="off" type="password" name="newpassword_confirm" lay-verify="required|same" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 
@@ -33,6 +33,22 @@
 					return '确认密码与新密码必须一致';
 				}
 			}
+		});
+		form.on('submit(cge_pwd_form)', function(data) {
+			var $form = $("#cge_pwd_form");
+			comm.getDataByCondition({
+				loading: true,
+				ajax: {
+					url: "/api/BasicUser/ModifyPassword",
+					type: "post",
+					data: $form.serialize(),
+					success: function(data) {
+						comm.closeLoading();
+						comm.systemTimeout("修改成功！", 1);
+					}
+				}
+			});
+			return false;
 		});
 	});
 </script>

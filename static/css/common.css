@@ -272,16 +272,15 @@ a {
 	position: absolute;
 	top: 90px;
 	bottom: 30px;
-/*	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1) inset;*/
+	/*	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1) inset;*/
 	background-color: #fafafa;
 	background-image: url("../img/water-mark.png");
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	overflow-x: hidden;
-/*	overflow-y: scroll;*/
+	/*	overflow-y: scroll;*/
 	padding: 0;
-	
 }
 
 .layui-form .required-logo::before {
@@ -635,13 +634,37 @@ a {
 	text-align: right;
 	font-weight: 400;
 }
+
 #alipay_table img {
 	height: 40px;
 }
+
 .layui-tab-content {
-    box-sizing: border-box;
-    /*padding: 10px 0 0 0;*/
+	box-sizing: border-box;
+	/*padding: 10px 0 0 0;*/
 }
- .layui-table-view {
-    margin: 10px 0 0 0;
+
+.layui-table-view {
+	margin: 10px 0 0 0;
+}
+
+/*.layui-layer-tips .layui-layer-close {
+	right: -8px !important;
+	top: -4px !important;
+}
+
+.layui-layer-tips .layui-layer-setwin a {
+	width: 13px;
+	height: 13px;
+	margin-left: 6px;
+	font-size: 8px;
+}*/
+
+#express_track_cont .layui-timeline-title{
+	font-size: 12px !important;
+	color: #5fb878;
+	margin-bottom: 5px;
+}
+#express_track_cont .layui-timeline-item {
+    padding-bottom: 5px;
 }

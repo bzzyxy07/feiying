@@ -122,9 +122,11 @@
 					for(var key in data) {
 						var sel = '<option value="">请选择</option>',
 							sepData = data[key];
-						sepData.map(function(v) {
-							sel += '<option value="' + v.id + '">' + v.name + '</option>';
-						});
+						if(typeof sepData == 'object') {
+							sepData.map(function(v) {
+								sel += '<option value="' + v.id + '">' + v.name + '</option>';
+							});
+						}
 
 						$('#package_info_search_form select[initial-name="' + key + '"]').html(sel);
 					}

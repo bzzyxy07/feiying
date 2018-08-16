@@ -17,7 +17,7 @@ layui.use(['element', 'layer'], function() {
 	var menuUrl = sessionStorage.getItem("menuUrl");
 	var tabUrl = sessionStorage.getItem("tabUrl");
 	if(menuUrl) {
-		$("#left_menu .layui-nav-item[url='" + menuUrl + "']").click();
+		$("#left_menu .layui-nav-item[url='" + menuUrl + "']").attr("tabUrl", sessionStorage.getItem("tabUrl")).click();
 	} else {
 		$("#left_menu .layui-nav-item").first().click();
 	}

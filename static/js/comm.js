@@ -1,4 +1,5 @@
 var path = "http://119.28.23.40:8081";
+var noImgAddress = "./static/img/no-img.png";
 var comm = {
 	/**
 	 * 根据统一接口初始化全部选项
@@ -225,7 +226,7 @@ var comm = {
 					}
 				});
 
-			}).parent("a").next("img").attr("src", "./static/img/no-img.png");
+			}).parent("a").next("img").attr("src", noImgAddress);
 
 			$(target + " .layui-form:not(.ignore-comm-submit)").each(function() {
 				var filter = $(this).attr("lay-filter");
@@ -276,40 +277,81 @@ var comm = {
 			}
 
 			ajaxData.url = path + ajaxData.url;
-			ajaxData.success = function(data) {
-				layer.closeAll();
-				comm.closeLoading();
-				if(!data.Success) {
-					layer.msg(data.Errors && data.Errors[0] || data.Message || "服务器异常：操作失败！");
-					return false;
-				}
+			//			ajaxData.success = function(data) {
+			//				layer.closeAll();
+			//				comm.closeLoading();
+			//				if(!data.Success) {
+			//					layer.msg(data.Errors && data.Errors[0] || data.Message || "服务器异常：操作失败！");
+			//					return false;
+			//				}
+			//
+			//				if(condition.login) {
+			//					userInfo = data.Object;
+			//					sessionStorage.setItem("modelId", data.modelId);
+			//					sessionStorage.setItem("authen", data.Token);
+			//					sessionStorage.setItem("local-depotName", userInfo.DepotName);
+			//					sessionStorage.setItem("local-depotId", userInfo.DepotId);
+			//				}
+			//				condition.ajax.success && condition.ajax.success(data.Object, data);
+			//				return data.Object;
+			//			};
+			//			ajaxData.error = function(data) {
+			//				layer.closeAll();
+			//				comm.closeLoading();
+			//				if(data.status == 401) {
+			//					comm.systemTimeout();
+			//					return false;
+			//				}
+			//				layui.use('layer', function() {
+			//					var layer = layui.layer;
+			//					layer.msg("服务器异常：请联系管理员！");
+			//					condition.ajax.error && condition.ajax.error(data);
+			//				});
+			//
+			//				return false;
+			//			};
+			//			$.ajax(ajaxData);
+			$.ajax({
+				url: path + condition.ajax.url,
+				type: ajaxData.type || "get",
+				data: ajaxData.data,
+				beforeSend: function(request) {
+					request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+				},
+				success: function(data) {
+					layer.closeAll();
+					comm.closeLoading();
+					if(!data.Success) {
+						layer.msg(data.Errors && data.Errors[0] || data.Message || "服务器异常：操作失败！");
+						return false;
+					}
 
-				if(condition.login) {
-					userInfo = data.Object;
-					sessionStorage.setItem("modelId", data.modelId);
-					sessionStorage.setItem("authen", data.Token);
-					sessionStorage.setItem("local-depotName", userInfo.DepotName);
-					sessionStorage.setItem("local-depotId", userInfo.DepotId);
-				}
-				condition.ajax.success && condition.ajax.success(data.Object, data);
-				return data.Object;
-			};
-			ajaxData.error = function(data) {
-				layer.closeAll();
-				comm.closeLoading();
-				if(data.status == 401) {
-					comm.systemTimeout();
-					return false;
-				}
-				layui.use('layer', function() {
-					var layer = layui.layer;
-					layer.msg("服务器异常：请联系管理员！");
-					condition.ajax.error && condition.ajax.error(data);
-				});
+					if(condition.login) {
+						userInfo = data.Object;
+						sessionStorage.setItem("modelId", data.modelId);
+						sessionStorage.setItem("authen", data.Token);
+						sessionStorage.setItem("local-depotName", userInfo.DepotName);
+						sessionStorage.setItem("local-depotId", userInfo.DepotId);
+					}
+					condition.ajax.success && condition.ajax.success(data.Object, data);
+					return data.Object;
+				},
+				error: function(data) {
+					layer.closeAll();
+					comm.closeLoading();
+					if(data.status == 401) {
+						comm.systemTimeout();
+						return false;
+					}
+					layui.use('layer', function() {
+						var layer = layui.layer;
+						layer.msg("服务器异常：请联系管理员！");
+						condition.ajax.error && condition.ajax.error(data);
+					});
 
-				return false;
-			};
-			$.ajax(ajaxData);
+					return false;
+				},
+			});
 		});
 	},
 	initTableByData: function() {
@@ -362,7 +404,7 @@ var comm = {
 				if(data[key]) {
 					sepCont.attr("src", data[key]);
 				} else {
-					sepCont.attr("src", "./static/img/no-img.png");
+					sepCont.attr("src", noImgAddress);
 				}
 
 			} else {
@@ -382,7 +424,7 @@ var comm = {
 			if(!data[key] || !sepCont.length) continue;
 			sepCont.val("");
 			sepCont.hasClass("upload-img-url") &&
-				sepCont.parent("a").next("img").attr("src", "./static/img/no-img.png");
+				sepCont.parent("a").next("img").attr("src", noImgAddress);
 
 			if(sepCont.hasClass("upload-img-url")) {
 				var $img = sepCont.parent("a").next("img");
@@ -481,19 +523,26 @@ var comm = {
 
 			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
 				var $this = $(this);
-				var clickArr = $(this).attr("click-name").split(",");
-				var dataArr = $(this).attr("data-value").split(",");
-				var $sibs = $this.siblings('input.auto-click-input');
-				$sibs.each(function() {
-					$(this).val("");
-				});
+				if($(this).attr("click-name") === "clearAll") {
+					$(this).siblings('input.auto-click-input').val("");
+				} else {
+
+					var clickArr = $(this).attr("click-name").split(",");
+					var dataArr = $(this).attr("data-value").split(",");
+					var $sibs = $this.siblings('input.auto-click-input');
+					$sibs.each(function() {
+						$(this).val("");
+					});
+					clickArr.map(function(v, index) {
+						if(!$("#" + param.formId + " input[name=" + v + "]").length) {
+							$this.after('<input type="hidden" name="' + v + '" class="auto-click-input">');
+						}
+						$('input.auto-click-input[name="' + v + '"]').val(dataArr[index]);
+					});
+				}
+
 				$this.addClass("active").siblings("li").removeClass("active");
-				clickArr.map(function(v, index) {
-					if(!$("#" + param.formId + " input[name=" + v + "]").length) {
-						$this.after('<input type="hidden" name="' + v + '" class="auto-click-input">');
-					}
-					$('input.auto-click-input[name="' + v + '"]').val(dataArr[index]);
-				});
+
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
@@ -649,7 +698,7 @@ var comm = {
 			var form = layui.form;
 			form.on('submit(' + filter + ')', function(data) {
 				var $form = $(".layui-form[lay-filter=" + filter + "]");
-				var formData = new FormData($form[0]);
+				var formData = $form.serialize();
 				var a = comm.getDataByCondition({
 					loading: true,
 					ajax: {
@@ -660,12 +709,26 @@ var comm = {
 							comm.closeLoading();
 							$form.attr("succ-close") && layer.closeAll();
 							$form.attr("succ-msg") && layer.confirm($form.attr("succ-msg"), {
-								icon: 5
+								icon: 1
 							}, function() {
 								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
 								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
-								$form.attr("succ-reset") && $form[0].reset();
+								if($form.attr("succ-reset")) {
+									$form[0].reset();
+									$(".layui-form[lay-filter=" + filter + "] .upload-img").attr("src", noImgAddress);
+								}
+								layer.closeAll();
 							});
+
+							if(!$form.attr("succ-msg")) {
+								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
+								if($form.attr("succ-reset")) {
+									$form[0].reset();
+									$(".layui-form[lay-filter=" + filter + "] .upload-img").attr("src", noImgAddress);
+								}
+								layer.closeAll();
+							}
 						}
 					}
 				});
@@ -736,11 +799,12 @@ var comm = {
 	/*系统超时*/
 	systemTimeout: function() {
 		var msg = arguments[0] || "系统超时或非法访问！";
+		var icon = arguments[1] || 2;
 		layui.use('layer', function() {
 			var layer = layui.layer;
 			layer.alert(msg + "系统将在<span id='interval_time'>5</span>秒后自动退出", {
 				skin: 'layui-layer-blue',
-				icon: arguments[1] || 2,
+				icon: icon,
 				btn: ['立即退出'],
 				closeBtn: 0
 			}, function() {
