@@ -1,21 +1,22 @@
-<form class="layui-form ignore-comm-submit fill-container fill-form-container" id="deliver_edit_form" lay-filter="deliver_edit_form" fill-type="get">
+<form class="layui-form fill-container fill-form-container" id="deliver_edit_form" submit-type="put" submit-url="/api/BasicDeliver/Put" lay-filter="deliver_edit_form" fill-type="get" succ-return="1" succ-msg="修改成功！">
+	<input type="hidden" name="id">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
-			<div class="layui-input-inline">
-				<input autocomplete="off" type="text" name="delivername" lay-verify="required" autocomplete="off" class="layui-input field-cont">
-			</div>
+		<div class="layui-input-inline">
+			<input autocomplete="off" type="text" name="delivername" lay-verify="required" class="layui-input field-cont">
+		</div>
 	</div>
 	<div class="layui-form-item">
-			<label class="layui-form-label required-logo">电话</label>
-			<div class="layui-input-inline">
-				<input autocomplete="off" type="text" name="mobilephone" lay-verify="required" autocomplete="off" class="layui-input field-cont">
-			</div>
+		<label class="layui-form-label required-logo">电话</label>
+		<div class="layui-input-inline">
+			<input autocomplete="off" type="text" name="mobilephone" lay-verify="required" class="layui-input field-cont">
+		</div>
 	</div>
-	<div class="layui-form-item">	
-			<label class="layui-form-label required-logo">地址</label>
-			<div class="layui-input-inline">
-				<input autocomplete="off" type="text" name="deliveraddress" lay-verify="required" autocomplete="off" class="layui-input field-cont">
-			</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label required-logo">地址</label>
+		<div class="layui-input-inline">
+			<input autocomplete="off" type="text" name="deliveraddress" lay-verify="required" class="layui-input field-cont">
+		</div>
 	</div>
 
 	<div class="layui-form-item">
@@ -26,36 +27,7 @@
 </form>
 
 <script>
-	layui.use(['form', 'table'], function() {
-		var form = layui.form;
-		var table = layui.table;
-		var deliverid = $("#main_container").data("data");
-		$("#deliver_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + deliverid);
-//
-//		//提交编辑的包裹信息
-//		form.on('submit(deliver_edit_form)', function(data) {
-//	
-//			var packageData = {
-//				"id": $('#package_edit_form [name="id"]').val(),
-//				"delivername": $('#deliver_edit_form [name="delivername"]').val(),
-//				"mobilephone": $('#deliver_edit_form [name="mobilephone"]').val(),
-//				"deliveraddress": $('#deliver_edit_form [name="deliveraddress"]').val(),
-//				"id":deliverid
-//			}
-//			comm.getDataByCondition({
-//				loading: true,
-//				ajax: {
-//					url: "/api/BasicDeliver/Put",
-//					type: "put",
-//					data: packageData,
-//					success: function(data) {
-//						layer.closeAll();
-//						layer.msg("修改成功！");
-//						$(".filter-form .filter-btn").click();
-//					}
-//				}
-//			});
-//			return false;
-//		});
-	});
+	var deliverid = $("#main_container").data("data").id;
+	$("#deliver_edit_form").attr("fill-url", "/api/BasicDeliver/GetMy?id=" + deliverid);
+	$("#deliver_edit_form input[name='id']").val(deliverid);
 </script>

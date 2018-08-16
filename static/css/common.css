@@ -668,3 +668,6 @@ a {
 #express_track_cont .layui-timeline-item {
     padding-bottom: 5px;
 }
+.message-box {
+	cursor: pointer;
+}

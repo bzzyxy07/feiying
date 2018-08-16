@@ -1,28 +1,28 @@
 <div class="layui-row layui-col-space15">
 	<div class="layui-col-xs6 layui-col-sm6 layui-col-md3 layui-col-lg3">
-		<div class="background-red message-box">
-			<b>12</b>
+		<div class="background-red message-box" tabUrl="./express/express-list-dcl.html">
+			<b name="dcl">0</b>
 			<span>待处理</span>
 			<i class="fa fa-hourglass-1"></i>
 		</div>
 	</div>
 	<div class="layui-col-xs6 layui-col-sm6 layui-col-md3 layui-col-lg3">
-		<div class="background-blue message-box">
-			<b>12</b>
+		<div class="background-blue message-box" tabUrl="./express/express-list-dkk.html">
+			<b name="dkk">0</b>
 			<span>待扣款</span>
 			<i class="fa fa-hourglass-1"></i>
 		</div>
 	</div>
 	<div class="layui-col-xs6 layui-col-sm6 layui-col-md3 layui-col-lg3">
-		<div class="background-green message-box">
-			<b>12</b>
+		<div class="background-green message-box" tabUrl="./express/express-list-dfh.html">
+			<b name="dfh">0</b>
 			<span>待发货</span>
 			<i class="fa fa-hourglass-1"></i>
 		</div>
 	</div>
 	<div class="layui-col-xs6 layui-col-sm6 layui-col-md3 layui-col-lg3">
-		<div class="background-teal message-box">
-			<b>12</b>
+		<div class="background-teal message-box" tabUrl="./express/express-list-yfh.html">
+			<b name="yfh">0</b>
 			<span>已发货</span>
 			<i class="fa fa-hourglass-1"></i>
 		</div>
@@ -58,3 +58,22 @@
 		</div>
 	</div>
 </div>
+<script>
+	comm.getDataByCondition({
+		ajax: {
+			url: '/api/OrderPackage/MyOrderCount',
+			type: 'get',
+			success: function(data) {
+				$(".message-box b[name='dcl']").text(data.daichuli);
+				$(".message-box b[name='dkk']").text(data.daikoukuan);
+				$(".message-box b[name='dfh']").text(data.daifahuo);
+				$(".message-box b[name='yfh']").text(data.yifahuo);
+			}
+		}
+	});
+//	$(".message-box").on("click", function() {
+//		sessionStorage.setItem("menuUrl", "./express/express-manage.html");
+//		sessionStorage.setItem("tabUrl", $(this).attr("tabUrl"));
+//		window.location.href = window.location.href;
+//	});
+</script>

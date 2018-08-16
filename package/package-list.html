@@ -4,8 +4,8 @@
 			<span>入库状态</span>
 			<ul class="form-condition" name="isenter">
 				<li class="active" data-value="">全部</li>
-				<li data-value="true">已入库<span class="layui-badge">3</span></li>
-				<li data-value="false">未入库<span class="layui-badge">4</span></li>
+				<li data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
+				<li data-value="false">未入库<span class="layui-badge" name="wrk">0</span></li>
 			</ul>
 		</li>
 		<li>
@@ -47,6 +47,18 @@
 		var form = layui.form;
 		var layer = layui.layer;
 		var table = layui.table;
+		comm.getDataByCondition({
+			ajax: {
+				url: '/api/OrderPackage/MyPackageCount',
+				type: 'get',
+				success: function(data) {
+					console.info(data)
+					$("ul[name=isenter] .layui-badge[name='wrk']").text(data.weidaoku);
+					$("ul[name=isenter] .layui-badge[name='yrk']").text(data.yidaoku);
+				}
+			}
+		});
+
 		comm.bindFilterForm({
 			formId: "package_info_search_form",
 			order: true,

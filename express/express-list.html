@@ -5,9 +5,9 @@
 			<ul class="form-condition auto-click-condition">
 				<li class="active" data-value="" click-name="clearAll">全部</li>
 				<li data-value="false" click-name="isenter">待处理</li>
-				<li data-value="false" click-name="ispay">待付款</li>
+				<li data-value="false,true" click-name="ispay,isenter">待付款</li>
 				<li data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</li>
-				<li data-value="true" click-name="isdeliver">已发货</li>
+				<li data-value="true,true,true" click-name="isdeliver,isenter,ispay">已发货</li>
 			</ul>
 		</li>
 		<li>
@@ -27,7 +27,8 @@
 
 		<li>
 			<span>运单号</span>
-			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
+			<input type="hidden" value="cnum" name="keyword_key">
+			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="keyword_value">
 		</li>
 		<li>
 			<span>发货批次</span>
@@ -124,7 +125,7 @@
 						field: '',
 						title: '操作',
 						toolbar: '#operation',
-						width: 300,
+						width: 330,
 						fixed: 'right'
 					}]
 				],

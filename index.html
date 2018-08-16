@@ -41,7 +41,7 @@
 					<i class="fa fa-money"></i>
 					<label>财务</label>
 				</li>
-				
+
 				<li class="layui-nav-item" url="deliver/deliver-manage.html">
 					<i class="fa fa-envelope"></i>
 					<label>发件人</label>
@@ -60,9 +60,9 @@
 		<div class="layui-body">
 			<header>
 				<div class="header-info">
-					<span name="user-name">时先生/LSSWG</span>
-					<span name="user-jf">积分：0(个)</span>
-					<span name="user-ye">余额：0.01($)</span>
+					<span name="user-name"><b></b></span>
+					<span name="user-jf">积分：<b>0</b>(个)</span>
+					<span name="user-ye">余额：<b>0.00</b>($)</span>
 					<a id="exit_system_btn"><i class="fa fa-sign-out"></i>退出</a>
 				</div>
 				<div id="page_address"></div>
@@ -90,6 +90,17 @@
 	<script src="static/js/less.min.js"></script>
 	<script>
 		window.onload = function() {
+			comm.getDataByCondition({
+				ajax: {
+					url: '/api/BasicUser/MyDetails',
+					type: 'get',
+					success: function(data) {
+						$(".header-info span[name=user-ye] b").text(data.restmoney);
+						$(".header-info span[name=user-name] b").text(data.username);
+						console.info(data);
+					}
+				}
+			});
 			document.getElementById("exit_system_btn").onclick = function() {
 				comm.exitSystem(1);
 			};

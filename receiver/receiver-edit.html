@@ -5,11 +5,12 @@
 		}
 	</style>
 </head>
-<form class="layui-form fill-container fill-form-container" id="receiver_edit_form" submit-url="/api/BasicReceiver/Put" succ-close="1" succ-form-refresh="1" enctype="multipart/form-data" submit-type="put" succ-msg="修改成功！">
+<form class="layui-form fill-container fill-form-container" id="receiver_edit_form" submit-url="/api/BasicReceiver/Put" succ-return="1" enctype="multipart/form-data" submit-type="put" succ-msg="修改成功！">
+	<input type="hidden" name="id">
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">姓名</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="receivername" lay-verify="required" placeholder="请输入收件人姓名" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="receivername" lay-verify="required" placeholder="请输入收件人姓名" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item relation-select">
@@ -24,25 +25,25 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">地址</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="receiveraddress" lay-verify="required"  placeholder="请输入收件人地址" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="receiveraddress" lay-verify="required" placeholder="请输入收件人地址" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">手机</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="mobilephone" required lay-verify="required|phone" placeholder="请输入收件人的手机号码" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮编</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" id="zipcode" name="zipcode" placeholder="请输入收件人的邮编号码" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" id="zipcode" name="zipcode" placeholder="请输入收件人的邮编号码" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">身份证号码</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="idcardnumber" placeholder="请输入收件人的身份证号码" autocomplete="off" class="layui-input field-cont">
+			<input autocomplete="off" type="text" name="idcardnumber" placeholder="请输入收件人的身份证号码" class="layui-input field-cont">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -84,9 +85,7 @@
 		container: ["#province", "#city"],
 		zipcode: "#zipcode"
 	});
-	layui.use(['form', 'table'], function() {
-		var id = $("#main_container").data("data");
-		$("#receiver_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
-		$("#receiver_edit_form input[name='id']").val(id);
-	});
+	var id = $("#main_container").data("data");
+	$("#receiver_edit_form").attr("fill-url", "/api/BasicReceiver/GetMy?id=" + id);
+	$("#receiver_edit_form input[name='id']").val(id);
 </script>

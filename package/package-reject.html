@@ -99,7 +99,6 @@
 							depotid: data.depotid
 						},
 						success: function(data) {
-							//							console.info(data);
 							$("#package_reject_form span[name=freereturn]").text(data);
 
 							form.on('submit(package-reject-form)', function(data) {

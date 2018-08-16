@@ -712,6 +712,7 @@ var comm = {
 								icon: 1
 							}, function() {
 								$form.attr("succ-cb") && eval($form.attr("succ-cb"));
+								$form.attr("succ-return") && comm.returnPrev();
 								$form.attr("succ-form-refresh") && $("#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show .filter-btn").click();
 								if($form.attr("succ-reset")) {
 									$form[0].reset();
