@@ -10,7 +10,7 @@
 			<ul class="form-condition" name="isenter">
 				<li data-value="false">未入库<span class="layui-badge" name="wrk">0</span></li>
 				<li class="active not-default" data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
-				<li data-value="">全部</li>
+				<li data-value="" class="all-package-status">全部</li>
 			</ul>
 		</li>
 		<li>
@@ -21,7 +21,7 @@
 			<span>包裹追踪号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
 		</li>
-		<li class="package-submit-status">
+		<li class="all-package-status-show">
 			<span>提交状态</span>
 			<!--<ul class="form-condition" name="isdeliver">
 				<li class="active" data-value="">全部</li>
@@ -30,11 +30,11 @@
 			</ul>-->
 			<select name="isdeliver">
 				<option value="">全部</option>
-				<option value="true">未提交</option>
-				<option value="false">已提交</option>
+				<option value="false">未提交</option>
+				<option value="true">已提交</option>
 			</select>
 		</li>
-		<li>
+		<li class="all-package-status-show">
 			<span>运单号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
 		</li>
@@ -42,6 +42,7 @@
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-danger" id="package_istop">置顶</button>
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
@@ -111,9 +112,13 @@
 					$("#package_submit_btn, .mess-info, .package-reject-btn").removeClass("hide");
 					$(".data-table-container").removeClass("isenter-false");
 				} else {
-					console.info($(".package-reject-btn").length)
 					$("#package_submit_btn, .mess-info, .package-reject-btn").addClass("hide");
 					$(".data-table-container").addClass("isenter-false");
+				}
+				if($(".filter-form ul[name='isenter'] li.all-package-status").hasClass("active")) {
+					$(".all-package-status-show").removeClass("hide");
+				} else {
+					$(".all-package-status-show").addClass("hide");
 				}
 			}
 		});
