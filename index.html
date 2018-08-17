@@ -61,8 +61,8 @@
 			<header>
 				<div class="header-info">
 					<span name="user-name"><b></b></span>
-					<span name="user-jf">积分：<b>0</b>(个)</span>
-					<span name="user-ye">余额：<b>0.00</b>($)</span>
+					<!--<span name="user-jf">积分：<b>0</b>(个)</span>-->
+					<span name="user-ye">余额：<b class="red-color cursor-pointer">0.00</b>($)</span>
 					<a id="exit_system_btn"><i class="fa fa-sign-out"></i>退出</a>
 				</div>
 				<div id="page_address"></div>
@@ -94,6 +94,13 @@
 						console.info(data);
 					}
 				}
+			});
+			$(".header-info span[name=user-ye] b").on("click", function() {
+//				jumpPage({
+//					menuUrl: "finance/finance-manage.html",
+//					tabUrl: ""
+//				});
+				$("#left_menu li[url='finance/finance-manage.html']").click()
 			});
 			document.getElementById("exit_system_btn").onclick = function() {
 				comm.exitSystem(1);

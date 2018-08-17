@@ -1,23 +1,21 @@
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
 	<ul>
 		<li>
-			<span>入库状态</span>
+			<span>包裹状态</span>
 			<ul class="form-condition" name="isenter">
-				<li class="active" data-value="">全部</li>
-				<li data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
 				<li data-value="false">未入库<span class="layui-badge" name="wrk">0</span></li>
+				<li class="active not-default" data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
+				<li data-value="">全部</li>
 			</ul>
 		</li>
-		<li>
+		<!--<li>
 			<span>订单提交状态</span>
 			<ul class="form-condition" name="isdeliver">
 				<li class="active" data-value="">全部</li>
 				<li data-value="true">未提交</li>
 				<li data-value="false">已提交</li>
 			</ul>
-		</li>
-	</ul>
-	<ul>
+		</li>-->
 		<li>
 			<span>送达仓库</span>
 			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
@@ -26,14 +24,14 @@
 			<span>包裹追踪号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
 		</li>
-		<li>
+		<!--<li>
 			<span>运单号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
-		</li>
+		</li>-->
 
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
-			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
@@ -58,6 +56,7 @@
 				}
 			}
 		});
+		
 
 		comm.bindFilterForm({
 			formId: "package_info_search_form",
@@ -70,20 +69,24 @@
 					[{
 						field: 'trackingnumber',
 						title: '包裹追踪号',
-						sort: true,
+						
 					}, {
 						field: 'depotname',
 						title: '仓库',
-						sort: true,
+						
 					}, {
-						field: 'enterdate',
-						title: '入库日期',
-						sort: true,
+						field: 'createtime_str',
+						title: '创建时间',
+						
+					}, {
+						field: 'enterdate_str',
+						title: '入库时间',
+						
 					}, {
 						field: 'goodsweight',
 						title: '重量(磅)',
 						width: 120,
-						sort: true,
+						
 					}, {
 						field: 'packagedetails',
 						title: '物品',

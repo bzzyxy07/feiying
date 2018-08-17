@@ -518,6 +518,7 @@ var comm = {
 			$("#" + param.formId + " .form-condition:not(.auto-click-condition) li").on("click", function() {
 				$(this).addClass("active").siblings("li").removeClass("active");
 				$("#" + param.formId + ' input[name="' + $(this).parent(".form-condition").attr("name") + '"]').val($(this).attr("data-value"));
+
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
@@ -542,8 +543,8 @@ var comm = {
 				}
 
 				$this.addClass("active").siblings("li").removeClass("active");
-
 				$("#" + param.formId + " .filter-btn").click();
+
 			});
 
 			if(param.renderTable) {
@@ -571,7 +572,12 @@ var comm = {
 				}
 				param.callback && param.callback();
 			});
-			$("#" + param.formId + " .filter-btn").click();
+			if($("#" + param.formId + " .form-condition:not(.auto-click-condition) li.active.not-default").length) {
+				$("#" + param.formId + " .form-condition:not(.auto-click-condition) li.active.not-default").click();
+			} else {
+				$("#" + param.formId + " .filter-btn").click();
+			}
+			
 
 			$("#" + param.formId + " .layui-btn[type=reset]").on("click", function(e) {
 				e.preventDefault();

@@ -20,7 +20,7 @@
 		</li>
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
-			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 		</li>
 	</ul>
 </form>
@@ -46,19 +46,19 @@
 					[{
 						field: 'cnum',
 						title: '运单号',
-						sort: true,
+						
 					}, {
 						field: 'financialtype',
 						title: '交易类型',
-						sort: true,
+						
 					}, {
 						field: 'createtime',
 						title: '时间',
-						sort: true,
+						
 					}, {
 						field: 'amount',
 						title: '金额($)',
-						sort: true,
+						
 						templet: '#amount',
 						style: 'text-align:right;font-weight: 600;'
 					}, {
@@ -66,7 +66,7 @@
 						title: '状态',
 						width: 120,
 						templet: '#status',
-						sort: true,
+						
 					}, {
 						field: 'remark',
 						title: '备注',

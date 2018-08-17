@@ -179,6 +179,7 @@ a {
 
 .layui-side .layui-nav .layui-nav-item {
 	padding: 15px 0;
+	cursor: pointer;
 }
 
 .layui-side .layui-nav .layui-nav-item:hover {
@@ -266,6 +267,13 @@ a {
 	text-align: center;
 	border-top: 1px solid #ddd;
 	line-height: 30px;
+}
+
+.red-color {
+	color: red;
+}
+.cursor-pointer {
+	cursor: pointer;
 }
 
 .layui-body .comm-body {
@@ -648,6 +656,7 @@ a {
 	margin: 10px 0 0 0;
 }
 
+
 /*.layui-layer-tips .layui-layer-close {
 	right: -8px !important;
 	top: -4px !important;
@@ -660,14 +669,28 @@ a {
 	font-size: 8px;
 }*/
 
-#express_track_cont .layui-timeline-title{
+#express_track_cont .layui-timeline-title {
 	font-size: 12px !important;
 	color: #5fb878;
 	margin-bottom: 5px;
 }
+
 #express_track_cont .layui-timeline-item {
-    padding-bottom: 5px;
+	padding-bottom: 5px;
 }
+
 .message-box {
 	cursor: pointer;
+}
+.message-box.background-red:hover {
+	background: #f55b5b;
+}
+.message-box.background-blue:hover {
+	background: #4d8ab3;
+}
+.message-box.background-green:hover {
+	background: #4ba26e;
+}
+.message-box.background-teal:hover {
+	background: #359c84;
 }
