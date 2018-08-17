@@ -71,9 +71,10 @@
 			}
 		}
 	});
-//	$(".message-box").on("click", function() {
-//		sessionStorage.setItem("menuUrl", "./express/express-manage.html");
-//		sessionStorage.setItem("tabUrl", $(this).attr("tabUrl"));
-//		window.location.href = window.location.href;
-//	});
+	$(".message-box").on("click", function() {
+		jumpPage({
+			menuUrl: "express/express-manage.html",
+			tabUrl: $(this).attr("tabUrl")
+		});
+	});
 </script>
