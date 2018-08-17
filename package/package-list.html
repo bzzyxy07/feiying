@@ -1,3 +1,8 @@
+<style>
+	.data-table-container.isenter-false .package-reject-btn {
+		display: none;
+	}
+</style>
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
 	<ul>
 		<li>
@@ -8,14 +13,6 @@
 				<li data-value="">全部</li>
 			</ul>
 		</li>
-		<!--<li>
-			<span>订单提交状态</span>
-			<ul class="form-condition" name="isdeliver">
-				<li class="active" data-value="">全部</li>
-				<li data-value="true">未提交</li>
-				<li data-value="false">已提交</li>
-			</ul>
-		</li>-->
 		<li>
 			<span>送达仓库</span>
 			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
@@ -24,10 +21,23 @@
 			<span>包裹追踪号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
 		</li>
-		<!--<li>
+		<li class="package-submit-status">
+			<span>提交状态</span>
+			<!--<ul class="form-condition" name="isdeliver">
+				<li class="active" data-value="">全部</li>
+				<li data-value="true">未提交</li>
+				<li data-value="false">已提交</li>
+			</ul>-->
+			<select name="isdeliver">
+				<option value="">全部</option>
+				<option value="true">未提交</option>
+				<option value="false">已提交</option>
+			</select>
+		</li>
+		<li>
 			<span>运单号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
-		</li>-->
+		</li>
 
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
@@ -56,7 +66,6 @@
 				}
 			}
 		});
-		
 
 		comm.bindFilterForm({
 			formId: "package_info_search_form",
@@ -69,24 +78,24 @@
 					[{
 						field: 'trackingnumber',
 						title: '包裹追踪号',
-						
+
 					}, {
 						field: 'depotname',
 						title: '仓库',
-						
+
 					}, {
 						field: 'createtime_str',
 						title: '创建时间',
-						
+
 					}, {
 						field: 'enterdate_str',
 						title: '入库时间',
-						
+
 					}, {
 						field: 'goodsweight',
 						title: '重量(磅)',
 						width: 120,
-						
+
 					}, {
 						field: 'packagedetails',
 						title: '物品',
@@ -99,9 +108,12 @@
 			},
 			callback: function() {
 				if($(".filter-form ul[name='isenter'] li[data-value=true]").hasClass("active")) {
-					$("#package_submit_btn, .mess-info").removeClass("hide");
+					$("#package_submit_btn, .mess-info, .package-reject-btn").removeClass("hide");
+					$(".data-table-container").removeClass("isenter-false");
 				} else {
-					$("#package_submit_btn, .mess-info").addClass("hide");
+					console.info($(".package-reject-btn").length)
+					$("#package_submit_btn, .mess-info, .package-reject-btn").addClass("hide");
+					$(".data-table-container").addClass("isenter-false");
 				}
 			}
 		});
@@ -196,7 +208,7 @@
 <script type="text/html" id="operation">
 	{{# if(d.isenter == true){ }}
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="reject">退货</a>
+	<a class="layui-btn layui-btn-danger layui-btn-sm package-reject-btn" lay-event="reject">退货</a>
 	{{# } else{ }}
 	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
