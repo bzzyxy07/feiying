@@ -272,6 +272,7 @@ a {
 .red-color {
 	color: red;
 }
+
 .cursor-pointer {
 	cursor: pointer;
 }
@@ -280,14 +281,13 @@ a {
 	position: absolute;
 	top: 90px;
 	bottom: 30px;
-	/*	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1) inset;*/
 	background-color: #fafafa;
 	background-image: url("../img/water-mark.png");
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	overflow-x: hidden;
-	/*	overflow-y: scroll;*/
+	overflow-y: scroll;
 	padding: 0;
 }
 
@@ -306,10 +306,11 @@ a {
 }
 
 .layui-table-cell {
-	padding: 0 8px;
+	padding: 0 5px;
 	min-width: 48px;
-	height: 30px;
-	line-height: 30px;
+	/*height: 30px;*/
+	line-height: 25px;
+	height: auto;
 }
 
 .layui-table-view .layui-table td,
@@ -682,15 +683,57 @@ a {
 .message-box {
 	cursor: pointer;
 }
+
 .message-box.background-red:hover {
 	background: #f55b5b;
 }
+
 .message-box.background-blue:hover {
 	background: #4d8ab3;
 }
+
 .message-box.background-green:hover {
 	background: #4ba26e;
 }
+
 .message-box.background-teal:hover {
 	background: #359c84;
+}
+
+.short-width {
+	width: 200px;
+}
+
+.express-container .layui-table-cell {
+	height: auto;
+	white-space: normal;
+	word-break: break-all;
+}
+
+.display-block {
+	display: block !important;
+}
+
+.layui-table-view .layui-table td {
+	font-size: 12px;
+}
+
+.display-inline-block {
+	display: inline-block !important;
+}
+
+.float-right {
+	float: right;
+	display: block;
+}
+
+.comm-line-height {
+	line-height: 35px;
+}
+
+.layui-btn-group.display-block + .layui-btn-group.display-block {
+	margin-top: 5px;
+}
+.font-bold {
+	font-weight: 900;
 }

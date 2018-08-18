@@ -17,7 +17,7 @@
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入地址" name="deliveraddress">
 		</li>
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 		</li>
 	</ul>
@@ -51,7 +51,8 @@
 					}, {
 						field: '',
 						title: '操作',
-						toolbar: operationParam
+						toolbar: operationParam,
+						align: 'center',
 					}]
 				]
 			}
@@ -62,7 +63,7 @@
 			var layEvent = obj.event;
 			var tr = obj.tr;
 
-			 if(layEvent === 'delete') { //删除发件人
+			if(layEvent === 'delete') { //删除发件人
 				layer.confirm('是否确认删除发件人？', function(index) {
 					comm.getDataByCondition({
 						loading: true,
@@ -82,13 +83,14 @@
 			} else if(layEvent === 'edit') { //编辑发件人信息
 				comm.changeTabContent({
 					url: './deliver/deliver-edit.html',
-				    data: {
-				    	id: data.id
-				    }
+					data: {
+						id: data.id
+					}
 				});
 			} else if(layEvent === 'choose-deliver') { //选定该发件人
 				comm.fillFormByData(data, $("form"), "fill-deliver");
-			    $('input[name="save-deliver"]').addClass("choosed");
+				$('input[name="save-deliver"]').addClass("choosed");
+				$(".layui-layer-content").remove();
 				comm.closeOpenPage();
 			}
 		});

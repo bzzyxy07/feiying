@@ -84,6 +84,7 @@ var comm = {
 					//					shade: 0,
 					content: $('.popup-page-store'),
 					end: function() {
+						$(".layui-layer-content").remove();
 						$(".popup-page-container").html("");
 					}
 				});

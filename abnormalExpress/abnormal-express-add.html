@@ -2,7 +2,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label required-logo">运单号</label>
 		<div class="layui-input-inline">
-			<input autocomplete="off" type="text" name="cnum" lay-verify="required" placeholder="请输入您的运单号" autocomplete="off" class="layui-input">
+			<input autocomplete="off" type="text" name="cnum" lay-verify="required" placeholder="请输入您的运单号" class="layui-input">
 		</div>
 	</div>
 
@@ -29,12 +29,12 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">备注</label>
 		<div class="layui-input-inline" style="width: 500px;">
-			<input autocomplete="off" type="text" name="AbnormalMessage" placeholder="请输入您的备注" autocomplete="off" class="layui-input">
+			<textarea autocomplete="off" name="AbnormalMessage" placeholder="请输入您的备注" class="layui-textarea"></textarea>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">保存</button>
+			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit-user-info">添加</button>
 		</div>
 	</div>
 </form>

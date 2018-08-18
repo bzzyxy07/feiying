@@ -3,16 +3,9 @@
 		display: none;
 	}
 </style>
-<form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
+<form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form_yrk">
+	<input type="hidden" name="isenter" value="true">
 	<ul>
-		<li>
-			<span>包裹状态</span>
-			<ul class="form-condition" name="isenter">
-				<li data-value="false">未入库<span class="layui-badge" name="wrk">0</span></li>
-				<li class="active not-default" data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
-				<li data-value="" class="all-package-status">全部</li>
-			</ul>
-		</li>
 		<li>
 			<span>送达仓库</span>
 			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
@@ -40,16 +33,16 @@
 		</li>
 
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
-			<!--<button type="reset" class="layui-btn layui-btn-sm layui-btn-danger" id="package_istop">置顶</button>-->
+			<button type="reset" class="layui-btn layui-btn-sm layui-btn-danger" id="package_istop">置顶</button>
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
 </form>
 <p class="mess-info hide">选中列表多条记录（必须为同一个仓库），点击“提交运单”按钮后填写相关信息提交可达到合箱操作</p>
 <div class="data-table-container">
-	<table id="package_info_table" lay-filter="package-info-table"></table>
+	<table id="package_info_table_yrk" lay-filter="package-info-table-yrk"></table>
 </div>
 <script>
 	layui.use(['layer', 'form', 'table'], function() {
@@ -69,12 +62,12 @@
 		});
 
 		comm.bindFilterForm({
-			formId: "package_info_search_form",
+			formId: "package_info_search_form_yrk",
 			order: true,
 			checkbox: true,
 			renderTable: {
 				id: 'package_list_data',
-				elem: '#package_info_table',
+				elem: '#package_info_table_yrk',
 				cols: [
 					[{
 						field: 'trackingnumber',
@@ -162,7 +155,7 @@
 							});
 						}
 
-						$('#package_info_search_form select[initial-name="' + key + '"]').html(sel);
+						$('#package_info_search_form_yrk select[initial-name="' + key + '"]').html(sel);
 					}
 
 					form.render('select');
@@ -170,7 +163,7 @@
 			}
 		});
 
-		table.on('tool(package-info-table)', function(obj) {
+		table.on('tool(package-info-table-yrk)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
 			var tr = obj.tr;

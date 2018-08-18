@@ -7,10 +7,10 @@
 			<span>来源</span>
 			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
 		</li>
-		<li>
+		<!--<li>
 			<span>送达仓库</span>
 			<select name="depotid" initial-name="depot_lists" initial-text="Text" initial-value="Value"></select>
-		</li>
+		</li>-->
 		<li>
 			<span>线路名称</span>
 			<select name="routeid" initial-name="route_list" initial-text="routename" initial-value="id"></select>
@@ -21,20 +21,20 @@
 			<input type="hidden" value="cnum" name="keyword_key">
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="keyword_value">
 		</li>
-		<li>
+		<!--<li>
 			<span>发货批次</span>
 			<select name="routeid" initial-name="shippingbatchs" initial-text="Text" initial-value="Value"></select>
-		</li>
+		</li>-->
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 			<button type="button" class="layui-btn layui-btn-sm" id="express_batch_print_btn"><i class="fa fa-print"></i>批量打印运单</button>
-			<button type="button" class="layui-btn layui-btn-sm"><i class="fa fa-download"></i>导出excel表格</button>
+			<!--<button type="button" class="layui-btn layui-btn-sm"><i class="fa fa-download"></i>导出excel表格</button>-->
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="express_batch_delete_btn"><i class="fa fa-trash-o"></i>批量删除</button>
 		</li>
 	</ul>
 </form>
-<div class="data-table-container">
+<div class="data-table-container express-container">
 	<table id="express_info_table_yfh" lay-filter="express-info-table-yfh"></table>
 </div>
 <script>
@@ -72,52 +72,58 @@
 					[{
 						field: 'source',
 						title: '来源',
-						
+						width: 60,
 					}, {
 						field: 'cnum',
 						title: '运单号',
-						
+
 					}, {
 						field: 'route_name',
 						title: '线路',
-						
+
 					}, {
 						field: 'depot_name',
 						title: '仓库',
-						
+
+					}, {
+						field: 'deliver_date_str',
+						title: '发货时间',
+
 					}, {
 						field: 'weight',
 						title: '重量(磅)',
-						width: 120,
-						
+						width: 90,
+						style: 'color:red;font-weight:900;',
+
 					}, {
 						field: 'total_price',
-						title: '总计（$）',
+						title: '总计($)',
+						width: 90,
+						style: 'color:red;font-weight:900;',
 					}, {
 						field: 'deliver_name',
 						title: '发件人',
-						
+
 					}, {
 						field: 'receiver_name',
 						title: '收件人',
-						
+
 					}, {
 						field: 'id_card_info',
 						title: '身份证信息',
-						
-					}, {
-						field: 'shippingbatch_name',
-						title: '发货批次',
+						width: 110,
+
 					}, {
 						field: 'process_name',
 						title: '运输状态',
-						
+						style: 'color:red;font-weight:900;',
+
 					}, {
 						field: '',
 						title: '操作',
 						toolbar: '#operation',
-						width: 300,
-						fixed: 'right'
+						width: 180,
+						align: 'center',
 					}]
 				],
 			},
@@ -261,6 +267,7 @@
 										'</div>' +
 										'</li>';
 								});
+								
 								var tips1 = layer.tips('<div id="express_track_cont"><ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul></div>', that, {
 									time: 0,
 									tips: [1, '#ddd'],
@@ -283,7 +290,7 @@
 							//							});
 						},
 						error: function() {
-							$("#express_track_cont").html("网络异常，未查询到运单信息");
+							$("#express_track_cont").html("网络异常，未搜索到运单信息");
 						}
 					}
 				});
@@ -292,13 +299,11 @@
 	});
 </script>
 <script type="text/html" id="operation">
-	<div class="layui-btn-group" style="margin-left: 8px;">
+	<div class="layui-btn-group display-block">
+		<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track" data-id="{{d.id}}">追踪</a>
+	</div>
+	<div class="layui-btn-group display-block">
 		<a class="layui-btn layui-btn-sm" lay-event="print-rm">热敏打印</a>
 		<a class="layui-btn layui-btn-sm" lay-event="print-A4">A4打印</a>
 	</div>
-<div class="layui-btn-group">
-	<a class="layui-btn layui-bg-cyan layui-btn-sm" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track" data-id="{{d.id}}">追踪</a>
-</div>
 </script>

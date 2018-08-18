@@ -9,7 +9,7 @@
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入备注关键词" name="operatemessage">
 		</li>
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 		</li>
 	</ul>
@@ -32,16 +32,19 @@
 						field: 'cnum',
 						title: '运单号',
 					}, {
-						field: 'createtime',
+						field: 'createtime_str',
 						title: '添加时间',
 						
 					}, {
 						field: 'typename',
 						title: '异常类型',
+						width: 100,
 					}, {
 						field: 'property',
 						title: '处理状态',
-						templet: '#property'
+						templet: '#property',
+						align: 'center',
+						width: 100,
 					}, {
 						field: 'operatername',
 						title: '处理人',
@@ -55,7 +58,9 @@
 					}, {
 						field: '',
 						title: '操作',
-						toolbar: '#operation'
+						toolbar: '#operation',
+						width: 180,
+						align: 'center'
 					}]
 				]
 			}

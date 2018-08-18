@@ -19,7 +19,7 @@
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入备注" name="remark">
 		</li>
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 		</li>
 	</ul>
@@ -52,7 +52,7 @@
 						title: '交易类型',
 						
 					}, {
-						field: 'createtime',
+						field: 'createtime_str',
 						title: '时间',
 						
 					}, {
@@ -64,7 +64,8 @@
 					}, {
 						field: 'property',
 						title: '状态',
-						width: 120,
+						width: 80,
+						align: 'center',
 						templet: '#status',
 						
 					}, {

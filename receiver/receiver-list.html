@@ -17,7 +17,7 @@
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入地址" name="receiveraddress">
 		</li>
 		<li>
-			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
+			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 		</li>
 	</ul>
@@ -59,11 +59,13 @@
 					}, {
 						field: 'idcardzheng',
 						title: '正面',
+						align: 'center',
 						templet: '#idcardzheng',
 						width: 65
 					}, {
 						field: 'idcardfan',
 						title: '反面',
+						align: 'center',
 						templet: '#idcardfan',
 						width: 65
 					}, {
@@ -123,6 +125,7 @@
 
 				comm.fillFormByData(data, $("form"), "fill-receiver");
 				$('input[name="save-receiver"]').addClass("choosed");
+				$(".layui-layer-content").remove();
 				comm.closeOpenPage();
 			}
 		});

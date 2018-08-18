@@ -1,4 +1,3 @@
-
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_transport_order_form">
 	<table class="layui-table" id="express_online_order_cont">
 		<colgroup>
@@ -17,12 +16,13 @@
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="gray-back">
-				<input name="Id" class="field-cont layui-input none-back-border" disabled="disabled">
+				<div class="layui-input-inline"><input name="Id" class="field-cont layui-input none-back-border" disabled="disabled"></div>
+				<div class="float-right comm-line-height">自动生成</div>
 				<!--<input name="id" type="hidden">-->
 			</td>
-			<th class="align-right">包裹追踪号</th>
+			<th class="align-right required-logo">包裹追踪号</th>
 			<td>
-				<input name="trackingnumber" class="field-cont layui-input">
+				<input name="trackingnumber" class="field-cont layui-input" lay-verify="required">
 			</td>
 			<th class="align-right">送达方式</th>
 			<td>
@@ -162,24 +162,27 @@
 		</tr>
 		<tr>
 			<th class="align-right required-logo">保额</th>
-			<td>
-				<input name="safefreeover" class="field-cont layui-input" lay-verify="required">
+			<td colspan="5">
+				<input name="safefreeover" class="field-cont layui-input short-width" lay-verify="required">
 			</td>
-			<th class="align-right">可用积分</th>
-			<td>
+			<!--<th class="align-right">可用积分</th>
+			<td colspan="2">
 				<select></select>
-			</td>
-			<th class="align-right">备注</th>
-			<td>
-				<input name="note" class="field-cont layui-input">
-			</td>
+			</td>-->
+
 		</tr>
 		<tr>
 			<th class="align-right">增值服务</th>
 			<td id="service_container" colspan="5"></td>
 		</tr>
+		<tr>
+			<th class="align-right">备注</th>
+			<td colspan="5">
+				<textarea name="note" class="field-cont layui-textarea"></textarea>
+			</td>
+		</tr>
 	</table>
-	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">保存</button>
+	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">创建</button>
 </form>
 <script>
 	layui.use(['form', 'element', 'table'], function() {
@@ -208,9 +211,11 @@
 				var servicelist = data['servicelist'];
 				var servStr = "";
 				servicelist.map(function(v) {
-					servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" title="' + v.servicename + '（' + v.remark + '）" lay-skin="primary">' +
+					servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name=""  lay-skin="primary">' +
 						'<div class="layui-input-inline">' +
-						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div></div>';
+						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>'+
+						v.servicename + '（' + v.remark + '）'
+						+'</div>';
 				});
 				$("#express_transport_order_form #service_container").html(servStr);
 				form.render();
@@ -233,7 +238,7 @@
 					title: '选择收件人'
 				},
 				cb: function() {
-
+					
 				}
 			});
 		});
