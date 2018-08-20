@@ -260,6 +260,8 @@
 							for(var i = 0, len = detaillist.length - 1; i < len; i++) {
 								$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
 							}
+							$("#express_transport_order_form input[name=depotid]").val(packagelist[0].depotid);
+							$("#express_transport_order_form input[name=depotname]").val(packagelist[0].depotname);
 							detaillist.map(function(v, index, arr) {
 								for(var key in v) {
 									var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");

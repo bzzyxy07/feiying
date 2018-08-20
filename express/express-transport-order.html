@@ -24,9 +24,9 @@
 			<td>
 				<input name="trackingnumber" class="field-cont layui-input" lay-verify="required">
 			</td>
-			<th class="align-right">送达方式</th>
+			<th class="align-right required-logo">送达方式</th>
 			<td>
-				<select name="trackingname" initial-name="dic_send" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont"></select>
+				<select name="trackingname" lay-verify="required" initial-name="dic_send" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont"></select>
 			</td>
 		</tr>
 		<tr>
@@ -252,7 +252,6 @@
 
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
-			debugger;
 			var a = $("#express_transport_order_form *[name=receiveridcardtype]").val(),
 				b = $("#express_transport_order_form *[name=receiveridcardnum]").val(),
 				c = $("#express_transport_order_form *[name=idcardzheng]").val(),

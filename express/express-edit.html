@@ -87,7 +87,7 @@
 					<a href="javascript:;">
 						<span>点此上传</span>
 						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
-						<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="idcardzheng" fill-receiver="idcardzheng">
+						<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="receiveridcard_zheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 
@@ -99,7 +99,7 @@
 					<a href="javascript:;">
 						<span>点此上传</span>
 						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
-						<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="idcardfan" fill-receiver="idcardfan">
+						<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="receiveridcard_fan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
 				</div>
@@ -228,9 +228,9 @@
 
 							//初始化省市联动
 							comm.initRelateSelect({
-								container: ["#province", "#city"],
-								data: data["region"][0].children,
-								zipcode: "#zipcode"
+								container: ["#express_edit_cont #province", "#express_edit_cont #city"],
+								data: data["region"],
+								zipcode: "#express_edit_cont #zipcode"
 							});
 							//添加行
 							$("#express_edit_form #add_detail_tr_btn").unbind("click").on("click", function() {

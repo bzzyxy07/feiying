@@ -2,20 +2,25 @@
 	<ul>
 		<li>
 			<span>运单状态</span>
-			<ul class="form-condition auto-click-condition">
+			<!--<ul class="form-condition auto-click-condition">
 				<li class="active" data-value="" click-name="clearAll">全部</li>
 				<li data-value="false" click-name="isenter">待处理</li>
 				<li data-value="false,true" click-name="ispay,isenter">待付款</li>
 				<li data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</li>
 				<li data-value="true,true,true" click-name="isdeliver,isenter,ispay">已发货</li>
-			</ul>
+			</ul>-->
+			<select class="form-condition auto-click-condition" style="display: none;">
+				<option data-value="" click-name="clearAll">全部</option>
+				<option data-value="false" click-name="isenter">待处理</option>
+				<option data-value="false,true" click-name="ispay,isenter">待付款<option>
+				<option data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</option>
+				<option data-value="true,true,true" click-name="isdeliver,isenter,ispay">已发货</option>
+			</select>
 		</li>
 		<li>
 			<span>来源</span>
 			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
 		</li>
-	</ul>
-	<ul>
 		<li>
 			<span>送达仓库</span>
 			<select name="depotid" initial-name="depot_lists" initial-text="Text" initial-value="Value"></select>
@@ -323,11 +328,11 @@
 </script>
 <script type="text/html" id="id_card_info">
 
-		{{# if(d.idcardstatus == 1) { }}
+		{{# if(d.id_card_info_index == 1) { }}
 		<span class="red-color font-bold">没有身份证号</span>
-		{{# } else if(d.idcardstatus == 2) { }}
+		{{# } else if(d.id_card_info_index == 2) { }}
 		<span class="red-color">没有身份证照片</span>
-		{{# } else if(d.idcardstatus == 3){ }}
+		{{# } else if(d.id_card_info_index == 3){ }}
 		<span style="color: green;">有身份证照片</span>
 		{{# } }}
 </script>

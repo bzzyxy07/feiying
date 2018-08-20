@@ -432,6 +432,7 @@ var comm = {
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
 				$img.prev("a").children(".upload-img-url").val(data[key]);
 			} else {
+//				debugger;
 				if(sepCont.prop("tagName") == 'SELECT') {
 					sepCont.find('option[value=' + data[key] + ']').attr("selected", "selected");
 				} else if(sepCont.prop("tagName") === 'INPUT') {
@@ -523,12 +524,11 @@ var comm = {
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
-			$("#" + param.formId + " .form-condition.auto-click-condition li").on("click", function() {
+			$("#" + param.formId + " ul.form-condition.auto-click-condition li").on("click", function() {
 				var $this = $(this);
 				if($(this).attr("click-name") === "clearAll") {
 					$(this).siblings('input.auto-click-input').val("");
 				} else {
-
 					var clickArr = $(this).attr("click-name").split(",");
 					var dataArr = $(this).attr("data-value").split(",");
 					var $sibs = $this.siblings('input.auto-click-input');
@@ -545,7 +545,30 @@ var comm = {
 
 				$this.addClass("active").siblings("li").removeClass("active");
 				$("#" + param.formId + " .filter-btn").click();
+			});
+			
+			$("#" + param.formId + " select.form-condition.auto-click-condition").on("change", function() {
+				var $thisSel = $(this);
+				var $this = $(this).find("option:selected");
+				if($this.attr("click-name") === "clearAll") {
+					$this.siblings('input.auto-click-input').val("");
+				} else {
+					var clickArr = $this.attr("click-name").split(",");
+					var dataArr = $this.attr("data-value").split(",");
+					var $sibs = $thisSel.siblings('input.auto-click-input');
+					$sibs.each(function() {
+						$(this).val("");
+					});
+					clickArr.map(function(v, index) {
+						if(!$("#" + param.formId + " input[name=" + v + "]").length) {
+							$thisSel.after('<input type="hidden" name="' + v + '" class="auto-click-input">');
+						}
+						$('input.auto-click-input[name="' + v + '"]').val(dataArr[index]);
+					});
+				}
 
+//				$this.addClass("active").siblings("li").removeClass("active");
+//				$("#" + param.formId + " .filter-btn").click();
 			});
 
 			if(param.renderTable) {
@@ -839,8 +862,9 @@ var comm = {
 	 * } 
 	 */
 	initRelateSelect: function(param) {
-
+      
 		layui.use('form', function() {
+			  
 			var form = layui.form,
 				container0 = param.container[0],
 				container1 = param.container[1],
@@ -852,7 +876,6 @@ var comm = {
 				provinceSel += '<option value="' + v.regionname + '">' + v.regionname + '</option>';
 				nameArr.push(v.regionname);
 			});
-
 			$(container0).attr("lay-filter", "relate-province").html(provinceSel);
 			$(container0).data("provinceArr", nameArr);
 			$(container0).data("regionData", relateList);
