@@ -160,32 +160,7 @@
 				}
 			}
 		});
-		//绑定批量删除按钮
-		$("#express_batch_delete_btn").on("click", function() {
-			var checkData = table.checkStatus('express_list_data').data;
-			if(!checkData.length) {
-				layer.msg("请勾选待删除的运单！");
-				return false;
-			}
-			var ids = [];
-			checkData.map(function(v) {
-				ids.push(v.id);
-			});
-
-			comm.getDataByCondition({
-				loading: true,
-				ajax: {
-					url: '/api/OrderTransportOrder/BatchDelete',
-					data: ids,
-					type: 'Delete',
-					success: function(rlt) {
-						layer.msg("删除成功！");
-						$(".filter-btn").click();
-					}
-				}
-			});
-		});
-
+		
 		//批量打印运单
 		$("#express_batch_print_btn").on("click", function(e) {
 			var checkData = table.checkStatus('express_list_data').data;

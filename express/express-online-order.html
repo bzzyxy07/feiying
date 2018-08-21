@@ -1,212 +1,227 @@
-<form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
-	<table class="layui-table" id="express_online_order_cont">
-		<colgroup>
-			<col width="130">
-			<col width="500">
-			<col width="120">
-			<col>
-			<col width="140">
-			<col>
-		</colgroup>
-		<tr>
-			<th colspan="8" class="none-back-border">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>运单信息
-					<span class="float-right">
+<div class="express-online-container">
+	<form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-online-order-form" id="express_online_order_form">
+		<table class="layui-table" id="express_online_order_cont">
+			<colgroup>
+				<col width="130">
+				<col width="500">
+				<col width="120">
+				<col>
+				<col width="140">
+				<col>
+			</colgroup>
+			<tr>
+				<th colspan="8" class="none-back-border">
+					<p class="comm-title-dot">
+						<span class="layui-badge-dot layui-bg-blue"></span>运单信息
+						<span class="float-right">
 					    <button type="button" class="layui-btn layui-btn-sm float-right" id="express_online_order_batch_btn">批量在线下单</button>
 				    </span>
-				</p>
-			</th>
-		</tr>
-		<tr>
-			<th class="align-right">运单编号</th>
-			<td class="gray-back">
-				<div class="layui-input-inline"><input name="Id" class="field-cont layui-input none-back-border" disabled="disabled"></div>
-				<div class="float-right comm-line-height">自动生成</div>
-				<!--<input name="id" type="hidden">-->
-			</td>
+					</p>
+				</th>
+			</tr>
+			<tr>
+				<th class="align-right">运单编号</th>
+				<td class="gray-back">
+					<div class="layui-input-inline"><input name="Id" class="field-cont layui-input none-back-border" disabled="disabled"></div>
+					<div class="float-right comm-line-height">自动生成</div>
+					<!--<input name="id" type="hidden">-->
+				</td>
 
-			<th class="align-right required-logo">送达仓库</th>
-			<td>
-				<select name="depotid" initial-name="depot_list" lay-verify="required" class="field-cont"></select>
-			</td>
-			<th class="align-right required-logo">线路名称</th>
-			<td>
-				<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" class="field-cont"></select>
-			</td>
-		</tr>
+				<th class="align-right required-logo">送达仓库</th>
+				<td>
+					<select name="depotid" initial-name="depot_list" lay-verify="required" class="field-cont"></select>
+				</td>
+				<th class="align-right required-logo">线路名称</th>
+				<td>
+					<select name="routeid" initial-name="routes" initial-text="routename" lay-verify="required" class="field-cont"></select>
+				</td>
+			</tr>
 
-		<tr>
-			<th colspan="8" class="none-back-border">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>发件人信息
-					<span class="float-right">
+			<tr>
+				<th colspan="8" class="none-back-border">
+					<p class="comm-title-dot">
+						<span class="layui-badge-dot layui-bg-blue"></span>发件人信息
+						<span class="float-right">
 						<input type="checkbox" name="save-deliver" title="保存发件人" lay-skin="primary" checked>
 						<button type="button" class="layui-btn layui-btn-sm float-right" id="choose_deliver">选择发件人</button>
 					</span>
-				</p>
-			</th>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">姓名</th>
-			<td>
-				<input name="delivername" class="field-cont layui-input" fill-deliver="delivername" lay-verify="required">
-			</td>
-			<th class="align-right required-logo">电话</th>
-			<td>
-				<input name="delivermobile" class="field-cont layui-input" fill-deliver="mobilephone" lay-verify="required">
-			</td>
-			<th class="align-right">地址</th>
-			<td colspan="3">
-				<input name="deliveraddress" class="field-cont layui-input" fill-deliver="deliveraddress">
-			</td>
-		</tr>
-		<tr>
-			<th colspan="8" class="none-back-border">
-				<p class="comm-title-dot">
-					<span class="layui-badge-dot layui-bg-blue"></span>收件人信息
-					<span class="float-right">
+					</p>
+				</th>
+			</tr>
+			<tr>
+				<th class="align-right required-logo">姓名</th>
+				<td>
+					<input name="delivername" class="field-cont layui-input" fill-deliver="delivername" lay-verify="required">
+				</td>
+				<th class="align-right required-logo">电话</th>
+				<td>
+					<input name="delivermobile" class="field-cont layui-input" fill-deliver="mobilephone" lay-verify="required">
+				</td>
+				<th class="align-right">地址</th>
+				<td colspan="3">
+					<input name="deliveraddress" class="field-cont layui-input" fill-deliver="deliveraddress">
+				</td>
+			</tr>
+			<tr>
+				<th colspan="8" class="none-back-border">
+					<p class="comm-title-dot">
+						<span class="layui-badge-dot layui-bg-blue"></span>收件人信息
+						<span class="float-right">
 						<input type="checkbox" name="save-receiver" title="保存收件人" lay-skin="primary" checked>
 						<button type="button" class="layui-btn layui-btn-sm" id="choose_receiver">选择收件人</button>
 					</span>
-				</p>
-			</th>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">收件人姓名</th>
-			<td>
-				<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-receiver="receivername" lay-verify="required">
-			</td>
-			<th class="align-right" rowspan="5">证件正面照片</th>
-			<td rowspan="5">
-				<div class="upload-img-container">
-					<a href="javascript:;">
-						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
-						<input type="hidden" name="idcard_zheng" class="upload-img-url field-cont" fill-receiver="idcardzheng">
-					</a>
-					<img class="upload-img" alt="暂无图片">
+					</p>
+				</th>
+			</tr>
+			<tr>
+				<th class="align-right required-logo">收件人姓名</th>
+				<td>
+					<input name="receivername" class="field-cont layui-input" id="express_receiver_id" type="text" fill-receiver="receivername" lay-verify="required">
+				</td>
+				<th class="align-right" rowspan="5">证件正面照片</th>
+				<td rowspan="5">
+					<div class="upload-img-container">
+						<a href="javascript:;">
+							<span>点此上传</span>
+							<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
+							<input type="hidden" name="idcard_zheng" class="upload-img-url field-cont" fill-receiver="idcardzheng">
+						</a>
+						<img class="upload-img" alt="暂无图片">
 
-				</div>
-			</td>
-			<th class="align-right" rowspan="5">证件反面照片</th>
-			<td rowspan="5">
-				<div class="upload-img-container">
-					<a href="javascript:;">
-						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
-						<input type="hidden" name="idcard_fan" class="upload-img-url field-cont" fill-receiver="idcardfan">
-					</a>
-					<img class="upload-img" alt="暂无图片">
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">手机号码</th>
-			<td>
-				<input name="receivermobile" class="field-cont layui-input" lay-verify="required|phone" fill-receiver="mobilephone">
-			</td>
-		</tr>
-		<tr>
+					</div>
+				</td>
+				<th class="align-right" rowspan="5">证件反面照片</th>
+				<td rowspan="5">
+					<div class="upload-img-container">
+						<a href="javascript:;">
+							<span>点此上传</span>
+							<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
+							<input type="hidden" name="idcard_fan" class="upload-img-url field-cont" fill-receiver="idcardfan">
+						</a>
+						<img class="upload-img" alt="暂无图片">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="align-right required-logo">手机号码</th>
+				<td>
+					<input name="receivermobile" class="field-cont layui-input" lay-verify="required|phone" fill-receiver="mobilephone">
+				</td>
+			</tr>
+			<tr>
 
-		</tr>
-		<tr>
-			<th class="align-right">证件类型</th>
-			<td>
-				<select name="receiveridcardtype" class="field-cont layui-input" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-receiver="receiveridcardtype"></select>
-			</td>
-		</tr>
-		<tr>
-			<th class="align-right">证件号码</th>
-			<td>
-				<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-receiver="idcardnumber">
-			</td>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">省市地址</th>
-			<td class="relation-select" colspan="3">
-				<div class="layui-input-inline">
-					<select name="receiverregion_province" lay-filter="relate-province" id="province" class="field-cont" lay-verify="required" fill-receiver="regionprovince"></select>
-				</div>
-				<div class="layui-input-inline">
-					<select name="receiverregion_city" lay-filter="relate-city" id="city" class="field-cont" lay-verify="required" fill-receiver="regioncity"></select>
-				</div>
-				<div class="layui-input-inline" style="width: 350px;">
-					<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
-				</div>
-			</td>
-			<th class="align-right required-logo">邮编</th>
-			<td>
-				<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-receiver="zipcode" lay-verify="required|number">
-			</td>
-		</tr>
-		<tr>
-			<th colspan="8" class="none-back-border">
-				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
-			</th>
-		</tr>
-		<tr>
-			<th class="align-right required-logo">物品明细</th>
-			<td colspan="7">
-				<table class="layui-table margin-0 table-inner-table" lay-size="sm">
-					<thead>
-						<tr>
-							<th class="required-logo">类别</th>
-							<th class="required-logo">物品名称</th>
-							<th class="required-logo">规格</th>
-							<th class="required-logo">品牌</th>
-							<th class="required-logo">数量</th>
-							<th class="required-logo">单价($)</th>
-							<th class="required-logo">单位</th>
-							<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
-						</tr>
-					</thead>
-					<tbody id="detail_body">
-						<tr class="detail-tr">
-							<td>
-								<select name="taxcategoryid" class="field-cont" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
-							</td>
-							<td><input type="text" name="Mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td><input type="text" name="Guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td><input type="text" name="Pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
-							<td><input type="text" name="Count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
-							<td><input type="text" name="Danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
-							<td>
-								<select name="Danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont layui-input"></select>
-							</td>
-							<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<th class="align-right">重量（磅）</th>
-			<td colspan="2">
-				<input name="" class="field-cont layui-input">
-			</td>
-			<th class="align-right required-logo">保额</th>
-			<td colspan="2">
-				<input name="safefreeover" class="field-cont layui-input" lay-verify="required">
-			</td>
-			<!--<th class="align-right">可用积分</th>
+			</tr>
+			<tr>
+				<th class="align-right">证件类型</th>
+				<td>
+					<select name="receiveridcardtype" class="field-cont layui-input" initial-name="id_cards" initial-text="Text" initial-value="Value" fill-receiver="receiveridcardtype"></select>
+				</td>
+			</tr>
+			<tr>
+				<th class="align-right">证件号码</th>
+				<td>
+					<input type="text" name="receiveridcardnum" class="field-cont layui-input" fill-receiver="idcardnumber">
+				</td>
+			</tr>
+			<tr>
+				<th class="align-right required-logo">省市地址</th>
+				<td class="relation-select" colspan="3">
+					<div class="layui-input-inline">
+						<select name="receiverregion_province" lay-filter="relate-province" id="province" class="field-cont" lay-verify="required" fill-receiver="regionprovince"></select>
+					</div>
+					<div class="layui-input-inline">
+						<select name="receiverregion_city" lay-filter="relate-city" id="city" class="field-cont" lay-verify="required" fill-receiver="regioncity"></select>
+					</div>
+					<div class="layui-input-inline" style="width: 350px;">
+						<input name="receiveraddress" class="field-cont layui-input" placeholder="请输入详细地址" fill-receiver="receiveraddress" lay-verify="required">
+					</div>
+				</td>
+				<th class="align-right required-logo">邮编</th>
+				<td>
+					<input name="ReceiverPostCard" id="zipcode" class="field-cont layui-input" fill-receiver="zipcode" lay-verify="required|number">
+				</td>
+			</tr>
+			<tr>
+				<th colspan="8" class="none-back-border">
+					<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹明细</p>
+				</th>
+			</tr>
+			<tr>
+				<th class="align-right required-logo">物品明细</th>
+				<td colspan="7">
+					<table class="layui-table margin-0 table-inner-table" lay-size="sm">
+						<thead>
+							<tr>
+								<th class="required-logo">类别</th>
+								<th class="required-logo">物品名称</th>
+								<th class="required-logo">规格</th>
+								<th class="required-logo">品牌</th>
+								<th class="required-logo">数量</th>
+								<th class="required-logo">单价($)</th>
+								<th class="required-logo">单位</th>
+								<th><button type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="add_detail_tr_btn">添加</button></th>
+							</tr>
+						</thead>
+						<tbody id="detail_body">
+							<tr class="detail-tr">
+								<td>
+									<select name="taxcategoryid" class="field-cont" lay-verify="required" initial-name="category" initial-text="categoryname"></select>
+								</td>
+								<td><input type="text" name="Mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+								<td><input type="text" name="Guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+								<td><input type="text" name="Pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="field-cont layui-input"></td>
+								<td><input type="text" name="Count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+								<td><input type="text" name="Danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="field-cont layui-input"></td>
+								<td>
+									<select name="Danwei" initial-name="units" lay-verify="required" initial-text="dictionaryname" initial-value="dictionaryname" class="field-cont layui-input"></select>
+								</td>
+								<td><button type="button" class="layui-btn layui-btn-sm layui-btn-danger del-detail-tr">删除</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<th class="align-right">重量（磅）</th>
+				<td colspan="2">
+					<input name="" class="field-cont layui-input">
+				</td>
+				<th class="align-right required-logo">保额（$）</th>
+				<td colspan="2">
+					<input name="safefreeover" class="field-cont layui-input" lay-verify="required">
+				</td>
+				<!--<th class="align-right">可用积分</th>
 			<td>
 				<select></select>
 			</td>-->
-		</tr>
-		<tr>
-			<th class="align-right">增值服务</th>
-			<td id="service_container" colspan="5"></td>
-		</tr>
-		<tr>
-			<th class="align-right">备注</th>
-			<td colspan="5">
-				<textarea name="note" class="field-cont layui-textarea"></textarea>
-			</td>
-		</tr>
-	</table>
-	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">创建</button>
-</form>
+			</tr>
+			<tr>
+				<th class="align-right">增值服务</th>
+				<td id="service_container" colspan="5"></td>
+			</tr>
+			<tr>
+				<th class="align-right">备注</th>
+				<td colspan="5">
+					<textarea name="note" class="field-cont layui-textarea"></textarea>
+				</td>
+			</tr>
+		</table>
+		<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">创建</button>
+	</form>
+</div>
+<div class="align-center express-online-success-container hide" style="padding: 30px 0;">
+	<p class="large-font">运单号<span name="express-num" class="red-color"></span>创建成功！</p>
+	<!--<p class="large-font1">总计：<span class="red-color"></span>（$）（税费：<span class="red-color"></span>$，保险：<span class="red-color"></span>$）</p>-->
+	<div class="express_online-success-btn align-center margin-top-30">
+		<button class="layui-btn layui-btn-normal" type="button" id="express_online_order_repeat">继续下单</button>
+		<button class="layui-btn" type="button" id="success_check_express_detail">查看详情</button>
+		<button class="layui-btn" type="button" id="success_print_express_detail">面单打印</button>
+		<!--<button class="layui-btn" type="button" id="">返回列表页</button>-->
+	</div>
+</div>
+<!--<script>
+	console.info($("#main_container").data("data"));
+</script>-->
 <script>
 	layui.use(['form'], function() {
 		var cloneLine = $(".detail-tr").first().clone();
@@ -300,7 +315,6 @@
 
 		//提交运单
 		form.on('submit(express-online-order-form)', function(data) {
-			debugger;
 			var a = $("#express_online_order_form *[name=receiveridcardtype]").val(),
 				b = $("#express_online_order_form *[name=receiveridcardnum]").val(),
 				c = $("#express_online_order_form *[name=idcardzheng]").val(),
@@ -398,11 +412,33 @@
 					url: "/api/OrderTransportOrder/PostMy",
 					type: "post",
 					data: expressOnlineOrderData,
-					success: function(data) {
-						layer.confirm("在线下单成功！", {
-							icon: 1
-						}, function() {
+					success: function(data, data0) {
+						console.info(data0)
+						$(".express-online-success-container span[name='express-num']").text(data0.Message);
+
+						$(".express-online-container").addClass("hide");
+						$(".express-online-success-container").removeClass("hide");
+
+						$("#express_online_order_repeat").unbind("click").on("click", function() {
 							comm.refreshInnerPage();
+						});
+
+						$("#success_check_express_detail").unbind("click").on("click", function() {
+							comm.changeTabContent({
+								url: './express/express-detail.html',
+								data: data0.Message
+							});
+						});
+						$("#success_print_express_detail").unbind("click").on("click", function() {
+							var ids = [data0.Message];
+							sessionStorage.setItem("printIds", ids);
+							layer.open({
+								type: 2,
+								title: '运单打印',
+								shadeClose: true,
+								area: ['820px', '600px'],
+								content: './print/print-A4-page.html'
+							});
 						});
 
 					}

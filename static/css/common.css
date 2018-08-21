@@ -709,6 +709,9 @@ a {
 .short-width {
 	width: 200px;
 }
+.align-center {
+	text-align: center;
+}
 
 .express-container .layui-table-cell {
 	height: auto;
@@ -755,4 +758,13 @@ a {
 
 .cnum-link:hover {
 	text-decoration: underline;
+}
+.large-font {
+	font-size: 30px;
+}
+.large-font1 {
+	font-size: 25px;
+}
+.margin-top-30 {
+	margin-top: 30px;
 }

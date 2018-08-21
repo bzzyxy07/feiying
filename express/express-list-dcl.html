@@ -125,6 +125,7 @@
 		//绑定批量删除按钮
 		$("#express_batch_delete_btn").on("click", function() {
 			var checkData = table.checkStatus('express_list_data_dcl').data;
+			console.info(checkData)
 			if(!checkData.length) {
 				layer.msg("请勾选待删除的运单！");
 				return false;
@@ -137,8 +138,10 @@
 			comm.getDataByCondition({
 				loading: true,
 				ajax: {
-					url: '/api/OrderTransportOrder/BatchDelete',
-					data: ids,
+					url: '/api/OrderTransportOrder/BatchDeleteLogic',
+					data: {
+						ids: ids
+					},
 					type: 'Delete',
 					success: function(rlt) {
 						layer.msg("删除成功！");

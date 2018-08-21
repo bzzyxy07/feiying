@@ -101,7 +101,7 @@ var comm = {
 		var $showTab = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show')
 		$showTab.load(param.url, function() {
 			if(!$(".return-prev").length) {
-				$showTab.prepend('<div class="layui-text"><a class="return-prev">返回上页&gt;&gt;</a></div>');
+				$showTab.prepend('<div class="layui-text"><a class="return-prev">返回&gt;&gt;</a></div>');
 				$(".return-prev").unbind("click").on("click", function() {
 					$showTab.load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
 				});
@@ -183,7 +183,7 @@ var comm = {
 					}
 				});
 			});
-			
+
 			$(target + " .upload-normal-file").on("change", function(e) {
 				console.info(1)
 				var $this = $(this);
@@ -212,7 +212,7 @@ var comm = {
 						if(!data.Success) {
 							layer.msg(data.Errors[0] || data.Message || "服务器异常：上传文件失败！");
 							return false;
-						} else{
+						} else {
 							layer.msg("上传成功！")
 						}
 					},
@@ -229,7 +229,7 @@ var comm = {
 					}
 				});
 			});
-			
+
 			$(target + " .upload-img-file").on("change", function(e) {
 				var $this = $(this);
 				comm.showImgFile(e, $(this));
@@ -597,14 +597,20 @@ var comm = {
 			var filter = $("#" + param.formId + " select.form-condition.auto-click-condition").attr("lay-filter");
 			form.on('select(' + filter + ')', function(data) {
 				var $this = $(data.elem);
-				var clickArr = $this.find("option:selected").attr("click-name").split(",");
-				var dataArr = $this.find("option:selected").attr("data-value").split(",");
-				clickArr.map(function(v, index) {
+				if($this.find("option:selected").attr("data-value")) {
+					var dataArr = $this.find("option:selected").attr("data-value").split(",");
+				}
+				if($this.find("option:selected").attr("click-name")) {
+					var clickArr = $this.find("option:selected").attr("click-name").split(",");
+					clickArr.map(function(v, index) {
 					if(!$("#" + param.formId + " input[name=" + v + "]").length) {
 						$this.after('<input type="hidden" name="' + v + '">');
 					}
 					$('input[name="' + v + '"]').val(dataArr[index]);
 				});
+				}
+				
+				
 				$("#" + param.formId + " .filter-btn").click();
 			});
 
