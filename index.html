@@ -17,7 +17,7 @@
 
 		<div class="layui-side">
 			<div class="logo-cont">
-				<img src="static/img/system-logo.png" src="飞鹰快递" class="system-logo">
+				<!--<img src="static/img/system-logo.png" src="飞鹰快递" class="system-logo">-->
 			</div>
 
 			<ul class="layui-nav layui-nav-tree" id="left_menu">
@@ -91,17 +91,17 @@
 					success: function(data) {
 						$(".header-info span[name=user-ye] b").text(data.restmoney);
 						$(".header-info span[name=user-name] b").text(data.username);
-						console.info(data);
+						$(".logo-cont").html('<span>' + data.username + '</span>');
+						$(".logo-cont span").on("click", function() {
+							$("#left_menu li[url='user/user-manage.html']").click();
+						});
 					}
 				}
 			});
 			$(".header-info span[name=user-ye] b").on("click", function() {
-//				jumpPage({
-//					menuUrl: "finance/finance-manage.html",
-//					tabUrl: ""
-//				});
-				$("#left_menu li[url='finance/finance-manage.html']").click()
+				$("#left_menu li[url='finance/finance-manage.html']").click();
 			});
+
 			document.getElementById("exit_system_btn").onclick = function() {
 				comm.exitSystem(1);
 			};

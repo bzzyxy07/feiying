@@ -162,6 +162,12 @@ a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: #fff;
+	font-weight: 900;
+}
+
+.layui-side .logo-cont span {
+	cursor: pointer;
 }
 
 .layui-side .logo-cont .system-logo {
@@ -731,18 +737,22 @@ a {
 	line-height: 35px;
 }
 
-.layui-btn-group.display-block + .layui-btn-group.display-block {
+.layui-btn-group.display-block+.layui-btn-group.display-block {
 	margin-top: 5px;
 }
+
 .font-bold {
 	font-weight: 900;
 }
+
 .layui-textarea {
 	width: 500px;
 }
+
 .cnum-link {
 	color: red;
 }
+
 .cnum-link:hover {
 	text-decoration: underline;
 }

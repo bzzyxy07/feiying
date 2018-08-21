@@ -41,7 +41,7 @@
 	<span name="" class="red-color font-bold">0.00</span>($)，您的账户余额为
 	<span name="restmoney" class="red-color font-bold">0.00</span>($)，还差：
 	<span name="" class="red-color font-bold">0.00</span>($)
-	<a href="#" class="layui-btn layui-btn-sm layui-btn-danger">支付宝充值</a>
+	<a href="#" class="layui-btn layui-btn-sm layui-btn-danger" id="alipay_link">支付宝充值</a>
 </p>
 
 <script>
@@ -50,9 +50,15 @@
 		var layer = layui.layer;
 		var table = layui.table;
 
+		$("#alipay_link").on("click", function() {
+			jumpPage({
+				menuUrl: "finance/finance-manage.html",
+				tabUrl: "./finance/alipay-recharge.html",
+			});
+		});
+
 		//初始化表格选项数据
 		comm.getDataByCondition({
-
 			ajax: {
 				url: '/api/OrderTransportOrder/SearchInit',
 				success: function(data) {
@@ -326,6 +332,8 @@
 	<div>{{d.receiver_name}}</div>
 	{{# if(d.id_card_info_index == 1) { }}
 	<span class="red-color font-bold">没有身份证号</span> {{# } else if(d.id_card_info_index == 2) { }}
-	<span class="red-color">没有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div> {{# } else if(d.id_card_info_index == 3){ }}
-	<span style="color: green;">有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div> {{# } }}
+	<span class="red-color">没有身份证照片</span>
+	<div>{{d.receiver_id_cardnumber}}</div> {{# } else if(d.id_card_info_index == 3){ }}
+	<span style="color: green;">有身份证照片</span>
+	<div>{{d.receiver_id_cardnumber}}</div> {{# } }}
 </script>

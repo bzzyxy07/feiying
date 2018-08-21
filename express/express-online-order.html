@@ -10,7 +10,12 @@
 		</colgroup>
 		<tr>
 			<th colspan="8" class="none-back-border">
-				<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>运单信息</p>
+				<p class="comm-title-dot">
+					<span class="layui-badge-dot layui-bg-blue"></span>运单信息
+					<span class="float-right">
+					    <button type="button" class="layui-btn layui-btn-sm float-right" id="express_online_order_batch_btn">批量在线下单</button>
+				    </span>
+				</p>
 			</th>
 		</tr>
 		<tr>
@@ -77,7 +82,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
+						<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_zheng" class="upload-img-url field-cont" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -89,7 +94,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
+						<input type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_fan" class="upload-img-url field-cont" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -203,10 +208,15 @@
 	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">创建</button>
 </form>
 <script>
-	layui.use(['form', 'element', 'table'], function() {
+	layui.use(['form'], function() {
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
-		var table = layui.table;
+		//批量在线下单
+		$("#express_online_order_batch_btn").on("click", function() {
+			comm.changeTabContent({
+				url: './express/express-batch-online-order.html',
+			});
+		});
 
 		//初始化表格选项数据
 		comm.groupInitial({
@@ -231,8 +241,8 @@
 				servicelist.map(function(v) {
 					servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" lay-skin="primary">' +
 						'<div class="layui-input-inline" style="margin:0 5px;">' +
-						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>'
-						+v.servicename + '（' + v.remark + '）'+
+						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>' +
+						v.servicename + '（' + v.remark + '）' +
 						'</div>';
 				});
 				$("#express_online_order_form #service_container").html(servStr);
@@ -256,7 +266,7 @@
 					title: '选择收件人'
 				},
 				cb: function() {
-					
+
 				}
 			});
 		});
@@ -270,7 +280,7 @@
 					title: '选择发件人'
 				},
 				cb: function() {
-					
+
 				}
 			});
 		});
