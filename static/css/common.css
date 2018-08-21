@@ -737,3 +737,12 @@ a {
 .font-bold {
 	font-weight: 900;
 }
+.layui-textarea {
+	width: 500px;
+}
+.cnum-link {
+	color: red;
+}
+.cnum-link:hover {
+	text-decoration: underline;
+}

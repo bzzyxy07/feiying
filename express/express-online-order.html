@@ -77,7 +77,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_zheng" class="upload-img-url field-cont" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -89,7 +89,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_fan" class="upload-img-url field-cont" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -229,9 +229,11 @@
 				var servicelist = data['servicelist'];
 				var servStr = "";
 				servicelist.map(function(v) {
-					servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" title="' + v.servicename + '（' + v.remark + '）" lay-skin="primary">' +
-						'<div class="layui-input-inline">' +
-						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div></div>';
+					servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" lay-skin="primary">' +
+						'<div class="layui-input-inline" style="margin:0 5px;">' +
+						'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>'
+						+v.servicename + '（' + v.remark + '）'+
+						'</div>';
 				});
 				$("#express_online_order_form #service_container").html(servStr);
 				form.render();

@@ -1,16 +1,28 @@
 <div class="layui-tab layui-tab-card" lay-filter="package-info-card">
 	<ul class="layui-tab-title">
-		<li class="layui-this" link-url="./package/package-list.html">所有包裹</li>
-		<li link-url="./package/package-list-wrk.html">未入库</li>
-		<li link-url="./package/package-list-yrk.html">已入库</li>
+		<li link-url="./package/package-list.html">所有包裹</li>
+		<li link-url="./package/package-list-wrk.html">未入库<span class="layui-badge" name="wrk">0</span></li>
+		<li class="layui-this" link-url="./package/package-list-yrk.html">已入库<span class="layui-badge" name="yrk">0</span></li>
 		<li link-url="./package/package-preview.html">包裹预报</li>
 		<li link-url="./package/reject-package-list.html">退货包裹列表</li>
 	</ul>
 	<div class="layui-tab-content white-back">
+		<div class="layui-tab-item"></div>
+		<div class="layui-tab-item"></div>
 		<div class="layui-tab-item layui-show"></div>
-		<div class="layui-tab-item"></div>
-		<div class="layui-tab-item"></div>
 		<div class="layui-tab-item"></div>
 		<div class="layui-tab-item"></div>
 	</div>
 </div>
+<script>
+	comm.getDataByCondition({
+		ajax: {
+			url: '/api/OrderPackage/MyPackageCount',
+			type: 'get',
+			success: function(data) {
+				$(".layui-tab-title li .layui-badge[name='wrk']").text(data.weidaoku);
+				$(".layui-tab-title li .layui-badge[name='yrk']").text(data.yidaoku);
+			}
+		}
+	});
+</script>

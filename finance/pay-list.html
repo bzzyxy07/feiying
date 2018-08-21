@@ -2,12 +2,12 @@
 	<ul>
 		<li>
 			<span>类型</span>
-			<ul class="form-condition" name="financialtype">
-				<li class="active" data-value="">全部</li>
-				<li data-value="1">现金支付</li>
-				<li data-value="2">消费余额</li>
-				<li data-value="3">支付</li>
-				<li data-value="4">消费现金</li>
+			<select name="financialtype">
+				<option value="">全部</option>
+				<option value="1">现金支付</option>
+				<option value="2">消费余额</option>
+				<option value="3">支付</option>
+				<option value="4">消费现金</option>
 			</ul>
 		</li>
 		<li>
@@ -44,29 +44,28 @@
 				elem: '#finance_info_table',
 				cols: [
 					[{
-						field: 'cnum',
-						title: '运单号',
-						
-					}, {
-						field: 'financialtype',
-						title: '交易类型',
-						
-					}, {
-						field: 'createtime_str',
-						title: '时间',
+						field: 'financialtype_str',
+						title: '类型',
 						
 					}, {
 						field: 'amount',
 						title: '金额($)',
-						
 						templet: '#amount',
-						style: 'text-align:right;font-weight: 600;'
+						style: 'font-weight: 600;'
+					}, {
+						field: 'createtime_str',
+						title: '时间',
+						
 					}, {
 						field: 'property',
 						title: '状态',
 						width: 80,
 						align: 'center',
 						templet: '#status',
+						
+					},{
+						field: 'cnum',
+						title: '运单号',
 						
 					}, {
 						field: 'remark',

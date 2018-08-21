@@ -1,8 +1,4 @@
-<style>
-	.data-table-container.isenter-false .package-reject-btn {
-		display: none;
-	}
-</style>
+
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form_wrk">
 	<input type="hidden" name="isenter" value="false">
 	<ul>
@@ -27,21 +23,16 @@
 				<option value="true">已提交</option>
 			</select>
 		</li>
-		<li class="all-package-status-show">
-			<span>运单号</span>
-			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
-		</li>
+		
 
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
-			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
 </form>
-<!--<p class="mess-info hide">选中列表多条记录（必须为同一个仓库），点击“提交运单”按钮后填写相关信息提交可达到合箱操作</p>-->
 <div class="data-table-container">
-	<table id="package_info_table_wrk" lay-filter="package-info-table-yrk"></table>
+	<table id="package_info_table_wrk" lay-filter="package-info-table-wrk"></table>
 </div>
 <script>
 	layui.use(['layer', 'form', 'table'], function() {
@@ -78,10 +69,6 @@
 
 					}, {
 						field: 'createtime_str',
-						title: '创建时间',
-
-					}, {
-						field: 'enterdate_str',
 						title: '预报时间',
 
 					}, {
@@ -96,45 +83,9 @@
 					}]
 				]
 			},
-			callback: function() {
-				if($(".filter-form ul[name='isenter'] li[data-value=true]").hasClass("active")) {
-					$("#package_submit_btn, .mess-info, .package-reject-btn").removeClass("hide");
-					$(".data-table-container").removeClass("isenter-false");
-				} else {
-					$("#package_submit_btn, .mess-info, .package-reject-btn").addClass("hide");
-					$(".data-table-container").addClass("isenter-false");
-				}
-				if($(".filter-form ul[name='isenter'] li.all-package-status").hasClass("active")) {
-					$(".all-package-status-show").removeClass("hide");
-				} else {
-					$(".all-package-status-show").addClass("hide");
-				}
-			}
+			callback: function() {}
 		});
-		//为提交运单（合箱）按钮绑定点击事件
-		$("#package_submit_btn").on("click", function() {
-			var checkData = table.checkStatus('package_list_data').data;
-			if(!checkData.length) {
-				layer.msg("请选择待提交的包裹！");
-				return false;
-			}
-			var depotid = checkData[0].depotid;
-			var ids = [];
-			var sameFlag = false;
-			checkData.map(function(v) {
-				if(v.depotid != depotid) {
-					layer.msg("请选择同一仓库的包裹！");
-					sameFlag = true;
-					return false;
-				}
-				ids.push(v.id);
-			});
-			if(sameFlag) return false;
-			comm.changeTabContent({
-				url: "./package/package-submit-express.html",
-				data: checkData
-			});
-		});
+		
 		//初始化表格选项数据
 		comm.getDataByCondition({
 			ajax: {
@@ -157,7 +108,7 @@
 			}
 		});
 
-		table.on('tool(package-info-table-yrk)', function(obj) {
+		table.on('tool(package-info-table-wrk)', function(obj) {
 			var data = obj.data;
 			var layEvent = obj.event;
 			var tr = obj.tr;
@@ -190,11 +141,6 @@
 					data: data.id
 				});
 
-			} else if(layEvent === 'reject') {
-				comm.changeTabContent({
-					url: './package/package-reject.html',
-					data: data.id
-				});
 			}
 		});
 	});
@@ -202,7 +148,6 @@
 <script type="text/html" id="operation">
 	{{# if(d.isenter == true){ }}
 	<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
-	<a class="layui-btn layui-btn-danger layui-btn-sm package-reject-btn" lay-event="reject">退货</a>
 	{{# } else{ }}
 	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>

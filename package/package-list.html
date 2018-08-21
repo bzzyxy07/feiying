@@ -1,17 +1,12 @@
-<style>
-	.data-table-container.isenter-false .package-reject-btn {
-		display: none;
-	}
-</style>
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
 	<ul>
 		<li>
 			<span>包裹状态</span>
-			<ul class="form-condition" name="isenter">
-				<li data-value="false">未入库<span class="layui-badge" name="wrk">0</span></li>
-				<li class="active not-default" data-value="true">已入库<span class="layui-badge" name="yrk">0</span></li>
-				<li data-value="" class="all-package-status">全部</li>
-			</ul>
+			<select name="isenter">
+				<option value="">全部</option>
+				<option value="false">未入库</option>
+				<option value="true">已入库</option>
+			</select>
 		</li>
 		<li>
 			<span>送达仓库</span>
@@ -21,20 +16,15 @@
 			<span>包裹追踪号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
 		</li>
-		<li class="all-package-status-show">
+		<li>
 			<span>提交状态</span>
-			<!--<ul class="form-condition" name="isdeliver">
-				<li class="active" data-value="">全部</li>
-				<li data-value="true">未提交</li>
-				<li data-value="false">已提交</li>
-			</ul>-->
 			<select name="isdeliver">
 				<option value="">全部</option>
 				<option value="false">未提交</option>
 				<option value="true">已提交</option>
 			</select>
 		</li>
-		<li class="all-package-status-show">
+		<li>
 			<span>运单号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="cnum">
 		</li>
@@ -42,8 +32,6 @@
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
-			<!--<button type="reset" class="layui-btn layui-btn-sm layui-btn-danger" id="package_istop">置顶</button>-->
-			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="package_submit_btn">提交运单</button>
 		</li>
 	</ul>
 </form>
@@ -56,17 +44,6 @@
 		var form = layui.form;
 		var layer = layui.layer;
 		var table = layui.table;
-		comm.getDataByCondition({
-			ajax: {
-				url: '/api/OrderPackage/MyPackageCount',
-				type: 'get',
-				success: function(data) {
-					console.info(data)
-					$("ul[name=isenter] .layui-badge[name='wrk']").text(data.weidaoku);
-					$("ul[name=isenter] .layui-badge[name='yrk']").text(data.yidaoku);
-				}
-			}
-		});
 
 		comm.bindFilterForm({
 			formId: "package_info_search_form",
@@ -77,76 +54,41 @@
 				elem: '#package_info_table',
 				cols: [
 					[{
-						field: 'trackingnumber',
-						title: '包裹追踪号',
+							field: 'trackingnumber',
+							title: '包裹追踪号',
 
-					}, {
-						field: 'depotname',
-						title: '仓库',
+						}, {
+							field: 'depotname',
+							title: '仓库',
+						}, {
+							field: 'enterdate_str',
+							title: '入库状态',
+							templet: '#package_enter_status'
 
-					}, {
-						field: 'createtime_str',
-						title: '创建时间',
+						}, {
+							field: '',
+							title: '提交状态',
+							templet: '#package_submit_status',
+						}, {
+							field: 'goodsweight',
+							title: '重量(磅)',
+							width: 120,
+							style: 'font-weight:900;color:red;',
 
-					}, {
-						field: 'enterdate_str',
-						title: '入库时间',
-
-					}, {
-						field: 'goodsweight',
-						title: '重量(磅)',
-						width: 120,
-
-					}, {
-						field: 'packagedetails',
-						title: '物品',
-					}, {
-						field: '',
-						title: '操作',
-						toolbar: '#operation',
-						width: 160,
-						align:'center'
-					}]
+						}, {
+							field: 'packagedetails',
+							title: '物品',
+						}, {
+							field: '',
+							title: '操作',
+							toolbar: '#operation',
+							width: 160,
+							align: 'center'
+						}
+					]
 				]
 			},
-			callback: function() {
-				if($(".filter-form ul[name='isenter'] li[data-value=true]").hasClass("active")) {
-					$("#package_submit_btn, .mess-info, .package-reject-btn").removeClass("hide");
-					$(".data-table-container").removeClass("isenter-false");
-				} else {
-					$("#package_submit_btn, .mess-info, .package-reject-btn").addClass("hide");
-					$(".data-table-container").addClass("isenter-false");
-				}
-				if($(".filter-form ul[name='isenter'] li.all-package-status").hasClass("active")) {
-					$(".all-package-status-show").removeClass("hide");
-				} else {
-					$(".all-package-status-show").addClass("hide");
-				}
-			}
-		});
-		//为提交运单（合箱）按钮绑定点击事件
-		$("#package_submit_btn").on("click", function() {
-			var checkData = table.checkStatus('package_list_data').data;
-			if(!checkData.length) {
-				layer.msg("请选择待提交的包裹！");
-				return false;
-			}
-			var depotid = checkData[0].depotid;
-			var ids = [];
-			var sameFlag = false;
-			checkData.map(function(v) {
-				if(v.depotid != depotid) {
-					layer.msg("请选择同一仓库的包裹！");
-					sameFlag = true;
-					return false;
-				}
-				ids.push(v.id);
-			});
-			if(sameFlag) return false;
-			comm.changeTabContent({
-				url: "./package/package-submit-express.html",
-				data: checkData
-			});
+			callback: function() {}
 		});
 		//初始化表格选项数据
 		comm.getDataByCondition({
@@ -208,6 +150,12 @@
 					url: './package/package-reject.html',
 					data: data.id
 				});
+			} else if(layEvent === 'cnum-detail') { //查看运单详情
+				jumpPageAndContent({
+					menuUrl: "express/express-manage.html",
+					data: data.id,
+					contentUrl: './express/express-detail.html',
+				});
 			}
 		});
 	});
@@ -220,4 +168,15 @@
 	<a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">删除</a>
 	{{# } }}
+</script>
+<script type="text/html" id="package_enter_status">
+	{{# if(d.isenter == true){ }}
+	<span style="color: #5FB878;margin-right: 5px;">已入库</span> {{d.enterdate}} {{# } else{ }}
+	<span style="color: red;margin-right: 5px;">未入库</span> {{# } }}
+</script>
+<script type="text/html" id="package_submit_status">
+	{{# if(d.isdeliver == true){ }}
+	<span style="color: #5FB878;margin-right: 5px;">已提交</span> 
+	<span class="cnum-link" lay-event="cnum-detail">{{d.cnum}}</span> {{# } else{ }}
+	<span style="color: red;margin-right: 5px;">未提交</span> {{# } }}
 </script>

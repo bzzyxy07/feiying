@@ -1,7 +1,22 @@
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
+	<table id="express_package_table" class="layui-table">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>包裹追踪号</th>
+				<th>仓库</th>
+				<th>状态</th>
+				<th>重量</th>
+				<th>物品</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
 	<input autocomplete="off" type="hidden" name="caozuo" value="1">
 	<input autocomplete="off" type="hidden" name="kkfs" value="1">
 	<input autocomplete="off" type="hidden" name="isenter" value="0">
+
 	<table class="layui-table" id="express_edit_cont">
 		<colgroup>
 			<col width="130">
@@ -86,7 +101,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input autocomplete="off" type="hidden" name="idcardzheng" class="upload-img-url field-cont" fill-name="receiveridcard_zheng" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -98,7 +113,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input autocomplete="off" type="file" name="" class="layui-input upload-img-file" accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input autocomplete="off" type="hidden" name="idcardfan" class="upload-img-url field-cont" fill-name="receiveridcard_fan" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -198,7 +213,7 @@
 		<tr>
 			<th class="align-right">备注</th>
 			<td colspan="7">
-				<input autocomplete="off" name="note" fill-name="note" class="field-cont layui-input">
+				<textarea autocomplete="off" name="note" fill-name="note" class="field-cont layui-textarea"></textarea>
 			</td>
 		</tr>
 	</table>
@@ -241,13 +256,60 @@
 
 							var orderInfo = data['orderdetails'];
 							comm.fillFormByData(orderInfo, $("#express_edit_form"), "fill-name");
+							//判断是否为转运运单
+							if(orderInfo.source === "转运") {
+								$("#express_package_table").show();
+								//								var data = orderInfo.details,
+								//								ids = [],tbodyStr="";
+								//								data.map(function(i, index) {
+								//									ids.push(i.id);
+								//									tbodyStr += "<tr>";
+								//									names.map(function(v) {
+								//										if(v === "index") {
+								//											tbodyStr += "<td>" + (index + 1) + "</td>";
+								//										} else if(v === "zhuangtai") {
+								//											tbodyStr += "<td>已到库</td>";
+								//										} else {
+								//											tbodyStr += "<td>" + i[v] + "</td>";
+								//										}
+								//									});
+								//									tbodyStr += "</tr>";
+								//								});
+								//								console.info(ids)
+								//								$("#express_package_table tbody").html(tbodyStr);
+							} else {
+								$("#express_package_table").hide();
+							}
+							//加载增值服务
+							var freeservicenotestr = orderInfo['freeservicenote'];
+							if(freeservicenotestr) {
+								var freeservicenotearr0 = freeservicenotestr.split(";");
+								var freeservicenotearrs = [];
+								var freeservicenotearrIds = [];
+								freeservicenotearr0.map(function(v) {
+									var a = v.split("*");
+									if(a.length == 2) {
+										freeservicenotearrs.push(a);
+										freeservicenotearrIds.push(a[0]);
+									}
+								});
+							}
 
 							var servicelist = data['servicelist'];
 							var servStr = "";
 							servicelist.map(function(v) {
-								servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" title="' + v.servicename + '（' + v.remark + '）" lay-skin="primary">' +
-									'<div class="layui-input-inline">' +
-									'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div></div>';
+								if(freeservicenotearrIds && (freeservicenotearrIds.indexOf(v.id) === -1)) {
+									servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" data-id="' + v.id + '" name="" lay-skin="primary">' +
+										'<div class="layui-input-inline" style="margin:0 5px;">' +
+										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>' +
+										v.servicename + '（' + v.remark + '）' + '</div>';
+								} else {
+									var num = freeservicenotearrs[freeservicenotearrIds.indexOf(v.id)][1];
+									servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" checked="checked" data-id="' + v.id + '" name="" lay-skin="primary">' +
+										'<div class="layui-input-inline" style="margin:0 5px;">' +
+										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量" value="' + num + '"></div>' +
+										v.servicename + '（' + v.remark + '）' + '</div>';
+								}
 							});
 							$("#express_edit_form #service_container").html(servStr);
 

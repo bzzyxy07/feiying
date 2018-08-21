@@ -67,7 +67,6 @@
 				}
 			}
 		});
-		
 
 		comm.bindFilterForm({
 			formId: "express_info_search_form_dkk",
@@ -84,6 +83,11 @@
 					}, {
 						field: 'cnum',
 						title: '运单号',
+						templet: '#cnum_link',
+
+					}, {
+						field: 'depot_name',
+						title: '仓库',
 
 					}, {
 						field: 'route_name',
@@ -92,10 +96,6 @@
 					}, {
 						field: 'enter_date_str',
 						title: '入库时间',
-					}, {
-						field: 'depot_name',
-						title: '仓库',
-
 					}, {
 						field: 'weight',
 						title: '重量(磅)',
@@ -110,20 +110,16 @@
 					}, {
 						field: 'deliver_name',
 						title: '发件人',
-
 					}, {
 						field: 'receiver_name',
 						title: '收件人',
-
-					}, {
-						field: 'id_card_info',
-						title: '身份证信息',
-						width: 110,
-
+						templet: '#id_card_info',
+						align: 'center',
+						width: 140,
 					}, {
 						field: '',
 						title: '操作',
-						toolbar: '#operation',
+						toolbar: '#express_list_dkk_operation',
 						width: 180,
 						align: 'center',
 					}]
@@ -142,7 +138,7 @@
 				}
 			}
 		});
-		
+
 		comm.getDataByCondition({
 			ajax: {
 				url: '/api/BasicUser/MyDetails',
@@ -153,7 +149,7 @@
 				}
 			}
 		});
-		
+
 		//绑定批量删除按钮
 		$("#express_batch_delete_btn").on("click", function() {
 			var checkData = table.checkStatus('express_list_data_dkk').data;
@@ -311,7 +307,7 @@
 		});
 	});
 </script>
-<script type="text/html" id="operation">
+<script type="text/html" id="express_list_dkk_operation">
 	<div class="layui-btn-group display-block">
 		{{# if(d.isenter) { }}
 		<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
@@ -322,4 +318,14 @@
 		<a class="layui-btn layui-btn-sm" lay-event="print-rm">热敏打印</a>
 		<a class="layui-btn layui-btn-sm" lay-event="print-A4">A4打印</a>
 	</div>
+</script>
+<script type="text/html" id="cnum_link">
+	<a class="cnum-link" lay-event="detail">{{d.cnum}}</a>
+</script>
+<script type="text/html" id="id_card_info">
+	<div>{{d.receiver_name}}</div>
+	{{# if(d.id_card_info_index == 1) { }}
+	<span class="red-color font-bold">没有身份证号</span> {{# } else if(d.id_card_info_index == 2) { }}
+	<span class="red-color">没有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div> {{# } else if(d.id_card_info_index == 3){ }}
+	<span style="color: green;">有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div> {{# } }}
 </script>

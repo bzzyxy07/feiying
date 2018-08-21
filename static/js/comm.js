@@ -183,12 +183,59 @@ var comm = {
 					}
 				});
 			});
+			
+			$(target + " .upload-normal-file").on("change", function(e) {
+				console.info(1)
+				var $this = $(this);
+				var fileObj = $(this)[0].files[0]; // js 获取文件对象
+				if(typeof(fileObj) == "undefined" || fileObj.size <= 0) {
+					alert("请上传正确的文件类型");
+					return;
+				}
+				var formFile = new FormData();
+				formFile.append("action", "UploadVMKImagePath");
+				formFile.append("file", fileObj); //加入文件对象
+
+				var data = formFile;
+				$.ajax({
+					url: path + "/api/OrderTransportOrder/UploadTranportOrder",
+					beforeSend: function(request) {
+						request.setRequestHeader("Authorization", sessionStorage.getItem("authen"));
+					},
+					data: data,
+					type: "post",
+					dataType: "json",
+					cache: false,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						if(!data.Success) {
+							layer.msg(data.Errors[0] || data.Message || "服务器异常：上传文件失败！");
+							return false;
+						} else{
+							layer.msg("上传成功！")
+						}
+					},
+					error: function(data) {
+						if(data.status == 401) {
+							comm.systemTimeout();
+							return false;
+						}
+						layui.use('layer', function() {
+							var layer = layui.layer;
+							layer.msg("服务器异常：请联系管理员！");
+						});
+						return false;
+					}
+				});
+			});
+			
 			$(target + " .upload-img-file").on("change", function(e) {
 				var $this = $(this);
 				comm.showImgFile(e, $(this));
 				var fileObj = $(this)[0].files[0]; // js 获取文件对象
 				if(typeof(fileObj) == "undefined" || fileObj.size <= 0) {
-					alert("请选择图片");
+					alert("请上传正确的文件类型");
 					return;
 				}
 				var formFile = new FormData();
@@ -432,7 +479,7 @@ var comm = {
 				$img.attr("src", data[key]).attr("onerror", "imgerror(this)");
 				$img.prev("a").children(".upload-img-url").val(data[key]);
 			} else {
-//				debugger;
+				//				debugger;
 				if(sepCont.prop("tagName") == 'SELECT') {
 					sepCont.find('option[value=' + data[key] + ']').attr("selected", "selected");
 				} else if(sepCont.prop("tagName") === 'INPUT') {
@@ -546,29 +593,41 @@ var comm = {
 				$this.addClass("active").siblings("li").removeClass("active");
 				$("#" + param.formId + " .filter-btn").click();
 			});
-			
+
+			var filter = $("#" + param.formId + " select.form-condition.auto-click-condition").attr("lay-filter");
+			form.on('select(' + filter + ')', function(data) {
+				var $this = $(data.elem);
+				var clickArr = $this.find("option:selected").attr("click-name").split(",");
+				var dataArr = $this.find("option:selected").attr("data-value").split(",");
+				clickArr.map(function(v, index) {
+					if(!$("#" + param.formId + " input[name=" + v + "]").length) {
+						$this.after('<input type="hidden" name="' + v + '">');
+					}
+					$('input[name="' + v + '"]').val(dataArr[index]);
+				});
+				$("#" + param.formId + " .filter-btn").click();
+			});
+
 			$("#" + param.formId + " select.form-condition.auto-click-condition").on("change", function() {
 				var $thisSel = $(this);
 				var $this = $(this).find("option:selected");
 				if($this.attr("click-name") === "clearAll") {
-					$this.siblings('input.auto-click-input').val("");
+					$this.siblings('input').val("");
 				} else {
 					var clickArr = $this.attr("click-name").split(",");
 					var dataArr = $this.attr("data-value").split(",");
-					var $sibs = $thisSel.siblings('input.auto-click-input');
+					var $sibs = $thisSel.siblings('input');
 					$sibs.each(function() {
 						$(this).val("");
 					});
+					console.info(dataArr[index])
 					clickArr.map(function(v, index) {
-						if(!$("#" + param.formId + " input[name=" + v + "]").length) {
-							$thisSel.after('<input type="hidden" name="' + v + '" class="auto-click-input">');
-						}
-						$('input.auto-click-input[name="' + v + '"]').val(dataArr[index]);
+						$('input[name="' + v + '"]').val(dataArr[index]);
 					});
 				}
 
-//				$this.addClass("active").siblings("li").removeClass("active");
-//				$("#" + param.formId + " .filter-btn").click();
+				//				$this.addClass("active").siblings("li").removeClass("active");
+				//				$("#" + param.formId + " .filter-btn").click();
 			});
 
 			if(param.renderTable) {
@@ -601,7 +660,6 @@ var comm = {
 			} else {
 				$("#" + param.formId + " .filter-btn").click();
 			}
-			
 
 			$("#" + param.formId + " .layui-btn[type=reset]").on("click", function(e) {
 				e.preventDefault();
@@ -862,9 +920,9 @@ var comm = {
 	 * } 
 	 */
 	initRelateSelect: function(param) {
-      
+
 		layui.use('form', function() {
-			  
+
 			var form = layui.form,
 				container0 = param.container[0],
 				container1 = param.container[1],

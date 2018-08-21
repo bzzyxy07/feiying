@@ -31,10 +31,11 @@
 					[{
 						field: 'cnum',
 						title: '运单号',
+						templet: '#abnormal_cnum_link'
 					}, {
 						field: 'createtime_str',
 						title: '添加时间',
-						
+
 					}, {
 						field: 'typename',
 						title: '异常类型',
@@ -51,7 +52,7 @@
 					}, {
 						field: 'operatetime',
 						title: '处理时间',
-						
+
 					}, {
 						field: 'operatemessage',
 						title: '备注'
@@ -89,6 +90,12 @@
 						}
 					});
 				});
+			} else if(layEvent === 'cnum-detail') { //查看运单详情
+				jumpPageAndContent({
+					menuUrl: "express/express-manage.html",
+					data: data.id,
+					contentUrl: './express/express-detail.html',
+				});
 			}
 		});
 	});
@@ -104,4 +111,7 @@
 	<span class="layui-badge layui-bg-green">已处理</span> {{# } else if(d.property == "2"){ }}
 	<span class="layui-badge-rim">已取消</span> {{# } else{ }}
 	<span class="layui-badge layui-bg-gray">状态有误</span> {{# } }}
+</script>
+<script type="text/html" id="abnormal_cnum_link">
+	<a class="cnum-link" lay-event="cnum-detail">{{d.cnum}}</a>
 </script>

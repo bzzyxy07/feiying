@@ -32,7 +32,11 @@
 		<tr>
 			<th class="align-right">运单编号</th>
 			<td class="gray-back">
-				<input name="Id" class="field-cont layui-input none-back-border" disabled="disabled">
+				<div class="layui-input-inline">
+					<input name="Id" class="field-cont layui-input none-back-border" disabled="disabled">
+				</div>
+				<div class="float-right comm-line-height">自动生成</div>
+
 				<!--<input name="id" type="hidden">-->
 			</td>
 			<th class="align-right required-logo">送达仓库</th>
@@ -69,7 +73,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_zheng" class="upload-img-url field-cont" fill-receiver="idcardzheng">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -81,7 +85,7 @@
 				<div class="upload-img-container">
 					<a href="javascript:;">
 						<span>点此上传</span>
-						<input type="file" name="" class="layui-input upload-img-file" accept="image/png, image/jpg, image/jpeg">
+						<input type="file" name="" class="layui-input upload-img-file"  accept=accept="image/gif, image/x-png, image/pjpeg, image/jpeg, image/bmp">
 						<input type="hidden" name="idcard_fan" class="upload-img-url field-cont" fill-receiver="idcardfan">
 					</a>
 					<img class="upload-img" alt="暂无图片">
@@ -186,7 +190,7 @@
 			<td id="service_container" colspan="5"></td>
 		</tr>
 	</table>
-	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">保存</button>
+	<button lay-submit class="layui-btn layui-btn-normal auto-center" style="width: 200px;margin: 20px auto;">创建</button>
 </form>
 
 <script>

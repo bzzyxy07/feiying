@@ -8,12 +8,6 @@ layui.use(['element', 'layer'], function() {
 		$("#main_container").load($(this).attr("url"), function() {
 			var activeTabUrl = sessionStorage.getItem("tabUrl");
 			var $activeTab = $('#main_container>.layui-tab-card>.layui-tab-title>li.layui-this[link-url]');
-			//			if($activeTab.attr("link-url") != activeTabUrl) {
-			//				$activeTab = $('#main_container>.layui-tab-card>.layui-tab-title>li[link-url="' + activeTabUrl + '"]');
-			//				$activeTab.addClass("layui-this").siblings("li").removeClass("layui-this");
-			//				var $targetTab = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item:eq(' + $activeTab.index() + ')');
-			//				$targetTab.addClass("layui-this").siblings().removeClass("layui-this");
-			//			}
 			$activeTab.length &&
 				tabClickCb($activeTab);
 		});
@@ -64,6 +58,26 @@ function jumpPage(param) {
 		$activeTab.length &&
 			tabClickCb($activeTab);
 
+		$("#page_address").html($activeMenu.html());
+	});
+}
+
+function jumpPageAndContent(param) {
+	var menuUrl = param.menuUrl;
+	var contentUrl = param.contentUrl;
+	sessionStorage.setItem("menuUrl", menuUrl);
+	layer.closeAll();
+	//加载模块页面
+	var $activeMenu = $("#left_menu .layui-nav-item[url='" + menuUrl + "']");
+	$activeMenu.addClass("layui-this").siblings("li").removeClass("layui-this");
+	$("#main_container").load(menuUrl, function() {
+		//		$('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-this').load(contentUrl, function() {
+		//			comm.fillSelAndCont();
+		//		});
+		comm.changeTabContent({
+			url: contentUrl,
+			data: param.data
+		});
 		$("#page_address").html($activeMenu.html());
 	});
 }
