@@ -78,6 +78,7 @@
 	layui.use(['form', 'table'], function() {
 		var form = layui.form;
 		var table = layui.table;
+		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + $("#main_container").data("data"));
 		comm.groupInitial({
 			url: '/api/OrderPackage/PackageViewMy',
 			cont: '#package_edit_form',
@@ -88,32 +89,30 @@
 					$("#detail_body .detail-tr").last().find("select,input").val("");
 					form.render('select');
 				});
-			}
-		});
-
-		$("#package_edit_form").attr("fill-url", "/api/OrderPackage/UnInDetails?modelId=" + $("#main_container").data("data"));
-		comm.fillContainerByUrl({
-			cont: $("#package_edit_form"),
-			cb: function(data) {
-				form.render('select');
-				var detaillist = data.detaillist;
-				for(var i = 0, len = detaillist.length - 1; i < len; i++) {
-					$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
-				}
-				detaillist.map(function(v, index, arr) {
-					for(var key in v) {
-						var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
-						$cont.val("");
-						if($cont.prop('tagName') == 'SELECT') {
-							$cont.find("option[value=" + v[key] + "]").attr("selected", "selected");
-						} else {
-							$cont.val(v[key]);
-						}
-						$cont.data("data", v[key])
+				comm.fillContainerByUrl({
+					cont: $("#package_edit_form"),
+					cb: function(data) {
 						form.render('select');
-					}
-					form.render('select');
+						var detaillist = data.detaillist;
+						for(var i = 0, len = detaillist.length - 1; i < len; i++) {
+							$("#detail_body").append("<tr class='detail-tr'>" + $(".detail-tr").first().html() + "</tr>");
+						}
+						detaillist.map(function(v, index, arr) {
+							for(var key in v) {
+								var $cont = $("#detail_body .detail-tr:eq(" + index + ")").find("*[name='" + key + "']");
+								$cont.val("");
+								if($cont.prop('tagName') == 'SELECT') {
+									$cont.find("option[value=" + v[key] + "]").attr("selected", "selected");
+								} else {
+									$cont.val(v[key]);
+								}
+								$cont.data("data", v[key])
+								form.render('select');
+							}
+							form.render('select');
 
+						});
+					}
 				});
 			}
 		});

@@ -259,24 +259,6 @@
 							//判断是否为转运运单
 							if(orderInfo.source === "转运") {
 								$("#express_package_table").show();
-								//								var data = orderInfo.details,
-								//								ids = [],tbodyStr="";
-								//								data.map(function(i, index) {
-								//									ids.push(i.id);
-								//									tbodyStr += "<tr>";
-								//									names.map(function(v) {
-								//										if(v === "index") {
-								//											tbodyStr += "<td>" + (index + 1) + "</td>";
-								//										} else if(v === "zhuangtai") {
-								//											tbodyStr += "<td>已到库</td>";
-								//										} else {
-								//											tbodyStr += "<td>" + i[v] + "</td>";
-								//										}
-								//									});
-								//									tbodyStr += "</tr>";
-								//								});
-								//								console.info(ids)
-								//								$("#express_package_table tbody").html(tbodyStr);
 							} else {
 								$("#express_package_table").hide();
 							}
@@ -304,7 +286,12 @@
 										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>' +
 										v.servicename + '（' + v.remark + '）' + '</div>';
 								} else {
-									var num = freeservicenotearrs[freeservicenotearrIds.indexOf(v.id)][1];
+									
+									var num = "";
+									if (freeservicenotearrIds && freeservicenotearrIds.length) {
+										num = freeservicenotearrs[freeservicenotearrIds.indexOf(v.id)][1];
+									}
+									
 									servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" checked="checked" data-id="' + v.id + '" name="" lay-skin="primary">' +
 										'<div class="layui-input-inline" style="margin:0 5px;">' +
 										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量" value="' + num + '"></div>' +
