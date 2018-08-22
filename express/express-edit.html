@@ -1,5 +1,5 @@
 <form class="layui-form init-select-group ignore-comm-submit" group-init-url="/api/OrderTransportOrder/PostView" lay-filter="express-edit-form" id="express_edit_form">
-	<table id="express_package_table" class="layui-table">
+	<table id="express_edit_package_table" class="layui-table">
 		<thead>
 			<tr>
 				<th>序号</th>
@@ -224,13 +224,19 @@
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
+		if($("#main_container").data("data").length == 1) {
+			var modelId = $("#main_container").data("data");
+		} else {
+			var modelId = $("#main_container").data("data")[0];
+			var trackingnumber = $("#main_container").data("data")[1];
+		}
 
 		comm.getDataByCondition({
 			loading: true,
 			ajax: {
 				url: "/api/OrderTransportOrder/DealPendingOrderInitMy",
 				data: {
-					id: $("#main_container").data("data")
+					id: modelId
 				},
 				type: "get",
 				success: function(data) {
@@ -257,10 +263,38 @@
 							var orderInfo = data['orderdetails'];
 							comm.fillFormByData(orderInfo, $("#express_edit_form"), "fill-name");
 							//判断是否为转运运单
-							if(orderInfo.source === "转运") {
-								$("#express_package_table").show();
+							if((orderInfo.source === "转运") || (orderInfo.source === "包裹转运")) {
+								$("#express_edit_package_table").show();
+								comm.getDataByCondition({
+									ajax: {
+										url: '/api/OrderPackage/QueryMy',
+										data: {
+											'orderid': modelId
+										},
+										success: function(data) {
+											var data = data.Data;
+
+											var tbodyStr = "";
+											var names = ["index", "trackingnumber", "depotname", "zhuangtai", "goodsweight", "packagedetails"];
+											data.map(function(i, index) {
+												tbodyStr += "<tr>";
+												names.map(function(v) {
+													if(v === "index") {
+														tbodyStr += "<td>" + (index + 1) + "</td>";
+													} else if(v === "zhuangtai") {
+														tbodyStr += "<td>已到库</td>";
+													} else {
+														tbodyStr += "<td>" + i[v] + "</td>";
+													}
+												});
+												tbodyStr += "</tr>";
+											});
+											$("#express_edit_package_table tbody").html(tbodyStr);
+										}
+									}
+								})
 							} else {
-								$("#express_package_table").hide();
+								$("#express_edit_package_table").hide();
 							}
 							//加载增值服务
 							var freeservicenotestr = orderInfo['freeservicenote'];
@@ -286,12 +320,12 @@
 										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量"></div>' +
 										v.servicename + '（' + v.remark + '）' + '</div>';
 								} else {
-									
+
 									var num = "";
-									if (freeservicenotearrIds && freeservicenotearrIds.length) {
+									if(freeservicenotearrIds && freeservicenotearrIds.length) {
 										num = freeservicenotearrs[freeservicenotearrIds.indexOf(v.id)][1];
 									}
-									
+
 									servStr += '<div style="margin: 5px 0;">' + '<input type="checkbox" checked="checked" data-id="' + v.id + '" name="" lay-skin="primary">' +
 										'<div class="layui-input-inline" style="margin:0 5px;">' +
 										'<input data-ref="' + v.id + '" class="layui-input" type="text" placeholder="请输入数量" value="' + num + '"></div>' +

@@ -185,7 +185,6 @@ var comm = {
 			});
 
 			$(target + " .upload-normal-file").on("change", function(e) {
-				console.info(1)
 				var $this = $(this);
 				var fileObj = $(this)[0].files[0]; // js 获取文件对象
 				if(typeof(fileObj) == "undefined" || fileObj.size <= 0) {

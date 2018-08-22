@@ -1,4 +1,19 @@
-<table class="fill-container fill-page-container layui-table" id="express_detail_cont" lay-filter="express-detail-cont" fill-type="get">
+<p class="comm-title-dot"><span class="layui-badge-dot layui-bg-blue"></span>包裹信息</p>
+<table id="express_detail_package_table" class="layui-table">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>包裹追踪号</th>
+				<th>仓库</th>
+				<th>状态</th>
+				<th>重量</th>
+				<th>物品</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	
+	<table class="fill-container fill-page-container layui-table" id="express_detail_cont" lay-filter="express-detail-cont" fill-type="get">
 	<colgroup>
 		<col width="130">
 		<col>
@@ -173,13 +188,14 @@
 		var cloneLine = $(".detail-tr").first().clone();
 		var form = layui.form;
 		var table = layui.table;
+		var modelId = $("#main_container").data("data");
 
 		comm.getDataByCondition({
 			loading: true,
 			ajax: {
 				url: "/api/OrderTransportOrder/DealPendingOrderInitMy",
 				data: {
-					id: $("#main_container").data("data")
+					id: modelId
 				},
 				type: "get",
 				success: function(data) {
@@ -187,10 +203,38 @@
 					comm.fillPageByData(orderInfo, $("#express_detail_cont"), "name");
 
 					//判断是否为转运运单
-					if(orderInfo.source === "转运") {
+					if((orderInfo.source === "转运") || (orderInfo.source === "包裹转运")) {
+						$("#express_detail_package_table").show();
+						comm.getDataByCondition({
+							ajax: {
+								url: '/api/OrderPackage/QueryMy',
+								data: {
+									'orderid': modelId
+								},
+								success: function(data) {
+									var data = data.Data;
 
+									var tbodyStr = "";
+									var names = ["index", "trackingnumber", "depotname", "zhuangtai", "goodsweight", "packagedetails"];
+									data.map(function(i, index) {
+										tbodyStr += "<tr>";
+										names.map(function(v) {
+											if(v === "index") {
+												tbodyStr += "<td>" + (index + 1) + "</td>";
+											} else if(v === "zhuangtai") {
+												tbodyStr += "<td>已到库</td>";
+											} else {
+												tbodyStr += "<td>" + i[v] + "</td>";
+											}
+										});
+										tbodyStr += "</tr>";
+									});
+									$("#express_detail_package_table tbody").html(tbodyStr);
+								}
+							}
+						})
 					} else {
-
+						$("#express_detail_package_table").hide();
 					}
 
 					$("#receiver_address").text(orderInfo['receiverregion_province'] + orderInfo['receiverregion_city'] + orderInfo['receiveraddress']);

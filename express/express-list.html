@@ -12,9 +12,10 @@
 			<select class="form-condition auto-click-condition" style="display: none;" lay-filter="express-status">
 				<option data-value="" click-name="clearAll" value=",,">全部</option>
 				<option data-value="false" click-name="isenter" value="false,,">待处理</option>
-				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款<option>
-				<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
-				<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
+				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款
+					<option>
+						<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
+						<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
 			</select>
 			<input type="hidden" value="" name="isenter" class="init-condition-input">
 			<input type="hidden" value="" name="ispay" class="init-condition-input">
@@ -46,7 +47,7 @@
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">搜索</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
 			<button type="button" class="layui-btn layui-btn-sm" id="express_batch_print_btn"><i class="fa fa-print"></i>批量打印运单</button>
-			<button type="button" class="layui-btn layui-btn-sm"><i class="fa fa-download"></i>导出excel表格</button>
+			<a class="layui-btn layui-btn-sm" id="express_export_excel" href="#"><i class="fa fa-download"></i>导出excel表格</a>
 			<button type="button" class="layui-btn layui-btn-danger layui-btn-sm hide" id="express_batch_delete_btn"><i class="fa fa-trash-o"></i>批量删除</button>
 		</li>
 	</ul>
@@ -62,7 +63,6 @@
 
 		//初始化表格选项数据
 		comm.getDataByCondition({
-
 			ajax: {
 				url: '/api/OrderTransportOrder/SearchInit',
 				success: function(data) {
@@ -148,9 +148,6 @@
 				],
 			},
 			succ: function() {
-				//				$(document).on("click", function() {
-				//					layer.closeAll('tips');
-				//				});
 			},
 			callback: function() {
 				if($(".filter-form li[click-name='isenter']").hasClass("active")) {
@@ -158,9 +155,19 @@
 				} else {
 					$("#express_batch_delete_btn").addClass("hide");
 				}
+
+				comm.getDataByCondition({
+					ajax: {
+						url: '/api/OrderTransportOrder/ExportOrderExcel',
+						data: $("#express_info_search_form").serialize(),
+						success: function(data, data0) {
+							$("#express_export_excel").attr("href", data0.Message).attr("target", "_blank");
+						}
+					}
+				});
 			}
 		});
-		
+
 		//批量打印运单
 		$("#express_batch_print_btn").on("click", function(e) {
 			var checkData = table.checkStatus('express_list_data').data;
@@ -195,7 +202,7 @@
 			} else if(layEvent === 'edit') { //编辑运单信息
 				comm.changeTabContent({
 					url: './express/express-edit.html',
-					data: data.id
+					data: [data.id, data.trackingnumber]
 				});
 			} else if(layEvent === 'delete') { //删除运单信息
 				layer.confirm('是否确认删除该运单信息？', function(index) {
@@ -309,16 +316,17 @@
 <script type="text/html" id="id_card_info">
 	<div>{{d.receiver_name}}</div>
 	{{# if(d.id_card_info_index == 1) { }}
-	<span class="red-color font-bold">没有身份证号</span>
-	{{# } else if(d.id_card_info_index == 2) { }}
-	<span class="red-color">没有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div>
+	<span class="red-color font-bold">没有身份证号</span> {{# } else if(d.id_card_info_index == 2) { }}
+	<span class="red-color">没有身份证照片</span>
+	<div>{{d.receiver_id_cardnumber}}</div>
 	{{# } else if(d.id_card_info_index == 3){ }}
-	<span style="color: green;">有身份证照片</span><div>{{d.receiver_id_cardnumber}}</div>
+	<span style="color: green;">有身份证照片</span>
+	<div>{{d.receiver_id_cardnumber}}</div>
 	{{# } }}
 </script>
 <script type="text/html" id="cnum_link">
 	<a class="cnum-link" lay-event="detail">{{d.cnum}}</a>
 </script>
 <script type="text/html" id="express_list_status">
-	
+
 </script>
