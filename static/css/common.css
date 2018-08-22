@@ -14,7 +14,11 @@ a {
 .gray-border {
 	border: 1px solid #f1f1f1;
 }
-
+.center-btn {
+	width: 200px;
+	display: block !important;
+	margin: 10px auto !important;
+}
 .background-red {
 	background: #f68484;
 }
@@ -164,6 +168,7 @@ a {
 	justify-content: center;
 	color: #fff;
 	font-weight: 900;
+	cursor: pointer;
 }
 
 .layui-side .logo-cont span {
@@ -610,10 +615,13 @@ a {
 }
 
 #express_track_cont {
-	color: #000;
+    color: #000;
+    width: 350px;
+    margin: 10px auto;
+    font-size: 15px;
 }
 
-#express_track_cont .layui-timeline-axis {
+/*#express_track_cont .layui-timeline-axis {
 	background-color: #5FB878;
 	left: -2px;
 	width: 16px;
@@ -624,7 +632,7 @@ a {
 #express_track_cont .layui-timeline-item:before,
 #express_track_cont hr {
 	background-color: #5fb878;
-}
+}*/
 
 .none-back-border {
 	background: none !important;
@@ -676,7 +684,7 @@ a {
 	font-size: 8px;
 }*/
 
-#express_track_cont .layui-timeline-title {
+/*#express_track_cont .layui-timeline-title {
 	font-size: 12px !important;
 	color: #5fb878;
 	margin-bottom: 5px;
@@ -684,7 +692,7 @@ a {
 
 #express_track_cont .layui-timeline-item {
 	padding-bottom: 5px;
-}
+}*/
 
 .message-box {
 	cursor: pointer;

@@ -1,6 +1,6 @@
 <form class="layui-form init-select-group filter-form" group-init-url="/api/OrderTransportOrder/SearchInit" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form">
 	<ul>
-
+		
 		<li>
 			<span>来源</span>
 			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
@@ -18,9 +18,10 @@
 			<select class="form-condition auto-click-condition" style="display: none;" lay-filter="express-status">
 				<option data-value="" click-name="clearAll" value=",,">全部</option>
 				<option data-value="false" click-name="isenter" value="false,,">待处理</option>
-				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款</option>
-				<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
-				<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
+				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款
+					<option>
+						<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
+						<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
 			</select>
 			<input type="hidden" value="" name="isenter" class="init-condition-input">
 			<input type="hidden" value="" name="ispay" class="init-condition-input">
@@ -140,7 +141,8 @@
 					}]
 				],
 			},
-			succ: function() {},
+			succ: function() {
+			},
 			callback: function() {
 				if($(".filter-form li[click-name='isenter']").hasClass("active")) {
 					$("#express_batch_delete_btn").removeClass("hide");
@@ -225,10 +227,68 @@
 					content: pageUrl
 				});
 			} else if(layEvent === 'track') { //运单追踪
+				var that = this;
+				//				if($("#express_track_cont").length) {
+				//					layer.closeAll();
+				//					$("#express_track_cont").html('<img src="./static/img/loading.gif" alt="加载中..." width="37" height="37">');
+				//				} else {
+				//					layer.tips('<div id="express_track_cont"><img src="./static/img/loading.gif" alt="加载中..." width="37" height="37"></div>', that, {
+				//						time: 0,
+				//						tips: [2, '#ddd']
+				//					});
+				//				}
+				if($("#express_track_cont").length) {
+					layer.closeAll();
+				}
 
-//				sessionStorage.setItem("trackData", data.id);
-				var url = './express/express-track.html?trackData=' + data.id + '&cnum=' + data.cnum;
-				window.open(url, '_blank');
+				comm.getDataByCondition({
+					ajax: {
+						url: '/api/OrderProcessStatusChange/Changes?elementid=' + data.id,
+						success: function(rlt) {
+							rlt = rlt["Data"];
+							if(!rlt || !rlt.length) {
+								var tips0 = layer.tips('<div id="express_track_cont">暂无运单信息</div>', that, {
+									time: 0,
+									tips: [1, '#ddd'],
+									closeBtn: 1
+								});
+							} else {
+								var timelineStr = "";
+								rlt.map(function(v) {
+									timelineStr += '<li class="layui-timeline-item">' +
+										'<i class="layui-icon layui-timeline-axis">&#xe63f;</i>' +
+										'<div class="layui-timeline-content layui-text">' +
+										'<h3 class="layui-timeline-title">' + v.createtime + '</h3>' +
+										'<p>' + v.processname + '</p>' +
+										'</div>' +
+										'</li>';
+								});
+								var tips1 = layer.tips('<div id="express_track_cont"><ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul></div>', that, {
+									time: 0,
+									tips: [1, '#ddd'],
+									closeBtn: 1
+								});
+								//								$(document).on("click", ".layui-layer-tips", function() {
+								//									debugger;
+								//									e.stopPropagation();
+								//								})
+								//								$("#express_track_cont").html('<ul class="layui-timeline" id="express_track-cont">' + timelineStr + '</ul>');
+							}
+
+							//							comm.openPage({
+							//								url: './express/express-track.html',
+							//								data: rlt['Data'],
+							//								open: {
+							//									maxmin: true,
+							//									area: ['80%', '80%'],
+							//								}
+							//							});
+						},
+						error: function() {
+							$("#express_track_cont").html("网络异常，未搜索到运单信息");
+						}
+					}
+				});
 			}
 		});
 	});

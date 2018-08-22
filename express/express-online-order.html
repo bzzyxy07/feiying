@@ -213,17 +213,14 @@
 </div>
 <div class="align-center express-online-success-container hide" style="padding: 30px 0;">
 	<p class="large-font">运单号<span name="express-num" class="red-color"></span>创建成功！</p>
-	<!--<p class="large-font1">总计：<span class="red-color"></span>（$）（税费：<span class="red-color"></span>$，保险：<span class="red-color"></span>$）</p>-->
+	<p class="large-font1">总计：<span class="red-color"></span>（$）（税费：<span class="red-color"></span>$，保险：<span class="red-color"></span>$）</p>
 	<div class="express_online-success-btn align-center margin-top-30">
 		<button class="layui-btn layui-btn-normal" type="button" id="express_online_order_repeat">继续下单</button>
 		<button class="layui-btn" type="button" id="success_check_express_detail">查看详情</button>
 		<button class="layui-btn" type="button" id="success_print_express_detail">面单打印</button>
-		<!--<button class="layui-btn" type="button" id="">返回列表页</button>-->
+		<button class="layui-btn" type="button" id="success_return_express_list">返回列表页</button>
 	</div>
 </div>
-<!--<script>
-	console.info($("#main_container").data("data"));
-</script>-->
 <script>
 	layui.use(['form'], function() {
 		var cloneLine = $(".detail-tr").first().clone();
@@ -445,7 +442,9 @@
 								content: './print/print-A4-page.html'
 							});
 						});
-
+						$("#success_return_express_list").unbind("click").on("click", function() {
+							 $('#main_container>.layui-tab-card>.layui-tab-title>li.layui-this').click();
+						});
 					}
 				}
 			});

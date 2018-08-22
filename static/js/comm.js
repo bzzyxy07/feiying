@@ -50,7 +50,7 @@ var comm = {
 			sepData && sepData.map(function(v) {
 				sepid = v[id] || v.id;
 				sepname = v[name] || v.name;
-//debugger;
+				//debugger;
 				if(m.data("data") && (sepid == m.data("data"))) {
 					sel += '<option value="' + sepid + '" selected="selected">' + sepname + '</option>';
 				} else {
@@ -100,12 +100,12 @@ var comm = {
 		$("#main_container").data("data", param.data);
 		var $showTab = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show')
 		$showTab.load(param.url, function() {
-			if(!$(".return-prev").length) {
+			if(!$("a.return-prev").length) {
 				$showTab.prepend('<div class="layui-text"><a class="return-prev">&lt;&lt;返回</a></div>');
-				$(".return-prev").unbind("click").on("click", function() {
-					$showTab.load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
-				});
 			}
+			$(".return-prev").unbind("click").on("click", function() {
+				$showTab.load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
+			});
 			comm.fillSelAndCont();
 		});
 	},
