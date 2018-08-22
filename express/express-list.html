@@ -1,26 +1,6 @@
 <form class="layui-form init-select-group filter-form" group-init-url="/api/OrderTransportOrder/SearchInit" url="/api/OrderTransportOrder/OrderListMy" id="express_info_search_form">
 	<ul>
-		<li>
-			<span>运单状态</span>
-			<!--<ul class="form-condition auto-click-condition">
-				<li class="active" data-value="" click-name="clearAll">全部</li>
-				<li data-value="false" click-name="isenter">待处理</li>
-				<li data-value="false,true" click-name="ispay,isenter">待付款</li>
-				<li data-value="false,true,true" click-name="isdeliver,isenter,ispay">待发货</li>
-				<li data-value="true,true,true" click-name="isdeliver,isenter,ispay">已发货</li>
-			</ul>-->
-			<select class="form-condition auto-click-condition" style="display: none;" lay-filter="express-status">
-				<option data-value="" click-name="clearAll" value=",,">全部</option>
-				<option data-value="false" click-name="isenter" value="false,,">待处理</option>
-				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款
-					<option>
-						<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
-						<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
-			</select>
-			<input type="hidden" value="" name="isenter" class="init-condition-input">
-			<input type="hidden" value="" name="ispay" class="init-condition-input">
-			<input type="hidden" value="" name="isdeliver" class="init-condition-input">
-		</li>
+		
 		<li>
 			<span>来源</span>
 			<select name="source" initial-name="order_sources" initial-text="Text" initial-value="Value"></select>
@@ -32,6 +12,20 @@
 		<li>
 			<span>线路名称</span>
 			<select name="routeid" initial-name="route_list" initial-text="routename" initial-value="id"></select>
+		</li>
+		<li>
+			<span>运单状态</span>
+			<select class="form-condition auto-click-condition" style="display: none;" lay-filter="express-status">
+				<option data-value="" click-name="clearAll" value=",,">全部</option>
+				<option data-value="false" click-name="isenter" value="false,,">待处理</option>
+				<option data-value="false,true" click-name="ispay,isenter" value="true,false,">待付款
+					<option>
+						<option data-value="false,true,true" click-name="isdeliver,isenter,ispay" value="true,true,false">待发货</option>
+						<option data-value="true,true,true" click-name="isdeliver,isenter,ispay" value="true,true,true">已发货</option>
+			</select>
+			<input type="hidden" value="" name="isenter" class="init-condition-input">
+			<input type="hidden" value="" name="ispay" class="init-condition-input">
+			<input type="hidden" value="" name="isdeliver" class="init-condition-input">
 		</li>
 
 		<li>
