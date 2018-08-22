@@ -47,11 +47,11 @@
 						<td class="padd-0">
 							<select name="taxcategoryid" lay-verify="required" initial-name="categorynamelist"></select>
 						</td>
-						<td class="padd-0"><input autocomplete="off" type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input autocomplete="off" type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input autocomplete="off" type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input autocomplete="off" type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
-						<td class="padd-0"><input autocomplete="off" type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" autocomplete="off" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="mingcheng" placeholder="请输入物品名称" lay-verify="required" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="guige" placeholder="请输入物品规格" lay-verify="required" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="pinpai" placeholder="请输入物品品牌" lay-verify="required" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="count" placeholder="请输入物品数量" lay-verify="required|number" class="layui-input"></td>
+						<td class="padd-0"><input autocomplete="off" type="text" name="danjia" placeholder="请输入物品单价" lay-verify="required|number" class="layui-input"></td>
 						<td class="padd-0">
 							<select name="danwei" initial-name="unitlist" initial-value="name" lay-verify="required"></select>
 						</td>
@@ -64,7 +64,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">备注</label>
 		<div class="layui-input-block">
-			<textarea autocomplete="off" type="text" name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+			<textarea autocomplete="off" type="text" name="remark" placeholder="请输入备注" class="layui-textarea field-cont"></textarea>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -125,10 +125,12 @@
 		//提交编辑的包裹信息
 		form.on('submit(package-edit-form)', function(data) {
 			var packageData = {
+				"id": $("#main_container").data("data"),
 				"depotid": $('#package_edit_form [name="depotid"]').val(),
 				"trackingname": $('#package_edit_form [name="trackingname"]').val(),
 				"trackingnumber": $('#package_edit_form [name="trackingnumber"]').val(),
-				"details": []
+				"details": [],
+				"remark": $('#package_edit_form [name="remark"]').val(),
 			}
 			$("#package_edit_form .detail-tr").each(function() {
 				var sepDetail = {}

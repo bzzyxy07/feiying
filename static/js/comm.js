@@ -50,7 +50,7 @@ var comm = {
 			sepData && sepData.map(function(v) {
 				sepid = v[id] || v.id;
 				sepname = v[name] || v.name;
-
+//debugger;
 				if(m.data("data") && (sepid == m.data("data"))) {
 					sel += '<option value="' + sepid + '" selected="selected">' + sepname + '</option>';
 				} else {
@@ -482,7 +482,7 @@ var comm = {
 				//				debugger;
 				if(sepCont.prop("tagName") == 'SELECT') {
 					sepCont.find('option[value=' + data[key] + ']').attr("selected", "selected");
-				} else if(sepCont.prop("tagName") === 'INPUT') {
+				} else if((sepCont.prop("tagName") === 'INPUT') || (sepCont.prop("tagName") === 'TEXTAREA')) {
 					sepCont.val(data[key]);
 				}
 				sepCont.data("data", data[key]);
@@ -596,6 +596,7 @@ var comm = {
 
 			var filter = $("#" + param.formId + " select.form-condition.auto-click-condition").attr("lay-filter");
 			form.on('select(' + filter + ')', function(data) {
+				console.info(2)
 				var $this = $(data.elem);
 				if($this.find("option:selected").attr("data-value")) {
 					var dataArr = $this.find("option:selected").attr("data-value").split(",");
@@ -603,18 +604,18 @@ var comm = {
 				if($this.find("option:selected").attr("click-name")) {
 					var clickArr = $this.find("option:selected").attr("click-name").split(",");
 					clickArr.map(function(v, index) {
-					if(!$("#" + param.formId + " input[name=" + v + "]").length) {
-						$this.after('<input type="hidden" name="' + v + '">');
-					}
-					$('input[name="' + v + '"]').val(dataArr[index]);
-				});
+						if(!$("#" + param.formId + " input[name=" + v + "]").length) {
+							$this.after('<input type="hidden" name="' + v + '">');
+						}
+						$('input[name="' + v + '"]').val(dataArr[index]);
+					});
 				}
-				
-				
 				$("#" + param.formId + " .filter-btn").click();
+
 			});
 
 			$("#" + param.formId + " select.form-condition.auto-click-condition").on("change", function() {
+				console.info(1)
 				var $thisSel = $(this);
 				var $this = $(this).find("option:selected");
 				if($this.attr("click-name") === "clearAll") {
@@ -626,14 +627,13 @@ var comm = {
 					$sibs.each(function() {
 						$(this).val("");
 					});
-					console.info(dataArr[index])
 					clickArr.map(function(v, index) {
 						$('input[name="' + v + '"]').val(dataArr[index]);
 					});
 				}
 
 				//				$this.addClass("active").siblings("li").removeClass("active");
-				//				$("#" + param.formId + " .filter-btn").click();
+				$("#" + param.formId + " .filter-btn").click();
 			});
 
 			if(param.renderTable) {
@@ -646,10 +646,18 @@ var comm = {
 					checkbox: true
 				});
 			}
-			form.on('select()', function(data) {
-				$("#" + param.formId + " .filter-btn").click();
+			$("#" + param.formId + " select:not(.auto-click-condition)").each(function() {
+				var filter1 = $(this).attr('lay-filter');
+				if(!filter1) {
+					var filter1 = "select" + comm.uuid();
+					$(this).attr('lay-filter', filter1);
+				}
+				form.render('select');
+				form.on('select(' + filter1 + ')', function(data) {
+					$("#" + param.formId + " .filter-btn").click();
+				});
+				form.render();
 			});
-			form.render();
 
 			$(filterForm).on("click", ".filter-btn", function() {
 				var $this = $(this);
