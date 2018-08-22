@@ -1,20 +1,20 @@
 <form class="layui-form filter-form" url="/api/OrderPackage/QueryMy" id="package_info_search_form">
 	<ul>
 		<li>
-			<span>包裹状态</span>
-			<select name="isenter">
-				<option value="">全部</option>
-				<option value="false">未入库</option>
-				<option value="true">已入库</option>
-			</select>
-		</li>
-		<li>
 			<span>送达仓库</span>
 			<select name="depotid" lay-verify="required" initial-name="depotlist"></select>
 		</li>
 		<li>
 			<span>包裹追踪号</span>
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入包裹追踪号" name="trackingnumber">
+		</li>
+		<li>
+			<span>包裹状态</span>
+			<select name="isenter">
+				<option value="">全部</option>
+				<option value="false">未入库</option>
+				<option value="true">已入库</option>
+			</select>
 		</li>
 		<li>
 			<span>提交状态</span>

@@ -20,10 +20,10 @@
 			<input type="hidden" value="cnum" name="keyword_key">
 			<input autocomplete="off" class="layui-input form-input" placeholder="请输入运单号" name="keyword_value">
 		</li>
-		<li>
+		<!--<li>
 			<span>发货批次</span>
 			<select name="routeid" initial-name="shippingbatchs" initial-text="Text" initial-value="Value"></select>
-		</li>
+		</li>-->
 		<li>
 			<button type="button" class="layui-btn layui-btn-sm layui-btn-normal filter-btn">查询</button>
 			<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">全部</button>
@@ -208,12 +208,7 @@
 			var layEvent = obj.event;
 			var tr = obj.tr;
 
-			if(layEvent === 'detail') { //查看运单详情
-				comm.changeTabContent({
-					url: './express/express-detail.html',
-					data: data.id
-				});
-			} else if(layEvent === 'edit') { //编辑运单信息
+			if(layEvent === 'edit') { //编辑运单信息
 				comm.changeTabContent({
 					url: './express/express-edit.html',
 					data: data.id
@@ -316,7 +311,6 @@
 <script type="text/html" id="express_list_dkk_operation">
 	<div class="layui-btn-group display-block">
 		{{# if(d.isenter) { }}
-		<a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">详情</a>
 		{{# } }}
 		<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="track" data-id="{{d.id}}">追踪</a>
 	</div>

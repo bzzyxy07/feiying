@@ -101,7 +101,7 @@ var comm = {
 		var $showTab = $('#main_container>.layui-tab-card>.layui-tab-content>.layui-tab-item.layui-show')
 		$showTab.load(param.url, function() {
 			if(!$(".return-prev").length) {
-				$showTab.prepend('<div class="layui-text"><a class="return-prev">返回&gt;&gt;</a></div>');
+				$showTab.prepend('<div class="layui-text"><a class="return-prev">&lt;&lt;返回</a></div>');
 				$(".return-prev").unbind("click").on("click", function() {
 					$showTab.load($('#main_container>.layui-tab-card>.layui-tab-title>.layui-this').attr('link-url'));
 				});
@@ -639,7 +639,7 @@ var comm = {
 				var array = param.renderTable.cols[0];
 				param.order && array.unshift({
 					type: 'numbers',
-					title: '',
+					title: '序号',
 				});
 				param.checkbox && array.unshift({
 					checkbox: true

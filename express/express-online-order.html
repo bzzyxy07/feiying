@@ -22,8 +22,10 @@
 			<tr>
 				<th class="align-right">运单编号</th>
 				<td class="gray-back">
-					<div class="layui-input-inline"><input name="Id" class="field-cont layui-input none-back-border" disabled="disabled"></div>
-					<div class="float-right comm-line-height">自动生成</div>
+					<div class="float-left short-width">
+						<input name="Id" class="field-cont layui-input" disabled="disabled">
+					</div>
+					<div class="float-left comm-line-height">自动生成</div>
 					<!--<input name="id" type="hidden">-->
 				</td>
 
@@ -420,7 +422,10 @@
 						$(".express-online-success-container").removeClass("hide");
 
 						$("#express_online_order_repeat").unbind("click").on("click", function() {
-							comm.refreshInnerPage();
+							comm.changeTabContent({
+								url: './express/express-online-order.html',
+								data: ""
+							});
 						});
 
 						$("#success_check_express_detail").unbind("click").on("click", function() {

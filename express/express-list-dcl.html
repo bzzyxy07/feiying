@@ -272,7 +272,7 @@
 	</div>
 </script>
 <script type="text/html" id="order_details">
-	{{# if(d.source == '转运') { }}
+	{{# if((d.source == '转运')||(d.source == '包裹转运')) { }}
 	<div style="color: orangered;">{{d.trackingnumber}}</div>
 	{{# } }}
 	<div>{{d.order_details}}</div>
