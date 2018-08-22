@@ -153,7 +153,7 @@
 			} else if(layEvent === 'cnum-detail') { //查看运单详情
 				jumpPageAndContent({
 					menuUrl: "express/express-manage.html",
-					data: data.id,
+					data: data.orderid,
 					contentUrl: './express/express-detail.html',
 				});
 			}
@@ -171,8 +171,8 @@
 </script>
 <script type="text/html" id="package_enter_status">
 	{{# if(d.isenter == true){ }}
-	<span style="color: #5FB878;margin-right: 5px;">已入库</span> {{d.enterdate}} {{# } else{ }}
-	<span style="color: red;margin-right: 5px;">未入库</span> {{# } }}
+	<span style="color: #5FB878;margin-right: 5px;">已入库</span> {{d.enterdate_str}} {{# } else{ }}
+	<span style="color: orangered;margin-right: 5px;">未入库</span>{{d.createtime_str}} {{# } }}
 </script>
 <script type="text/html" id="package_submit_status">
 	{{# if(d.isdeliver == true){ }}
