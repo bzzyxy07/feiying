@@ -208,7 +208,12 @@
 			var layEvent = obj.event;
 			var tr = obj.tr;
 
-			if(layEvent === 'edit') { //编辑运单信息
+			if(layEvent === 'detail') { //查看运单详情
+				comm.changeTabContent({
+					url: './express/express-detail.html',
+					data: data.id
+				});
+			} else if(layEvent === 'edit') { //编辑运单信息
 				comm.changeTabContent({
 					url: './express/express-edit.html',
 					data: data.id
